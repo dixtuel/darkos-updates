@@ -607,9 +607,6 @@ if [ ! -f "/home/ark/.config/.update10032026" ]; then
   exit 187
 fi
 
-# Follow-up R36S-only adaptation release. Keep the already-published base OTA
-# unchanged and version the patch separately. It only replaces scoped scripts
-# and applies the two known Atari command fixes without touching ROM paths.
 PATCH_VERSION="10032026-r1"
 if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
   BASE_VERSION="$(cat /home/ark/.config/.VERSION 2>/dev/null)"
@@ -826,3 +823,62 @@ PY
   sudo systemctl reboot
   exit 187
 fi
+
+PATCH_VERSION="10032026-r2"
+if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
+  BASE_VERSION="$(cat /home/ark/.config/.VERSION 2>/dev/null)"
+  if [[ "$(tr -d '\0' < /proc/device-tree/compatible 2>/dev/null)" != *"rk3326"* ]] || \
+     [[ "$BASE_VERSION" != "10032026" && "$BASE_VERSION" != "10032026-r1" ]]; then
+    printf "\nThis update requires dArkOSRE-R36 OTA 10032026 or 10032026-r1 on RK3326; no files were installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  if mountpoint -q /roms2; then
+    ROM_ROOT="roms2"
+  elif mountpoint -q /roms; then
+    ROM_ROOT="roms"
+  else
+    printf "\nNo mounted ROM card was detected; update stopped.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  if ! grep -Fq "<path>/$ROM_ROOT/nds" /etc/emulationstation/es_systems.cfg; then
+    printf "\nThe NDS ROM path does not match the mounted ROM card; update stopped.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+
+  UPDATE_ZIP="/dev/shm/darkosupdate$PATCH_VERSION.zip"
+  INSTALLER="/tmp/install-$PATCH_VERSION.sh"
+  UPDATE_URL="$LOCATION/$PATCH_VERSION/darkosupdate$PATCH_VERSION.zip"
+  UPDATE_SHA256="6540db84566fdc3ada761867d03583bf79725c7c69a4bf69406945c080da786e"
+  if mountpoint -q /roms2; then
+    BACKUP_BASE="/roms2/backup/darkosre-update/$PATCH_VERSION"
+  else
+    BACKUP_BASE="/roms/backup/darkosre-update/$PATCH_VERSION"
+  fi
+  wget -t 3 -T 120 --no-check-certificate "$UPDATE_URL" -O "$UPDATE_ZIP" -a "$LOG_FILE" || {
+    rm -f "$UPDATE_ZIP"
+    printf "\nCould not download the update package.\n" | tee -a "$LOG_FILE"
+    exit 1
+  }
+  echo "$UPDATE_SHA256  $UPDATE_ZIP" | sha256sum -c - || {
+    rm -f "$UPDATE_ZIP"
+    printf "\nUpdate checksum failed; no files were installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  }
+  unzip -t "$UPDATE_ZIP" >/dev/null || {
+    rm -f "$UPDATE_ZIP"
+    printf "\nUpdate archive validation failed; no files were installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  }
+  unzip -p "$UPDATE_ZIP" install-r2.sh > "$INSTALLER" || {
+    rm -f "$UPDATE_ZIP" "$INSTALLER"
+    printf "\nThe package is missing its installer.\n" | tee -a "$LOG_FILE"
+    exit 1
+  }
+  chmod 755 "$INSTALLER"
+  sudo bash "$INSTALLER" "$UPDATE_ZIP" "$ROM_ROOT" "$BACKUP_BASE" "$UPDATE_SHA256"
+  exit $?
+fi
+
+# Follow-up R36S-only adaptation release. Keep the already-published base OTA
+# unchanged and version the patch separately. It only replaces scoped scripts
+# and applies the two known Atari command fixes without touching ROM paths.

@@ -32,3 +32,5 @@ jobs:
               [[ "/$path/" != *"/../"* ]] || { echo "Path traversal in ZIP: $archive:$path" >&2; exit 1; }
             done < <(unzip -Z1 "$archive")
           done
+      - name: Check maintained R36 payload checksums and ELF objects
+        run: python3 tools/validate-current-ota.py 10032026*/darkosupdate*.zip

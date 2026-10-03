@@ -10,7 +10,7 @@ firmware.
 
 The repository mirrors the full upstream `southoz/darkos-updates` history
 through `01302026` (latest upstream commit: 2026-03-14) and adds documented
-R36-specific packages `10032026` and `10032026-r1`. Existing upstream payloads remain unchanged.
+R36-specific packages `10032026`, `10032026-r1`, and `10032026-r2`. Existing upstream payloads remain unchanged.
 The new package is assembled from RK3326-selected artifacts in vanilla
 06072026, 07262026, and 08272026 releases; it does not install a vanilla image
 or rewrite R36 ROM-card configuration. See
@@ -19,6 +19,14 @@ checks, limits, and rollback location. The follow-up `10032026-r1` carries
 R36-side auto-suspend, backup/restore, Daphne, Atari, and dual-card Singe/ZLua
 changes. See [`10032026-r1/README.md`](10032026-r1/README.md) for its exact
 payload, ROM-path guards, checksum, and rollback procedure.
+The next `10032026-r2` adds DSperate v3.0.0 as an optional third NDS emulator,
+the legacy FFmpeg SONAME set, the missing ARMhf WebP mux dependency, and the
+RK3326 Mali OpenCL alias correction. It keeps the device's newer AArch64 WebP
+mux library. Its installer patches only the NDS emulator selector and four
+BaRT labels/handler paths while checking that every ROM path and both SD
+switching scripts remain unchanged.
+See [`10032026-r2/README.md`](10032026-r2/README.md) for the binary/source
+provenance, device checks, limitations, and rollback location.
 
 The upstream update repository has no GitHub Actions workflows or GitHub
 Releases. This fork validates shell/archive structure on pushes and pull
@@ -37,6 +45,7 @@ on raw `main`.
    The R36/R36S `10032026` update is started from the device's Update menu; it
    does not ask the user to type on a keyboard and reboots after installation.
    The `10032026-r1` follow-up requires the base OTA marker/version `10032026`.
+   The `10032026-r2` follow-up applies after `10032026` and/or `10032026-r1`.
 
 Because the updater writes into the live root filesystem, update payloads are
 release artifacts, not ordinary application data. Review every ZIP entry and

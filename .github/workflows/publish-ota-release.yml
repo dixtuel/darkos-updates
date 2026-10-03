@@ -29,6 +29,7 @@ jobs:
           test -f "$date/README.md"
           test -f "$date/SHA256SUMS"
           (cd "$date" && sha256sum -c SHA256SUMS)
+          python3 tools/validate-current-ota.py "$archive"
       - name: Create GitHub Release with device payload
         env:
           GH_TOKEN: ${{ github.token }}
