@@ -3,7 +3,13 @@
 clear
 UPDATE_DATE="10032026"
 LOG_FILE="/home/ark/update$UPDATE_DATE.log"
-UPDATE_DONE="/home/ark/.config/.update$UPDATE_DATE"
+BASE_UPDATE_DONE="/home/ark/.config/.update$UPDATE_DATE"
+PATCH_UPDATE_DONE="/home/ark/.config/.update10032026-r1"
+if [ -f "$BASE_UPDATE_DONE" ]; then
+	UPDATE_DONE="$PATCH_UPDATE_DONE"
+else
+	UPDATE_DONE="$BASE_UPDATE_DONE"
+fi
 
 if [ -f "$UPDATE_DONE" ] || [ -z "$UPDATE_DONE" ]; then
 	msgbox "No more updates available.  Check back later."
@@ -594,6 +600,226 @@ if [ ! -f "/home/ark/.config/.update10032026" ]; then
   echo "10032026" > /home/ark/.config/.VERSION
   sudo sed -i "/title\=/c\title\=dArkOSRE (10032026)" /usr/share/plymouth/themes/text.plymouth
   printf "\nInstalled RK3326 update. ROM library remains on /$ROM_ROOT; rollback files are in $BACKUP_BASE.\n" | tee -a "$LOG_FILE"
+  sudo systemctl reboot
+  exit 187
+fi
+
+# Follow-up R36S-only adaptation release. Keep the already-published base OTA
+# unchanged and version the patch separately. It only replaces scoped scripts
+# and applies the two known Atari command fixes without touching ROM paths.
+PATCH_VERSION="10032026-r1"
+if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
+  BASE_VERSION="$(cat /home/ark/.config/.VERSION 2>/dev/null)"
+  if [[ "$(tr -d '\0' < /proc/device-tree/compatible 2>/dev/null)" != *"rk3326"* ]] || [ "$BASE_VERSION" != "10032026" ]; then
+    printf "\nThis update requires dArkOSRE-R36 RK3326 OTA 10032026; no files were installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+
+  printf "\nInstall R36 Singe/ZLua and settings-backup fixes while preserving /roms and /roms2...\n" | tee -a "$LOG_FILE"
+  UPDATE_ZIP="/dev/shm/darkosupdate$PATCH_VERSION.zip"
+  UPDATE_STAGE="/tmp/darkos-update$PATCH_VERSION.$$"
+  UPDATE_URL="$LOCATION/$PATCH_VERSION/darkosupdate$PATCH_VERSION.zip"
+  UPDATE_SHA256="12987d5fcc7bd889b922f3e0083b2e454c002b0d7dce6a6c26f192b7ea9b429b"
+
+  if mountpoint -q /roms2; then
+    ROM_ROOT="roms2"
+    BACKUP_BASE="/roms2/backup/darkosre-update/$PATCH_VERSION"
+  else
+    ROM_ROOT="roms"
+    BACKUP_BASE="/roms/backup/darkosre-update/$PATCH_VERSION"
+  fi
+
+  PATHS_BEFORE="$(grep -o '<path>[^<]*</path>' /etc/emulationstation/es_systems.cfg 2>/dev/null)"
+  SWITCH_GUARD_BEFORE="$(sed '/\/usr\/local\/bin\/singe\.sh/d' "/usr/local/bin/Switch to SD2 for Roms.sh" | sha256sum; \
+    sed '/\/usr\/local\/bin\/singe\.sh/d' "/usr/local/bin/Switch to Main SD for Roms.sh" | sha256sum)"
+  SINGE_SWITCH_LINES="$(grep -c '/usr/local/bin/singe\.sh' "/usr/local/bin/Switch to SD2 for Roms.sh"; \
+    grep -c '/usr/local/bin/singe\.sh' "/usr/local/bin/Switch to Main SD for Roms.sh")"
+  if ! awk 'NF && ($1 !~ /^[01]$/) {bad=1} END {exit bad || NR != 2}' <<< "$SINGE_SWITCH_LINES"; then
+    printf "\nUnexpected Singe path rewrite in the ROM-card switch scripts; update stopped.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  if [ -z "$PATHS_BEFORE" ] || [ "$(printf '%s\n' "$SWITCH_GUARD_BEFORE" | sed '/^$/d' | wc -l)" -ne 2 ] || \
+     ! grep -Fq "<path>/$ROM_ROOT/" /etc/emulationstation/es_systems.cfg; then
+    printf "\nROM-card selection could not be verified; update stopped without installing files.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+
+  sudo mkdir -p "$BACKUP_BASE" || exit 1
+  mkdir -p "$UPDATE_STAGE" || exit 1
+  if ! sudo touch "$BACKUP_BASE/.write-test"; then
+    printf "\nCould not create a rollback backup on the active ROM card.\n" | tee -a "$LOG_FILE"
+    rm -rf "$UPDATE_STAGE"
+    exit 1
+  fi
+  sudo rm -f "$BACKUP_BASE/.write-test"
+
+  AVAILABLE_TMP_KB="$(df -Pk /tmp | awk 'NR==2 {print $4}')"
+  if [ "${AVAILABLE_TMP_KB:-0}" -lt 120000 ]; then
+    printf "\nNot enough temporary storage; update stopped before installation.\n" | tee -a "$LOG_FILE"
+    rm -rf "$UPDATE_STAGE"
+    exit 1
+  fi
+
+  wget -t 3 -T 120 --no-check-certificate "$UPDATE_URL" -O "$UPDATE_ZIP" -a "$LOG_FILE" || {
+    rm -f "$UPDATE_ZIP"; rm -rf "$UPDATE_STAGE"
+    printf "\nCould not download the update package.\n" | tee -a "$LOG_FILE"
+    exit 1
+  }
+  echo "$UPDATE_SHA256  $UPDATE_ZIP" | sha256sum -c - || {
+    rm -f "$UPDATE_ZIP"; rm -rf "$UPDATE_STAGE"
+    printf "\nUpdate archive checksum did not match; no files were installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  }
+  unzip -t "$UPDATE_ZIP" >/dev/null || {
+    rm -f "$UPDATE_ZIP"; rm -rf "$UPDATE_STAGE"
+    printf "\nUpdate archive validation failed; no files were installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  }
+  if unzip -Z1 "$UPDATE_ZIP" | grep -Eq '^(etc/emulationstation/es_systems.cfg|usr/local/bin/Switch to (SD2|Main SD) for Roms.sh|opt/system/Advanced/Switch to (SD2|Main SD) for Roms.sh|roms/|roms2/)'; then
+    rm -f "$UPDATE_ZIP"; rm -rf "$UPDATE_STAGE"
+    printf "\nUpdate archive contains a ROM-root or SD-switch file; installation refused.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  unzip -q -o "$UPDATE_ZIP" -d "$UPDATE_STAGE" || {
+    rm -f "$UPDATE_ZIP"; rm -rf "$UPDATE_STAGE"
+    printf "\nCould not stage update archive; no system files were installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  }
+
+  UPDATE_PATHS=(
+    "etc/emulationstation/es_systems.cfg"
+    "home/ark/.emulationstation/themes"
+    "opt/system/Advanced/Backup dArkOS Settings.sh"
+    "opt/system/Advanced/Restore dArkOS Settings.sh"
+    "usr/local/bin/Switch to SD2 for Roms.sh"
+    "usr/local/bin/Switch to Main SD for Roms.sh"
+    "usr/local/bin/auto_suspend.py"
+    "usr/local/bin/daphne.sh"
+    "usr/local/bin/singe.sh"
+  )
+  BACKUP_ARCHIVE="$BACKUP_BASE/rollback.tar"
+  if [ ! -f "$BACKUP_BASE/backup-ready" ]; then
+    sudo rm -rf "$BACKUP_BASE"
+    sudo mkdir -p "$BACKUP_BASE" || exit 1
+    printf '%s\n' "${UPDATE_PATHS[@]}" | sudo tee "$BACKUP_BASE/managed-paths.txt" >/dev/null
+    sudo truncate -s 0 "$BACKUP_BASE/existed-paths.txt"
+    EXISTED_PATHS=()
+    for item in "${UPDATE_PATHS[@]}"; do
+      if [ -e "/$item" ] || [ -L "/$item" ]; then
+        EXISTED_PATHS+=("$item")
+        printf '%s\n' "$item" | sudo tee -a "$BACKUP_BASE/existed-paths.txt" >/dev/null
+      fi
+    done
+    if ((${#EXISTED_PATHS[@]})); then
+      sudo tar --numeric-owner -cpf "$BACKUP_ARCHIVE.tmp" -C / -- "${EXISTED_PATHS[@]}" || {
+        rm -f "$UPDATE_ZIP"; rm -rf "$UPDATE_STAGE"
+        printf "\nRollback archive creation failed; update stopped before installation.\n" | tee -a "$LOG_FILE"
+        exit 1
+      }
+    else
+      sudo tar -cpf "$BACKUP_ARCHIVE.tmp" --files-from=/dev/null || exit 1
+    fi
+    if ! sudo tar -tf "$BACKUP_ARCHIVE.tmp" >/dev/null; then
+      rm -f "$UPDATE_ZIP"; rm -rf "$UPDATE_STAGE"
+      printf "\nRollback archive validation failed; update stopped before installation.\n" | tee -a "$LOG_FILE"
+      exit 1
+    fi
+    sudo mv "$BACKUP_ARCHIVE.tmp" "$BACKUP_ARCHIVE" || exit 1
+    sudo sha256sum "$BACKUP_ARCHIVE" | sudo tee "$BACKUP_BASE/rollback.sha256" >/dev/null
+    sudo touch "$BACKUP_BASE/backup-ready"
+  else
+    if ! cmp -s <(printf '%s\n' "${UPDATE_PATHS[@]}") "$BACKUP_BASE/managed-paths.txt"; then
+      printf "\nExisting rollback snapshot does not match this update; update stopped.\n" | tee -a "$LOG_FILE"
+      rm -f "$UPDATE_ZIP"; rm -rf "$UPDATE_STAGE"
+      exit 1
+    fi
+    EXPECTED_BACKUP_SHA256="$(awk 'NR == 1 {print $1}' "$BACKUP_BASE/rollback.sha256" 2>/dev/null)"
+    ACTUAL_BACKUP_SHA256="$(sha256sum "$BACKUP_ARCHIVE" 2>/dev/null | awk '{print $1}')"
+    if [ -z "$EXPECTED_BACKUP_SHA256" ] || [ "$EXPECTED_BACKUP_SHA256" != "$ACTUAL_BACKUP_SHA256" ] || ! sudo tar -tf "$BACKUP_ARCHIVE" >/dev/null; then
+      printf "\nRollback archive is missing or damaged; update stopped.\n" | tee -a "$LOG_FILE"
+      rm -f "$UPDATE_ZIP"; rm -rf "$UPDATE_STAGE"
+      exit 1
+    fi
+  fi
+
+  rollback_patch() {
+    printf "\nInstallation failed; restoring the previous files from $BACKUP_BASE\n" | tee -a "$LOG_FILE"
+    local failed=0
+    for item in "${UPDATE_PATHS[@]}"; do sudo rm -rf "/$item" || failed=1; done
+    sudo tar --numeric-owner -xpf "$BACKUP_ARCHIVE" -C / || failed=1
+    return "$failed"
+  }
+
+  for item in "${UPDATE_PATHS[@]}"; do
+    if [ -e "$UPDATE_STAGE/$item" ] || [ -L "$UPDATE_STAGE/$item" ]; then
+      sudo mkdir -p "/$(dirname "$item")"
+      sudo rm -rf "/$item"
+      sudo cp -a "$UPDATE_STAGE/$item" "/$(dirname "$item")/" || { rollback_patch; exit 1; }
+      if [ ! -L "/$item" ]; then sudo chown root:root "/$item" || { rollback_patch; exit 1; }; fi
+    fi
+  done
+
+  # singe.sh now resolves /roms versus /roms2 from the selected shortcut.
+  # Remove only the legacy sed lines that would corrupt that dual-root logic.
+  sudo sed -i '\|/usr/local/bin/singe\.sh|d' "/usr/local/bin/Switch to SD2 for Roms.sh" || { rollback_patch; exit 1; }
+  sudo sed -i '\|/usr/local/bin/singe\.sh|d' "/usr/local/bin/Switch to Main SD for Roms.sh" || { rollback_patch; exit 1; }
+
+  # Preserve user themes. Make the vanilla dual-card link only when the path
+  # is absent or is already a symlink; never replace a real theme directory.
+  if mountpoint -q /roms2 && [ -d /roms2/themes ] && { [ ! -e /home/ark/.emulationstation/themes ] || [ -L /home/ark/.emulationstation/themes ]; }; then
+    sudo ln -sfn /roms2/themes /home/ark/.emulationstation/themes || { rollback_patch; exit 1; }
+  fi
+
+  # Port vanilla's Atari 800/XEGS default-core fix without replacing the local
+  # XML or changing any of its ROM path entries.
+sudo python3 - <<'PY'
+import os, re, stat, tempfile
+path = "/etc/emulationstation/es_systems.cfg"
+with open(path, "r", encoding="utf-8") as f:
+    content = f.read()
+original = content
+for system, config in (("atari800", "retroarch_A800.cfg"), ("atarixegs", "retroarch_XEGS.cfg")):
+    pattern = re.compile(r"<system>(?:(?!</system>).)*?<name>" + re.escape(system) + r"</name>(?:(?!</system>).)*?</system>", re.S)
+    matches = list(pattern.finditer(content))
+    if len(matches) != 1:
+        raise SystemExit(f"expected one {system} system section, found {len(matches)}")
+    block = matches[0].group(0)
+    old = "--config /home/ark/.config/retroarch/config/Atari800/" + config + " "
+    if old in block:
+        block = block.replace(old, "", 1)
+    elif "retroarch --config" in block and config in block:
+        raise SystemExit(f"unexpected Atari config command for {system}")
+    content = content[:matches[0].start()] + block + content[matches[0].end():]
+if content != original:
+    mode = stat.S_IMODE(os.stat(path).st_mode)
+    fd, tmp = tempfile.mkstemp(prefix=".es_systems.cfg.", dir=os.path.dirname(path))
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            f.write(content)
+        os.chmod(tmp, mode)
+        os.replace(tmp, path)
+    finally:
+        if os.path.exists(tmp): os.unlink(tmp)
+PY
+  PATCH_STATUS=$?
+  PATHS_AFTER="$(grep -o '<path>[^<]*</path>' /etc/emulationstation/es_systems.cfg 2>/dev/null)"
+  SWITCH_GUARD_AFTER="$(sed '/\/usr\/local\/bin\/singe\.sh/d' "/usr/local/bin/Switch to SD2 for Roms.sh" | sha256sum; \
+    sed '/\/usr\/local\/bin\/singe\.sh/d' "/usr/local/bin/Switch to Main SD for Roms.sh" | sha256sum)"
+  if [ "$PATCH_STATUS" -ne 0 ] || [ "$PATHS_BEFORE" != "$PATHS_AFTER" ] || \
+     [ "$SWITCH_GUARD_BEFORE" != "$SWITCH_GUARD_AFTER" ] || \
+     ! grep -Fq "<path>/$ROM_ROOT/" /etc/emulationstation/es_systems.cfg; then
+    rollback_patch
+    rm -f "$UPDATE_ZIP"; rm -rf "$UPDATE_STAGE"
+    printf "\nROM paths or SD switch scripts changed unexpectedly; previous files restored.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+
+  rm -f "$UPDATE_ZIP"
+  rm -rf "$UPDATE_STAGE"
+  touch "/home/ark/.config/.update$PATCH_VERSION"
+  echo "$PATCH_VERSION" > /home/ark/.config/.VERSION
+  sudo sed -i "/title=/c\\title=dArkOSRE ($PATCH_VERSION)" /usr/share/plymouth/themes/text.plymouth
+  printf "\nInstalled R36S fixes. ROM library remains on /$ROM_ROOT; rollback is saved under $BACKUP_BASE.\n" | tee -a "$LOG_FILE"
   sudo systemctl reboot
   exit 187
 fi

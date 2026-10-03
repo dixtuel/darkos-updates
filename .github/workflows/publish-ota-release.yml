@@ -21,7 +21,7 @@ jobs:
           set -euo pipefail
           tag="${GITHUB_REF_NAME}"
           date="${tag#ota-}"
-          [[ "$date" =~ ^[0-9]{8}$ ]]
+          [[ "$date" =~ ^[0-9]{8}(-r[1-9][0-9]*)?$ ]]
           git fetch origin main
           git merge-base --is-ancestor "$GITHUB_SHA" origin/main
           archive="$date/darkosupdate${date}.zip"

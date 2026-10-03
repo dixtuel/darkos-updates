@@ -9,19 +9,23 @@ firmware.
 ## Current contents
 
 The repository mirrors the full upstream `southoz/darkos-updates` history
-through `01302026` (latest upstream commit: 2026-03-14) and adds the documented
-R36-specific `10032026` package. Existing upstream payloads remain unchanged.
+through `01302026` (latest upstream commit: 2026-03-14) and adds documented
+R36-specific packages `10032026` and `10032026-r1`. Existing upstream payloads remain unchanged.
 The new package is assembled from RK3326-selected artifacts in vanilla
 06072026, 07262026, and 08272026 releases; it does not install a vanilla image
 or rewrite R36 ROM-card configuration. See
 [`10032026/README.md`](10032026/README.md) for its exact contents, device
-checks, limits, and rollback location.
+checks, limits, and rollback location. The follow-up `10032026-r1` carries
+R36-side auto-suspend, backup/restore, Daphne, Atari, and dual-card Singe/ZLua
+changes. See [`10032026-r1/README.md`](10032026-r1/README.md) for its exact
+payload, ROM-path guards, checksum, and rollback procedure.
 
 The upstream update repository has no GitHub Actions workflows or GitHub
 Releases. This fork validates shell/archive structure on pushes and pull
-requests. Pushing a tag named `ota-<MMDDYYYY>` for a commit on `main` publishes
-a GitHub Release with the dated ZIP and checksum file; the same ZIP is already
-available to devices from the dated directory on raw `main`.
+requests. Pushing a tag named `ota-<MMDDYYYY>` or `ota-<MMDDYYYY>-rN` for a
+commit on `main` publishes a GitHub Release with the matching ZIP and checksum
+file; the same ZIP is already available to devices from its versioned directory
+on raw `main`.
 
 ## Update flow
 
@@ -32,6 +36,7 @@ available to devices from the dated directory on raw `main`.
 3. A successful update records its marker and updates the displayed version.
    The R36/R36S `10032026` update is started from the device's Update menu; it
    does not ask the user to type on a keyboard and reboots after installation.
+   The `10032026-r1` follow-up requires the base OTA marker/version `10032026`.
 
 Because the updater writes into the live root filesystem, update payloads are
 release artifacts, not ordinary application data. Review every ZIP entry and
