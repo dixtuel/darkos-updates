@@ -10,7 +10,8 @@ firmware.
 
 The repository mirrors the full upstream `southoz/darkos-updates` history
 through `01302026` (latest upstream commit: 2026-03-14) and adds documented
-R36-specific packages `10032026`, `10032026-r1`, and `10032026-r2`. Existing upstream payloads remain unchanged.
+R36-specific packages `10032026`, `10032026-r1`, `10032026-r2`, and staged
+`10032026-r3`. Existing upstream payloads remain unchanged.
 The new package is assembled from RK3326-selected artifacts in vanilla
 06072026, 07262026, and 08272026 releases; it does not install a vanilla image
 or rewrite R36 ROM-card configuration. See
@@ -27,6 +28,10 @@ BaRT labels/handler paths while checking that every ROM path and both SD
 switching scripts remain unchanged.
 See [`10032026-r2/README.md`](10032026-r2/README.md) for the binary/source
 provenance, device checks, limitations, and rollback location.
+The `10032026-r3` runtime follow-up applies only after R2 is complete. Its exact
+package hash, target scope and device validation are documented in
+[`10032026-r3/README.md`](10032026-r3/README.md). The R3 follow-up is staged in
+the working tree and has not been committed or pushed.
 
 The upstream update repository has no GitHub Actions workflows or GitHub
 Releases. This fork validates shell/archive structure on pushes and pull
@@ -46,6 +51,7 @@ on raw `main`.
    does not ask the user to type on a keyboard and reboots after installation.
    The `10032026-r1` follow-up requires the base OTA marker/version `10032026`.
    The `10032026-r2` follow-up applies after `10032026` and/or `10032026-r1`.
+   The `10032026-r3` follow-up requires completed `10032026-r2` on RK3326.
 
 Because the updater writes into the live root filesystem, update payloads are
 release artifacts, not ordinary application data. Review every ZIP entry and

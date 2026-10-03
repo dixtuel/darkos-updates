@@ -5,7 +5,7 @@ UPDATE_DATE="10032026"
 LOG_FILE="/home/ark/update$UPDATE_DATE.log"
 BASE_UPDATE_DONE="/home/ark/.config/.update$UPDATE_DATE"
 # The terminal guard must name the newest wired step, not the prior patch.
-PATCH_UPDATE_DONE="/home/ark/.config/.update10032026-r2"
+PATCH_UPDATE_DONE="/home/ark/.config/.update10032026-r3"
 if [ -f "$BASE_UPDATE_DONE" ]; then
 	UPDATE_DONE="$PATCH_UPDATE_DONE"
 else
@@ -877,7 +877,63 @@ if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
   }
   chmod 755 "$INSTALLER"
   sudo bash "$INSTALLER" "$UPDATE_ZIP" "$ROM_ROOT" "$BACKUP_BASE" "$UPDATE_SHA256"
-  exit $?
+  INSTALL_STATUS=$?
+  if [ "$INSTALL_STATUS" -eq 0 ]; then exit 187; fi
+  exit "$INSTALL_STATUS"
+fi
+
+PATCH_VERSION="10032026-r3"
+if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
+  BASE_VERSION="$(cat /home/ark/.config/.VERSION 2>/dev/null)"
+  if [[ "$(tr -d '\0' < /proc/device-tree/compatible 2>/dev/null)" != *"rk3326"* ]] || \
+     [[ "$BASE_VERSION" != "10032026-r2" ]] || \
+     [ ! -f "/home/ark/.config/.update10032026-r2" ]; then
+    printf "\nThis update requires completed dArkOSRE-R36 RK3326 OTA 10032026-r2; no files were installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  HAS_ROM2_PATH=0
+  HAS_ROM1_PATH=0
+  grep -Fq '<path>/roms2/' /etc/emulationstation/es_systems.cfg && HAS_ROM2_PATH=1 || true
+  grep -Fq '<path>/roms/' /etc/emulationstation/es_systems.cfg && HAS_ROM1_PATH=1 || true
+  if [[ "$HAS_ROM2_PATH" -eq 1 && "$HAS_ROM1_PATH" -eq 0 ]] && mountpoint -q /roms2; then
+    ROM_ROOT="roms2"
+  elif [[ "$HAS_ROM1_PATH" -eq 1 && "$HAS_ROM2_PATH" -eq 0 ]] && mountpoint -q /roms; then
+    ROM_ROOT="roms"
+  else
+    printf "\nNo mounted ROM card was detected; update stopped.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+
+  UPDATE_ZIP="/dev/shm/darkosupdate$PATCH_VERSION.zip"
+  INSTALLER="/tmp/install-$PATCH_VERSION.sh"
+  UPDATE_URL="$LOCATION/$PATCH_VERSION/darkosupdate$PATCH_VERSION.zip"
+  UPDATE_SHA256="f6123c9e3a7e95d58b7ca95c7fd653134fac1f5c8236427f2da6637de7755b87"
+  wget -t 3 -T 120 --no-check-certificate "$UPDATE_URL" -O "$UPDATE_ZIP" -a "$LOG_FILE" || {
+    rm -f "$UPDATE_ZIP"
+    printf "\nCould not download the update package.\n" | tee -a "$LOG_FILE"
+    exit 1
+  }
+  echo "$UPDATE_SHA256  $UPDATE_ZIP" | sha256sum -c - || {
+    rm -f "$UPDATE_ZIP"
+    printf "\nUpdate checksum failed; no files were installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  }
+  unzip -t "$UPDATE_ZIP" >/dev/null || {
+    rm -f "$UPDATE_ZIP"
+    printf "\nUpdate archive validation failed; no files were installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  }
+  unzip -p "$UPDATE_ZIP" install-runtime.sh > "$INSTALLER" || {
+    rm -f "$UPDATE_ZIP" "$INSTALLER"
+    printf "\nThe package is missing its runtime installer.\n" | tee -a "$LOG_FILE"
+    exit 1
+  }
+  chmod 755 "$INSTALLER"
+  sudo bash "$INSTALLER" "$UPDATE_ZIP" "$UPDATE_SHA256"
+  INSTALL_STATUS=$?
+  rm -f "$UPDATE_ZIP" "$INSTALLER"
+  if [ "$INSTALL_STATUS" -eq 0 ]; then exit 187; fi
+  exit "$INSTALL_STATUS"
 fi
 
 # Follow-up R36S-only adaptation release. Keep the already-published base OTA
