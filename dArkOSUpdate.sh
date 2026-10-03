@@ -505,23 +505,37 @@ if [ ! -f "/home/ark/.config/.update10032026" ]; then
     "usr/local/bin/retrorun"
     "usr/local/bin/retrorun32"
   )
+  BACKUP_ARCHIVE="$BACKUP_BASE/rollback.tar"
   if [ ! -f "$BACKUP_BASE/backup-ready" ]; then
     sudo rm -rf "$BACKUP_BASE"
     sudo mkdir -p "$BACKUP_BASE" || exit 1
     printf '%s\n' "${UPDATE_PATHS[@]}" | sudo tee "$BACKUP_BASE/managed-paths.txt" >/dev/null
     sudo truncate -s 0 "$BACKUP_BASE/existed-paths.txt"
+    EXISTED_PATHS=()
     for item in "${UPDATE_PATHS[@]}"; do
       if [ -e "/$item" ]; then
-        sudo mkdir -p "$BACKUP_BASE/$(dirname "$item")"
-        sudo cp -a "/$item" "$BACKUP_BASE/$item" || {
-          rm -f "$UPDATE_ZIP"
-          rm -rf "$UPDATE_STAGE"
-          printf "\nBackup failed at /$item; update stopped before installation.\n" | tee -a "$LOG_FILE"
-          exit 1
-        }
+        EXISTED_PATHS+=("$item")
         printf '%s\n' "$item" | sudo tee -a "$BACKUP_BASE/existed-paths.txt" >/dev/null
       fi
     done
+    if ((${#EXISTED_PATHS[@]})); then
+      sudo tar --numeric-owner -cpf "$BACKUP_ARCHIVE.tmp" -C / -- "${EXISTED_PATHS[@]}" || {
+        rm -f "$UPDATE_ZIP"
+        rm -rf "$UPDATE_STAGE"
+        printf "\nRollback archive creation failed; update stopped before installation.\n" | tee -a "$LOG_FILE"
+        exit 1
+      }
+    else
+      sudo tar -cpf "$BACKUP_ARCHIVE.tmp" --files-from=/dev/null || exit 1
+    fi
+    if ! sudo tar -tf "$BACKUP_ARCHIVE.tmp" >/dev/null; then
+      rm -f "$UPDATE_ZIP"
+      rm -rf "$UPDATE_STAGE"
+      printf "\nRollback archive validation failed; update stopped before installation.\n" | tee -a "$LOG_FILE"
+      exit 1
+    fi
+    sudo mv "$BACKUP_ARCHIVE.tmp" "$BACKUP_ARCHIVE" || exit 1
+    sudo sha256sum "$BACKUP_ARCHIVE" | sudo tee "$BACKUP_BASE/rollback.sha256" >/dev/null
     sudo touch "$BACKUP_BASE/backup-ready"
   else
     if ! cmp -s <(printf '%s\n' "${UPDATE_PATHS[@]}") "$BACKUP_BASE/managed-paths.txt"; then
@@ -530,26 +544,23 @@ if [ ! -f "/home/ark/.config/.update10032026" ]; then
       rm -rf "$UPDATE_STAGE"
       exit 1
     fi
-    while IFS= read -r item; do
-      if [ ! -e "$BACKUP_BASE/$item" ]; then
-        printf "\nRollback snapshot is incomplete at $item; update stopped.\n" | tee -a "$LOG_FILE"
-        rm -f "$UPDATE_ZIP"
-        rm -rf "$UPDATE_STAGE"
-        exit 1
-      fi
-    done < "$BACKUP_BASE/existed-paths.txt"
+    EXPECTED_BACKUP_SHA256="$(awk 'NR == 1 {print $1}' "$BACKUP_BASE/rollback.sha256" 2>/dev/null)"
+    ACTUAL_BACKUP_SHA256="$(sha256sum "$BACKUP_ARCHIVE" 2>/dev/null | awk '{print $1}')"
+    if [ -z "$EXPECTED_BACKUP_SHA256" ] || [ "$EXPECTED_BACKUP_SHA256" != "$ACTUAL_BACKUP_SHA256" ] || ! sudo tar -tf "$BACKUP_ARCHIVE" >/dev/null; then
+      printf "\nRollback archive is missing or damaged; update stopped.\n" | tee -a "$LOG_FILE"
+      rm -f "$UPDATE_ZIP"
+      rm -rf "$UPDATE_STAGE"
+      exit 1
+    fi
   fi
 
   rollback_update() {
     printf "\nInstallation failed; restoring the previous files from $BACKUP_BASE\n" | tee -a "$LOG_FILE"
     ROLLBACK_FAILED=0
     for item in "${UPDATE_PATHS[@]}"; do
-      sudo rm -rf "/$item"
-      if grep -Fxq "$item" "$BACKUP_BASE/existed-paths.txt"; then
-        sudo mkdir -p "/$(dirname "$item")"
-        sudo cp -a "$BACKUP_BASE/$item" "/$(dirname "$item")/" || ROLLBACK_FAILED=1
-      fi
+      sudo rm -rf "/$item" || ROLLBACK_FAILED=1
     done
+    sudo tar --numeric-owner -xpf "$BACKUP_ARCHIVE" -C / || ROLLBACK_FAILED=1
     return "$ROLLBACK_FAILED"
   }
 
