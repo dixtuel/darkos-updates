@@ -1,0 +1,23 @@
+[
+  {
+    "installed_path": "opt/ppsspp/backupforromsfolder/ppsspp/PSP/SYSTEM/controls.ini",
+    "sha256": "83dcbc75635a88dba815fc423fc87b2404a70d339e49e442e802af92a481c537",
+    "mode": "0o755",
+    "upstream_commit": "b19a081539e728c1f5460a158f4243a1728435c0",
+    "status": "source/draft; device validation pending"
+  },
+  {
+    "installed_path": "opt/ppsspp/backupforromsfolder/ppsspp/PSP/SYSTEM/ppsspp.ini",
+    "sha256": "078caec2702eab56a4f657fea8fa6f5954dc29249195a77b4b7b3091744ee777",
+    "mode": "0o755",
+    "upstream_commit": "b19a081539e728c1f5460a158f4243a1728435c0",
+    "status": "source/draft; device validation pending"
+  },
+  {
+    "installed_path": "etc/systemd/system/emulationstation.service.d/20-r36-nice-limit.conf",
+    "sha256": "ed4bf4264b6e298454688d84fa253da69f83b7cdc661a46f1de8895a38566bbc",
+    "mode": "0o644",
+    "upstream_artifact": "vanilla 08272026 ZIP etc/systemd/system/emulationstation.service",
+    "status": "source/draft; effective-unit and physical validation pending"
+  }
+]
