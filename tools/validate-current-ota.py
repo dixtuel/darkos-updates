@@ -44,10 +44,12 @@ def validate(archive_path):
                 target = data.decode('utf-8')
                 if not target or '\\' in target or '..' in target.split('/'):
                     raise ValueError(f'unsafe symlink: {name!r}')
-                if target.startswith('/') and (canonical, target) != (
-                    'etc/systemd/system/multi-user.target.wants/r36-disable-mali-opencl-aliases.service',
-                    '/etc/systemd/system/r36-disable-mali-opencl-aliases.service',
-                ):
+                if target.startswith('/') and (canonical, target) not in {
+                    ('etc/systemd/system/multi-user.target.wants/r36-disable-mali-opencl-aliases.service',
+                     '/etc/systemd/system/r36-disable-mali-opencl-aliases.service'),
+                    ('etc/systemd/system/multi-user.target.wants/wifi_importer.service',
+                     '/etc/systemd/system/wifi_importer.service'),
+                }:
                     raise ValueError(f'unexpected absolute symlink: {name!r}')
                 continue
             if name.endswith('.sh'):
