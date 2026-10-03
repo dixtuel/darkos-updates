@@ -19,7 +19,11 @@ ZIP SHA-256: `12987d5fcc7bd889b922f3e0083b2e454c002b0d7dce6a6c26f192b7ea9b429b`.
 
 ## Verification status
 
-The package must pass shell syntax checks, ZIP path/mode inspection, checksum verification, and local shell-path assertions before release. The live device uses `/roms2` and its theme symlink already resolves there. The device currently has no Singe game payload under `/roms2/alg`, so actual Singe/ZLua gameplay cannot be claimed from a launcher-only smoke check. No Debian upgrade or system Mali/OpenCL link replacement is included.
+The updater passed shell syntax, ZIP path/mode inspection, SHA-256 verification, Atari patch idempotence/path-preservation checks, and the public GitHub Actions archive/shell validation. It installed from the device's `/opt/system/Update.sh` flow and rebooted to active EmulationStation. Post-reboot checks confirmed `.VERSION=10032026-r1`, both ROM cards mounted, all game `<path>` entries still on `/roms2`, the Atari XML parsed, the themes symlink resolved to `/roms2/themes`, switch-script rewrites were absent, and the rollback archive checksum passed. All five installed scripts are root-owned and executable.
+
+No Singe game payload exists under `/roms2/alg`, so Singe/ZLua gameplay was not tested. Daphne gameplay and interactive backup/restore were not tested; the latter were not run to avoid replacing the user's stored backup or settings. Auto-suspend's Python `evdev` import passed, but the user has no `.TIMEOUT` setting so the daemon was not enabled. No Debian upgrade or system Mali/OpenCL link replacement is included. Boot logged `systemd-remount-fs.service` failure (`mount: /: mount point not mounted or bad option`); this OTA does not alter fstab, root mount, kernel, or boot files and this needs separate investigation.
+
+During this OTA the previous updater's hard-coded brightness value 255 exceeded this device's maximum 160 and printed an invalid-argument error; installation still completed. The current raw-main updater now reads `max_brightness` before changing brightness.
 
 Rollback base on a two-card system: `/roms2/backup/darkosre-update/10032026-r1`. From a root shell, restore with:
 
