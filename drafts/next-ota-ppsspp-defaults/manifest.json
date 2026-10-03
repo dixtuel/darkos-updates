@@ -1,23 +1,120 @@
 [
   {
-    "installed_path": "opt/ppsspp/backupforromsfolder/ppsspp/PSP/SYSTEM/controls.ini",
-    "sha256": "83dcbc75635a88dba815fc423fc87b2404a70d339e49e442e802af92a481c537",
+    "installed_path": "usr/local/bin/ppsspp.sh",
+    "kind": "file",
+    "sha256": "a8f43ec9776b9cc2a8f2cc0e4b4cd414e40ce1ac39faa538a620a2ad56342249",
     "mode": "0o755",
-    "upstream_commit": "b19a081539e728c1f5460a158f4243a1728435c0",
-    "status": "source/draft; device validation pending"
+    "status": "source/draft; device startup/game validation pending",
+    "condition": null
   },
   {
-    "installed_path": "opt/ppsspp/backupforromsfolder/ppsspp/PSP/SYSTEM/ppsspp.ini",
-    "sha256": "078caec2702eab56a4f657fea8fa6f5954dc29249195a77b4b7b3091744ee777",
+    "installed_path": "usr/local/bin/importwifi.sh",
+    "kind": "file",
+    "sha256": "e2dfeee2ac467a9f1385f87351e6af7ce2285360d4b6bd040b9113fa72054667",
     "mode": "0o755",
-    "upstream_commit": "b19a081539e728c1f5460a158f4243a1728435c0",
-    "status": "source/draft; device validation pending"
+    "status": "source/draft; device startup/game validation pending",
+    "condition": null
+  },
+  {
+    "installed_path": "usr/local/bin/zram-autostart.sh",
+    "kind": "file",
+    "sha256": "93a21e451328f1dfd99f8338762a877e176de0d7525074fe484b7f07754e8ea8",
+    "mode": "0o755",
+    "status": "source/draft; device startup/game validation pending",
+    "condition": null
+  },
+  {
+    "installed_path": "opt/system/Advanced/Restore Default PPSSPP Controls.sh",
+    "kind": "file",
+    "sha256": "e8aea06956a61256f8efb1cd2db61c5bb60004424cfafd3c651078faa04487d6",
+    "mode": "0o755",
+    "status": "source/draft; device startup/game validation pending",
+    "condition": null
+  },
+  {
+    "installed_path": "opt/system/ZRam Manager.sh",
+    "kind": "file",
+    "sha256": "3e10b3d41a80c9b8223f3adda507fd37b3c2bc9c134da5c4fc58defb458b5d18",
+    "mode": "0o755",
+    "status": "source/draft; device startup/game validation pending",
+    "condition": null
+  },
+  {
+    "installed_path": "etc/systemd/system/wifi_importer.service",
+    "kind": "file",
+    "sha256": "726e2b2356278fd46035091772f28703ee9e5d6f2bf04bbff7e3ec9d512387fd",
+    "mode": "0o644",
+    "status": "source/draft; device startup/game validation pending",
+    "condition": null
+  },
+  {
+    "installed_path": "etc/systemd/system/multi-user.target.wants/wifi_importer.service",
+    "kind": "symlink",
+    "target": "/etc/systemd/system/wifi_importer.service",
+    "status": "draft; installer must preserve existing enabling policy"
   },
   {
     "installed_path": "etc/systemd/system/emulationstation.service.d/20-r36-nice-limit.conf",
+    "kind": "file",
     "sha256": "ed4bf4264b6e298454688d84fa253da69f83b7cdc661a46f1de8895a38566bbc",
     "mode": "0o644",
-    "upstream_artifact": "vanilla 08272026 ZIP etc/systemd/system/emulationstation.service",
-    "status": "source/draft; effective-unit and physical validation pending"
+    "status": "source/draft; device startup/game validation pending",
+    "condition": null
+  },
+  {
+    "installed_path": "etc/systemd/system/zram-swap.service",
+    "kind": "file",
+    "sha256": "6429ec1445eb16e865c633112579fa90ca7c634fff0cc4cb5e08ed481be7af3e",
+    "mode": "0o644",
+    "status": "source/draft; device startup/game validation pending",
+    "condition": "replace only when existing base unit present; preserve enabled state"
+  },
+  {
+    "installed_path": "opt/ppsspp/backupforromsfolder/ppsspp/PSP/SYSTEM/controls.ini",
+    "kind": "file",
+    "sha256": "83dcbc75635a88dba815fc423fc87b2404a70d339e49e442e802af92a481c537",
+    "mode": "0o755",
+    "status": "source/draft; device startup/game validation pending",
+    "condition": null
+  },
+  {
+    "installed_path": "opt/ppsspp/backupforromsfolder/ppsspp/PSP/SYSTEM/ppsspp.ini",
+    "kind": "file",
+    "sha256": "56da9d455359d6968fe95e9f0be3c3628772a002999b76eb8f10c398d317e490",
+    "mode": "0o755",
+    "status": "source/draft; device startup/game validation pending",
+    "condition": null
+  },
+  {
+    "installed_path": "opt/ppsspp/backupforromsfolder/ppsspp/PSP/SYSTEM/ppsspp.ini.sdl",
+    "kind": "file",
+    "sha256": "56da9d455359d6968fe95e9f0be3c3628772a002999b76eb8f10c398d317e490",
+    "mode": "0o755",
+    "status": "source/draft; device startup/game validation pending",
+    "condition": null
+  },
+  {
+    "installed_path": "opt/ppsspp-2021/backupforromsfolder/ppsspp/PSP/SYSTEM/controls.ini",
+    "kind": "file",
+    "sha256": "83dcbc75635a88dba815fc423fc87b2404a70d339e49e442e802af92a481c537",
+    "mode": "0o755",
+    "status": "source/draft; device startup/game validation pending",
+    "condition": null
+  },
+  {
+    "installed_path": "opt/ppsspp-2021/backupforromsfolder/ppsspp/PSP/SYSTEM/ppsspp.ini",
+    "kind": "file",
+    "sha256": "078caec2702eab56a4f657fea8fa6f5954dc29249195a77b4b7b3091744ee777",
+    "mode": "0o755",
+    "status": "source/draft; device startup/game validation pending",
+    "condition": null
+  },
+  {
+    "installed_path": "opt/ppsspp-2021/backupforromsfolder/ppsspp/PSP/SYSTEM/ppsspp.ini.sdl",
+    "kind": "file",
+    "sha256": "078caec2702eab56a4f657fea8fa6f5954dc29249195a77b4b7b3091744ee777",
+    "mode": "0o755",
+    "status": "source/draft; device startup/game validation pending",
+    "condition": null
   }
 ]

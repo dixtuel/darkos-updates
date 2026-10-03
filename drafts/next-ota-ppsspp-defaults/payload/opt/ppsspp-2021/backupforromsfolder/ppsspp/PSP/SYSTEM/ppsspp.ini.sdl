@@ -136,6 +136,7 @@ AutoFrameSkip = False
 FrameRate = 0
 FrameRate2 = 0
 FrameSkipUnthrottle = True
+ForceMaxEmulatedFPS = 30
 AnisotropyLevel = 0
 VertexDecCache = True
 TextureBackoffCache = False

@@ -15,3 +15,18 @@ This directory is not a dated OTA, install script or release. `dArkOSUpdate.sh` 
 ## Additional reviewed ES service candidate
 
 The payload also stages `etc/systemd/system/emulationstation.service.d/20-r36-nice-limit.conf` with `LimitNICE=-20`, taken from vanilla 08272026 OTA rather than its divergent source unit. Preserve the R36 base service; do not assume any FPS benefit. Future installer must back up the new/existing drop-in, set root:root 0644, reload units and validate the effective service/launcher priorities after restart. Device test is pending; raw updater does not consume this draft.
+
+
+## Superseding device-backed expansion
+
+After actual R36 readback, this draft now includes 15 source targets: PPSSPP modern/2021 default seeds, dynamic two-card launcher and paired reset tool, Wi-Fi importer plus oneshot service/link, ES nice-limit drop-in, ZRam Manager generator and existing-service boot-order repair/helper. It remains a non-installable draft; no dated ZIP or raw feed references it.
+
+The launcher reads `.ini.sdl`: modern `.ini` and `.ini.sdl` both enable IgnoreBadMemAccess and drop the old forced 30 FPS cap, while 2021 seed retains it. Existing profiles are untouched until the user launches/resets; initial 2021 profile migration copies existing settings and saves into a separate tree without deleting the old profile. After separation, profiles and subsequent saves can diverge; migration is initial-only. No real home config directory is replaced. The existing SD switcher's literal substitutions cannot rewrite the new dynamic launcher.
+
+Reset retains A/B-button confirmation and original two-card scope, also covering the new 2021 profile; an unmounted SD2 is skipped. It deletes only configuration INIs/controls after the user's A-button action, not savedata.
+
+R36 r8188eu USB Wi-Fi is WEXT: upstream-only iw detection fails on the real adapter. The importer adds the tested wireless-sysfs + ip-link fallback. RequiresMountsFor=/opt/system/Tools uses the configured Tools mount regardless of card; no credentials are embedded. Do not run a live credential import test over the sole SSH connection.
+
+The old zram service is enabled but inactive with no active swap. Its default systemd dependencies create a swap/sysinit/local-fs ordering cycle and its ExecStop names nonexistent /usr/bin/swapoff. The reviewed full R36 unit removes that cycle using DefaultDependencies=no, modules-load ordering and explicit shutdown ordering; ExecStop uses existing /usr/sbin/swapoff. An attempted After= reset in a drop-in was rejected after testing because dependency lists cannot be cleared that way; no failed drop-in is shipped. Corrected temporary units verified on device with no cycle/error; no actual service was installed or started. Future OTA must replace zram unit only if an existing generated unit is present, preserve enabled state and /etc/zram.conf, and review existing customizations before replacement. Do not enable zram for users who disabled it.
+
+Before releasing: active-card rollback for all replaced/new paths and link state, metadata, no ROM-profile replacement, effective unit/reboot/menu checks, representative PSP modes/controller/save tests, importer no-keyfile startup test and zram swap observation. This draft is not cleared for public installation.
