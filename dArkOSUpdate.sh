@@ -432,7 +432,7 @@ if [ ! -f "/home/ark/.config/.update10032026" ]; then
   UPDATE_ZIP="/dev/shm/darkosupdate10032026.zip"
   UPDATE_STAGE="/tmp/darkos-update10032026.$$"
   UPDATE_URL="$LOCATION/10032026/darkosupdate10032026.zip"
-  UPDATE_SHA256="59df7021e908336fa8c7aee78c91bbf6beb8debdfada8af3e22588ff4324adba"
+  UPDATE_SHA256="2d57e123f0172783b1e049701389180ba791d3ce0b5aeaa234574491d39ec3f7"
 
   if mountpoint -q /roms2; then
     ROM_ROOT="roms2"

@@ -68,6 +68,24 @@ def validate(archive_path):
                 elif name.startswith('usr/lib/arm-linux-gnueabihf/'):
                     if (data[4], machine) != (1, 40):
                         raise ValueError(f'wrong ARMhf ABI: {name!r}')
+        # Replacing the whole modern PPSSPP assets directory must retain its
+        # controller database and UI assets, not merely a loadable executable.
+        if 'opt/ppsspp/PPSSPPSDL' in names:
+            required_assets = {
+                'opt/ppsspp/assets/gamecontrollerdb.txt',
+                'opt/ppsspp/assets/compat.ini',
+                'opt/ppsspp/assets/lang/en_US.ini',
+                'opt/ppsspp/assets/font_atlas.meta',
+                'opt/ppsspp/assets/font_atlas.zim',
+                'opt/ppsspp/assets/ui_atlas.meta',
+                'opt/ppsspp/assets/ui_atlas.zim',
+            }
+            missing = required_assets - names
+            if missing:
+                raise ValueError(f'PPSSPP required assets missing: {sorted(missing)}')
+            for required in required_assets:
+                if required in symlinks or not archive.read(required):
+                    raise ValueError(f'PPSSPP required asset is linked/empty: {required}')
         for name in names:
             parts = name.split('/')
             if any('/'.join(parts[:i]) in symlinks for i in range(1, len(parts))):
