@@ -2,7 +2,7 @@
   {
     "installed_path": "usr/local/bin/ppsspp.sh",
     "kind": "file",
-    "sha256": "a8f43ec9776b9cc2a8f2cc0e4b4cd414e40ce1ac39faa538a620a2ad56342249",
+    "sha256": "9cc6ab8a1c82154950d52f61f3a223cfc5b66d8b9ec373ea1b2e3637ab5d89e8",
     "mode": "0o755",
     "status": "source/draft; device startup/game validation pending",
     "condition": null
@@ -67,7 +67,10 @@
     "sha256": "6429ec1445eb16e865c633112579fa90ca7c634fff0cc4cb5e08ed481be7af3e",
     "mode": "0o644",
     "status": "source/draft; device startup/game validation pending",
-    "condition": "replace only when existing base unit present; preserve enabled state"
+    "condition": "replace only an existing recognized generated R36 unit; preserve enabled state; unknown/custom unit requires separate review",
+    "accepted_base_sha256": [
+      "237d0729fbc1c8ee2a7dfd50740e304e020a8d1d33e21bd2d65e5b2ef3a724d3"
+    ]
   },
   {
     "installed_path": "opt/ppsspp/backupforromsfolder/ppsspp/PSP/SYSTEM/controls.ini",

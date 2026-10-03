@@ -1,10 +1,15 @@
 #!/bin/bash
 
 # ROM card follows the selected game, independent of the SD-switch script.
-if [[ "$2" =~ ^/(roms2?)/psp/ ]]; then
+if [[ "$2" =~ ^/(roms2?)/(psp|pspminis)/ ]]; then
   directory="${BASH_REMATCH[1]}"
 else
-  printf 'PPSSPP: game must be inside the selected ROM card PSP directory.\n' >&2
+  printf 'PPSSPP: game must be inside the selected ROM card PSP or PSP Minis directory.\n' >&2
+  exit 1
+fi
+# Do not create a second-card profile on the system disk when SD2 is absent.
+if [[ "$directory" == "roms2" ]] && ! mountpoint -q /roms2; then
+  printf 'PPSSPP: second ROM card is not mounted.\n' >&2
   exit 1
 fi
 psp_root="/$directory/psp"
