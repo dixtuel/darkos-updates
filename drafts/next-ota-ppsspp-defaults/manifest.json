@@ -143,5 +143,13 @@
     "mode": "0o755",
     "status": "source/draft; isolated fixtures passed; physical launch validation pending",
     "condition": null
+  },
+  {
+    "installed_path": "opt/ppsspp/assets/gamecontrollerdb.txt",
+    "kind": "file",
+    "sha256": "741a2b21cc85c12c58f1edbe325d610b09fb81d872b9fb3fbb84c4abf86159c5",
+    "mode": "0o644",
+    "status": "source/draft; native controller mapping readback verified; gameplay and built-in GUI reset parity pending",
+    "condition": "install only when absent or when the installed file matches the original R36 DB SHA256 45ce6ad8b8f932ac1cffebd5bb0b23a67ff4813bf9169ec72ba20aef7b278e5d or this target SHA256; refuse customized/unknown DB"
   }
 ]
