@@ -594,6 +594,6 @@ if [ ! -f "/home/ark/.config/.update10032026" ]; then
   echo "10032026" > /home/ark/.config/.VERSION
   sudo sed -i "/title\=/c\title\=dArkOSRE (10032026)" /usr/share/plymouth/themes/text.plymouth
   printf "\nInstalled RK3326 update. ROM library remains on /$ROM_ROOT; rollback files are in $BACKUP_BASE.\n" | tee -a "$LOG_FILE"
-  sudo reboot
+  sudo systemctl reboot
   exit 187
 fi
