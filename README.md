@@ -8,18 +8,20 @@ firmware.
 
 ## Current contents
 
-The repository currently mirrors the upstream `southoz/darkos-updates` history
-through `01302026` (latest upstream commit: 2026-03-14). The dated payloads are
-stored under matching directories, for example
-`01302026/darkosupdate01302026.zip`. There are no GitHub Actions workflows or
-GitHub Releases in the upstream update repository; its updater downloads the
-versioned ZIP files directly from the repository's raw `main` branch.
+The repository mirrors the full upstream `southoz/darkos-updates` history
+through `01302026` (latest upstream commit: 2026-03-14) and adds the documented
+R36-specific `10032026` package. Existing upstream payloads remain unchanged.
+The new package is assembled from RK3326-selected artifacts in vanilla
+06072026, 07262026, and 08272026 releases; it does not install a vanilla image
+or rewrite R36 ROM-card configuration. See
+[`10032026/README.md`](10032026/README.md) for its exact contents, device
+checks, limits, and rollback location.
 
-These existing ZIPs are the upstream dArkOS update payloads. They have not been
-repacked or certified as a new dArkOSRE-R36 update. Do not add a payload here
-until its target devices, pre-update state, file list, rollback plan, and device
-testing are documented. In particular, a vanilla dArkOS package must not be
-assumed safe for every dArkOSRE-R36 installation.
+The upstream update repository has no GitHub Actions workflows or GitHub
+Releases. This fork validates shell/archive structure on pushes and pull
+requests. Pushing a tag named `ota-<MMDDYYYY>` for a commit on `main` publishes
+a GitHub Release with the dated ZIP and checksum file; the same ZIP is already
+available to devices from the dated directory on raw `main`.
 
 ## Update flow
 
@@ -58,4 +60,3 @@ backward-compatible migration is reviewed.
 The `upstream` Git remote should remain pointed at `southoz/darkos-updates` so
 future changes can be compared and intentionally integrated. The `origin`
 remote is this maintained fork.
-

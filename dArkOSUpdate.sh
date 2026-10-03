@@ -1,7 +1,7 @@
 #!/bin/bash
 
 clear
-UPDATE_DATE="01302026"
+UPDATE_DATE="10032026"
 LOG_FILE="/home/ark/update$UPDATE_DATE.log"
 UPDATE_DONE="/home/ark/.config/.update$UPDATE_DATE"
 
@@ -417,4 +417,185 @@ if [ ! -f "/home/ark/.config/.update01302026" ]; then
 	sudo reboot
 	exit 187
 
+fi
+
+# R36/R36S RK3326 focused update. This payload deliberately contains no ROM
+# roots, EmulationStation system config, SD switching scripts, or game data.
+if [ ! -f "/home/ark/.config/.update10032026" ]; then
+
+  BASE_VERSION="$(cat /home/ark/.config/.VERSION 2>/dev/null)"
+  if [[ "$(tr -d '\0' < /proc/device-tree/compatible 2>/dev/null)" != *"rk3326"* ]] || [ "$BASE_VERSION" != "03082026" ]; then
+    printf "\nThis package requires dArkOSRE-R36 RK3326 firmware 03082026; no files were installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+
+  printf "\nInstall verified RK3326 emulator/core updates while preserving the selected ROM card...\n" | tee -a "$LOG_FILE"
+
+  UPDATE_ZIP="/dev/shm/darkosupdate10032026.zip"
+  UPDATE_STAGE="/tmp/darkos-update10032026.$$"
+  UPDATE_URL="$LOCATION/10032026/darkosupdate10032026.zip"
+  UPDATE_SHA256="59df7021e908336fa8c7aee78c91bbf6beb8debdfada8af3e22588ff4324adba"
+
+  if mountpoint -q /roms2; then
+    ROM_ROOT="roms2"
+    BACKUP_BASE="/roms2/backup/darkosre-update/10032026"
+  else
+    ROM_ROOT="roms"
+    BACKUP_BASE="/roms/backup/darkosre-update/10032026"
+  fi
+
+  PATH_GUARD_BEFORE="$(sha256sum /etc/emulationstation/es_systems.cfg \
+    "/usr/local/bin/Switch to SD2 for Roms.sh" \
+    "/usr/local/bin/Switch to Main SD for Roms.sh" 2>/dev/null)"
+  PATH_GUARD_COUNT="$(printf '%s\n' "$PATH_GUARD_BEFORE" | sed '/^$/d' | wc -l)"
+  if [ "$PATH_GUARD_COUNT" -ne 3 ] || ! grep -q "<path>/$ROM_ROOT/" /etc/emulationstation/es_systems.cfg; then
+    printf "\nROM card selection could not be verified; update stopped without installing files.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+
+  sudo mkdir -p "$BACKUP_BASE" || exit 1
+  mkdir -p "$UPDATE_STAGE" || exit 1
+  if ! sudo touch "$BACKUP_BASE/.write-test"; then
+    printf "\nCould not create a rollback backup on the active ROM card.\n" | tee -a "$LOG_FILE"
+    rm -rf "$UPDATE_STAGE"
+    exit 1
+  fi
+  sudo rm -f "$BACKUP_BASE/.write-test"
+
+  AVAILABLE_TMP_KB="$(df -Pk /tmp | awk 'NR==2 {print $4}')"
+  AVAILABLE_ROOT_KB="$(df -Pk /opt | awk 'NR==2 {print $4}')"
+  if [ "${AVAILABLE_TMP_KB:-0}" -lt 250000 ] || [ "${AVAILABLE_ROOT_KB:-0}" -lt 300000 ]; then
+    printf "\nNot enough temporary or system storage; update stopped before installation.\n" | tee -a "$LOG_FILE"
+    rm -rf "$UPDATE_STAGE"
+    exit 1
+  fi
+
+  wget -t 3 -T 120 --no-check-certificate "$UPDATE_URL" -O "$UPDATE_ZIP" -a "$LOG_FILE" || {
+    rm -f "$UPDATE_ZIP"
+    rm -rf "$UPDATE_STAGE"
+    printf "\nCould not download the update package.\n" | tee -a "$LOG_FILE"
+    exit 1
+  }
+  echo "$UPDATE_SHA256  $UPDATE_ZIP" | sha256sum -c - || {
+    rm -f "$UPDATE_ZIP"
+    rm -rf "$UPDATE_STAGE"
+    printf "\nUpdate archive checksum did not match; no files were installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  }
+  unzip -t "$UPDATE_ZIP" >/dev/null || {
+    rm -f "$UPDATE_ZIP"
+    rm -rf "$UPDATE_STAGE"
+    printf "\nUpdate archive validation failed; no files were installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  }
+  if unzip -Z1 "$UPDATE_ZIP" | grep -Eq '^(etc/emulationstation/es_systems.cfg|usr/local/bin/Switch to (SD2|Main SD) for Roms.sh|opt/system/Advanced/Switch to (SD2|Main SD) for Roms.sh|roms/|roms2/)'; then
+    rm -f "$UPDATE_ZIP"
+    rm -rf "$UPDATE_STAGE"
+    printf "\nUpdate archive contains a ROM-root or SD-switch path; installation refused.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  unzip -q -o "$UPDATE_ZIP" -d "$UPDATE_STAGE" || {
+    rm -f "$UPDATE_ZIP"
+    rm -rf "$UPDATE_STAGE"
+    printf "\nCould not stage update archive; no system files were installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  }
+
+  UPDATE_PATHS=(
+    "home/ark/.config/retroarch/cores/lowresnx_libretro.info"
+    "home/ark/.config/retroarch/cores/lowresnx_libretro.so"
+    "home/ark/.config/retroarch32/cores/parallel_n64_libretro.so"
+    "opt/hypseus-singe/fonts"
+    "opt/hypseus-singe/hypseus-singe"
+    "opt/hypseus-singe/pics"
+    "opt/ppsspp/PPSSPPSDL"
+    "opt/ppsspp/assets"
+    "opt/scummvm/scummvm"
+    "opt/scummvm/themes"
+    "opt/system/Update.sh"
+    "opt/xroar/xroar"
+    "usr/local/bin/retrorun"
+    "usr/local/bin/retrorun32"
+  )
+  if [ ! -f "$BACKUP_BASE/backup-ready" ]; then
+    sudo rm -rf "$BACKUP_BASE"
+    sudo mkdir -p "$BACKUP_BASE" || exit 1
+    printf '%s\n' "${UPDATE_PATHS[@]}" | sudo tee "$BACKUP_BASE/managed-paths.txt" >/dev/null
+    sudo truncate -s 0 "$BACKUP_BASE/existed-paths.txt"
+    for item in "${UPDATE_PATHS[@]}"; do
+      if [ -e "/$item" ]; then
+        sudo mkdir -p "$BACKUP_BASE/$(dirname "$item")"
+        sudo cp -a "/$item" "$BACKUP_BASE/$item" || {
+          rm -f "$UPDATE_ZIP"
+          rm -rf "$UPDATE_STAGE"
+          printf "\nBackup failed at /$item; update stopped before installation.\n" | tee -a "$LOG_FILE"
+          exit 1
+        }
+        printf '%s\n' "$item" | sudo tee -a "$BACKUP_BASE/existed-paths.txt" >/dev/null
+      fi
+    done
+    sudo touch "$BACKUP_BASE/backup-ready"
+  else
+    if ! cmp -s <(printf '%s\n' "${UPDATE_PATHS[@]}") "$BACKUP_BASE/managed-paths.txt"; then
+      printf "\nExisting rollback snapshot does not match this update; update stopped.\n" | tee -a "$LOG_FILE"
+      rm -f "$UPDATE_ZIP"
+      rm -rf "$UPDATE_STAGE"
+      exit 1
+    fi
+    while IFS= read -r item; do
+      if [ ! -e "$BACKUP_BASE/$item" ]; then
+        printf "\nRollback snapshot is incomplete at $item; update stopped.\n" | tee -a "$LOG_FILE"
+        rm -f "$UPDATE_ZIP"
+        rm -rf "$UPDATE_STAGE"
+        exit 1
+      fi
+    done < "$BACKUP_BASE/existed-paths.txt"
+  fi
+
+  rollback_update() {
+    printf "\nInstallation failed; restoring the previous files from $BACKUP_BASE\n" | tee -a "$LOG_FILE"
+    ROLLBACK_FAILED=0
+    for item in "${UPDATE_PATHS[@]}"; do
+      sudo rm -rf "/$item"
+      if grep -Fxq "$item" "$BACKUP_BASE/existed-paths.txt"; then
+        sudo mkdir -p "/$(dirname "$item")"
+        sudo cp -a "$BACKUP_BASE/$item" "/$(dirname "$item")/" || ROLLBACK_FAILED=1
+      fi
+    done
+    return "$ROLLBACK_FAILED"
+  }
+
+  for item in "${UPDATE_PATHS[@]}"; do
+    if [ -e "$UPDATE_STAGE/$item" ]; then
+      sudo mkdir -p "/$(dirname "$item")"
+      if [ -d "$UPDATE_STAGE/$item" ]; then
+        sudo rm -rf "/$item"
+        sudo cp -a "$UPDATE_STAGE/$item" "/$(dirname "$item")/" || { rollback_update; exit 1; }
+      else
+        sudo install -m "$(stat -c '%a' "$UPDATE_STAGE/$item")" "$UPDATE_STAGE/$item" "/$item.new" || { rollback_update; exit 1; }
+        sudo mv -f "/$item.new" "/$item" || { rollback_update; exit 1; }
+      fi
+    fi
+  done
+
+  PATH_GUARD_AFTER="$(sha256sum /etc/emulationstation/es_systems.cfg \
+    "/usr/local/bin/Switch to SD2 for Roms.sh" \
+    "/usr/local/bin/Switch to Main SD for Roms.sh" 2>/dev/null)"
+  if [ "$PATH_GUARD_BEFORE" != "$PATH_GUARD_AFTER" ] || ! grep -q "<path>/$ROM_ROOT/" /etc/emulationstation/es_systems.cfg; then
+    rollback_update
+    rm -f "$UPDATE_ZIP"
+    rm -rf "$UPDATE_STAGE"
+    printf "\nROM path configuration changed unexpectedly; previous files restored.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+
+  rm -f "$UPDATE_ZIP"
+  rm -rf "$UPDATE_STAGE"
+  touch "/home/ark/.config/.update10032026"
+  echo "10032026" > /home/ark/.config/.VERSION
+  sudo sed -i "/title\=/c\title\=dArkOSRE (10032026)" /usr/share/plymouth/themes/text.plymouth
+  printf "\nInstalled RK3326 update. ROM library remains on /$ROM_ROOT; rollback files are in $BACKUP_BASE.\n" | tee -a "$LOG_FILE"
+  sudo msgbox "Update complete. Your ROM card path was kept on /$ROM_ROOT. System will restart now."
+  sudo reboot
+  exit 187
 fi
