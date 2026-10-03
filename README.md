@@ -30,6 +30,8 @@ available to devices from the dated directory on raw `main`.
 2. `dArkOSUpdate.sh` selects dated ZIP files using per-update marker files in
    `/home/ark/.config/` and extracts the selected payloads to `/`.
 3. A successful update records its marker and updates the displayed version.
+   The R36/R36S `10032026` update is started from the device's Update menu; it
+   does not ask the user to type on a keyboard and reboots after installation.
 
 Because the updater writes into the live root filesystem, update payloads are
 release artifacts, not ordinary application data. Review every ZIP entry and

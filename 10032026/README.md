@@ -19,6 +19,8 @@ This is a selective, device-targeted update assembled from the RK3326 artifacts 
 
 The ZIP intentionally contains no `/roms` or `/roms2` tree, `es_systems.cfg`, SD switching script, ROM directory, or launcher that rewrites card paths. The OTA selects the active ROM card by checking whether `/roms2` is mounted, stores rollback copies under that card's `backup/darkosre-update/10032026` directory (or `/roms/backup/...` when the second card is not mounted), and checks hashes of `es_systems.cfg` and both SD switching scripts before and after installation. It aborts and rolls back if those path-defining files change.
 
+Start this update through the device's Update menu. It has no keyboard-entry confirmation and restarts automatically after a successful install.
+
 Archive SHA-256: 59df7021e908336fa8c7aee78c91bbf6beb8debdfada8af3e22588ff4324adba.
 
 ## Verification and limits
