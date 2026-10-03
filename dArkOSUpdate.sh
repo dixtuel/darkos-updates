@@ -24,8 +24,11 @@ fi
 LOCATION="https://raw.githubusercontent.com/dixtuel/darkos-updates/main"
 
 c_brightness="$(cat /sys/class/backlight/backlight/brightness)"
+max_brightness="$(cat /sys/class/backlight/backlight/max_brightness 2>/dev/null)"
 sudo chmod 666 /dev/tty1
-echo 255 > /sys/class/backlight/backlight/brightness
+if [[ "$max_brightness" =~ ^[0-9]+$ ]] && [ "$max_brightness" -gt 0 ]; then
+	echo "$max_brightness" > /sys/class/backlight/backlight/brightness
+fi
 touch $LOG_FILE
 tail -f $LOG_FILE >> /dev/tty1 &
 
