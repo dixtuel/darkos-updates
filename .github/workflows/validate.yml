@@ -1,0 +1,34 @@
+name: Validate update repository
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check updater shell syntax
+        run: bash -n dArkOSUpdate.sh
+      - name: Validate update archives
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          archives=( */*.zip )
+          ((${#archives[@]} > 0)) || { echo "No dated update ZIPs found" >&2; exit 1; }
+          for archive in "${archives[@]}"; do
+            echo "Checking $archive"
+            unzip -t "$archive"
+            while IFS= read -r path; do
+              [[ -n "$path" ]] || continue
+              [[ "$path" != /* ]] || { echo "Absolute ZIP path: $archive:$path" >&2; exit 1; }
+              [[ "/$path/" != *"/../"* ]] || { echo "Path traversal in ZIP: $archive:$path" >&2; exit 1; }
+            done < <(unzip -Z1 "$archive")
+          done
