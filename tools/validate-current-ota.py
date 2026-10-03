@@ -5,6 +5,7 @@ import pathlib
 import re
 import stat
 import struct
+import subprocess
 import sys
 import zipfile
 
@@ -49,6 +50,11 @@ def validate(archive_path):
                 ):
                     raise ValueError(f'unexpected absolute symlink: {name!r}')
                 continue
+            if name.endswith('.sh'):
+                syntax = subprocess.run(['bash', '-n'], input=data, capture_output=True)
+                if syntax.returncode:
+                    raise ValueError(f'invalid shell syntax: {name!r}: '
+                                     f'{syntax.stderr.decode("utf-8", "replace").strip()}')
             if re.search(r'(^|/)lib[^/]*\.so(?:\.|$)', name) or name == 'opt/DSperate/dsperate':
                 if len(data) < 20 or data[:4] != b'\x7fELF':
                     raise ValueError(f'empty or invalid ELF: {name!r}')

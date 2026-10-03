@@ -126,6 +126,33 @@ PAYLOAD_PATHS=()
 while IFS= read -r path; do
 	[[ -n "$path" && "$path" != install-r2.sh ]] && PAYLOAD_PATHS+=("$path")
 done < <(unzip -Z1 "$ZIP_PATH")
+# Legacy compatibility libraries must never replace an unknown/newer installed
+# object. Preserve exact existing objects; review any nonidentical collision.
+LIBRARY_COPY_PATHS=()
+for path in "${PAYLOAD_PATHS[@]}"; do
+  case "$path" in
+    usr/lib/aarch64-linux-gnu/*|usr/lib/arm-linux-gnueabihf/*)
+      if [[ -L "/$path" ]]; then
+        if [[ -L "$STAGE/$path" && "$(readlink "/$path")" == "$(readlink "$STAGE/$path")" ]]; then
+          continue
+        fi
+        echo "Existing library symlink differs; separate review required: /$path" >&2
+        exit 1
+      elif [[ -e "/$path" ]]; then
+        if [[ -f "/$path" && ! -L "$STAGE/$path" ]] && cmp -s "/$path" "$STAGE/$path"; then
+          continue
+        fi
+        # Recorded original R36 defect: empty AArch64 codec placeholder.
+        if [[ "$path" != usr/lib/aarch64-linux-gnu/libavcodec.so.58 || ! -f "/$path" || -s "/$path" ]]; then
+          echo "Existing library differs; refusing an unreviewed replacement: /$path" >&2
+          exit 1
+        fi
+      fi
+      ;;
+  esac
+  LIBRARY_COPY_PATHS+=("$path")
+done
+
 UPDATE_PATHS=("etc/emulationstation/es_systems.cfg" "usr/bin/emulationstation/emulationstation.sh" "usr/lib/aarch64-linux-gnu/libOpenCL.so" "usr/lib/arm-linux-gnueabihf/libOpenCL.so")
 UPDATE_PATHS+=("${PAYLOAD_PATHS[@]}")
 
@@ -166,7 +193,7 @@ rollback() {
 	tar --numeric-owner -xpf "$BACKUP_ARCHIVE" -C /
 	systemctl daemon-reload || true
 }
-for path in "${PAYLOAD_PATHS[@]}"; do
+for path in "${LIBRARY_COPY_PATHS[@]}"; do
 	mkdir -p "/$(dirname "$path")" || { rollback; exit 1; }
 	rm -rf -- "/$path" || { rollback; exit 1; }
 	cp -a "$STAGE/$path" "/$(dirname "$path")/" || { rollback; exit 1; }

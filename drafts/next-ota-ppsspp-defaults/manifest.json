@@ -119,5 +119,29 @@
     "mode": "0o755",
     "status": "source/draft; device startup/game validation pending",
     "condition": null
+  },
+  {
+    "installed_path": "usr/local/bin/bigpemu.sh",
+    "kind": "file",
+    "sha256": "aa14e7c92c6ec2d5bfe41643054d68a9fce24e225625e7901a4eb5625e471ccc",
+    "mode": "0o755",
+    "status": "source/draft; isolated fixtures passed; physical launch validation pending",
+    "condition": null
+  },
+  {
+    "installed_path": "usr/local/bin/perfmax",
+    "kind": "file",
+    "sha256": "9a8c45cac25bf76dc0dd8bdda5c2b7c98f08f610481dbaaea6da4cf5fb3d8fab",
+    "mode": "0o755",
+    "status": "source/draft; isolated fixtures passed; physical launch validation pending",
+    "condition": null
+  },
+  {
+    "installed_path": "usr/local/bin/perfnorm",
+    "kind": "file",
+    "sha256": "f83e458db52c6f14ab66d62e4d2e4605fda7d2b91dc31b13f0c16fa6e8ab3295",
+    "mode": "0o755",
+    "status": "source/draft; isolated fixtures passed; physical launch validation pending",
+    "condition": null
   }
 ]

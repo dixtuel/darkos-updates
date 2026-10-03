@@ -109,7 +109,7 @@ commits the update. Clean-base closure and fresh device verification remain
 pending; the local ZIP is not publication-ready.
 
 Current local ZIP SHA-256:
-`6540db84566fdc3ada761867d03583bf79725c7c69a4bf69406945c080da786e`.
+`f64e26fe553a1bae6e9af4379b47e37ee0028e769685d952f049d21097bc69e2`.
 The ZIP embeds the hardened installer and the SD-switch-safe DSperate
 launcher. It has 55 entries, including only the ARMhf `libwebpmux.so.3.0.1`
 object and its relative `.3` link as additions. Existing entry content and
@@ -124,3 +124,7 @@ been applied or verified by the device loader. A clean installation/reboot
 and actual game/controller/audio/save tests remain pending. This archive has
 not been published. A completion marker from an older draft does not
 establish validation of this rebuilt archive.
+
+## Existing-library collision guard (2026-10-03)
+
+The installer now preserves byte-identical installed libraries and matching links. It aborts before installation when a differing existing library/link would be overwritten. Only the documented zero-byte AArch64 libavcodec.so.58 placeholder is eligible for repair. Six isolated filesystem cases passed; this does not establish package ownership/dependency closure or clean-base/device gameplay validation. The candidate remains unpublished.

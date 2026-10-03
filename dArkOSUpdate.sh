@@ -4,7 +4,8 @@ clear
 UPDATE_DATE="10032026"
 LOG_FILE="/home/ark/update$UPDATE_DATE.log"
 BASE_UPDATE_DONE="/home/ark/.config/.update$UPDATE_DATE"
-PATCH_UPDATE_DONE="/home/ark/.config/.update10032026-r1"
+# The terminal guard must name the newest wired step, not the prior patch.
+PATCH_UPDATE_DONE="/home/ark/.config/.update10032026-r2"
 if [ -f "$BASE_UPDATE_DONE" ]; then
 	UPDATE_DONE="$PATCH_UPDATE_DONE"
 else
@@ -848,7 +849,7 @@ if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
   UPDATE_ZIP="/dev/shm/darkosupdate$PATCH_VERSION.zip"
   INSTALLER="/tmp/install-$PATCH_VERSION.sh"
   UPDATE_URL="$LOCATION/$PATCH_VERSION/darkosupdate$PATCH_VERSION.zip"
-  UPDATE_SHA256="6540db84566fdc3ada761867d03583bf79725c7c69a4bf69406945c080da786e"
+  UPDATE_SHA256="f64e26fe553a1bae6e9af4379b47e37ee0028e769685d952f049d21097bc69e2"
   if mountpoint -q /roms2; then
     BACKUP_BASE="/roms2/backup/darkosre-update/$PATCH_VERSION"
   else
