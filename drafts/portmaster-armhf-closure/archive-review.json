@@ -1,0 +1,3748 @@
+[
+  {
+    "archive": "libbluray2_1.3.4-1+b2_armhf.deb",
+    "package": "libbluray2",
+    "version": "1:1.3.4-1+b2",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.34), libfontconfig1 (>= 2.12.6), libfreetype6 (>= 2.2.1), libudfread0 (>= 1.1.1), libxml2 (>= 2.7.4)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.20\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libbluray.so.2.4.3",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "9e5898ee96202c184b49003b9e23cd9a846fce0dd33a53bf17c111190a51ee0c"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libbluray2",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libbluray2/changelog.Debian.armhf.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "64651c03788aaff5bd5a64764bbd9900b5a4a8d0b82fe20f248ec9a695fccd59"
+      },
+      {
+        "path": "/usr/share/doc/libbluray2/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "bed0d553455a25ba558fd380fa6494dd948ec9fb1a7b5674b3f3d6adda71f608"
+      },
+      {
+        "path": "/usr/share/doc/libbluray2/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "7e04b2d53d7be409d2612f21361911ad4b15ccf4eda93783dccc9e21c89a43a4"
+      },
+      {
+        "path": "/usr/share/doc/libbluray2/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "4e890ce8aa03539f2a76b929552e1c4791a4a1619317c9379d0c506a2faedf0d"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libbluray.so.2",
+        "type": "symlink",
+        "link": "libbluray.so.2.4.3",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "d49094251e869b45f05db62b1733f33a21815c78dd9575e83155f20cbee19e6c",
+      "md5sums": "42b760e250b8fa7d67ec217f893d5c99f16409db711ebc108069f6c14bb3f84b",
+      "shlibs": "3f605ebe507e134e26d1298939eb1ae7d134156effce4fc5178158334a3f8957",
+      "symbols": "38640c23345e1ae0037452dc0ef6eebeaeeef1c3ada01c9a444be9d3fd0cfeb1",
+      "triggers": "1dbe55839bbaebb58e032a4d423751e5a53fc12f159a1deda90daaec8b3dc500"
+    }
+  },
+  {
+    "archive": "libchromaprint1_1.5.1-7_armhf.deb",
+    "package": "libchromaprint1",
+    "version": "1.5.1-7",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.29), libgcc-s1 (>= 3.5), libstdc++6 (>= 13.1)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.23\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libchromaprint.so.1.5.1",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "2e3eef26b1f5c5f09e68db35acdf2cc76a2660dcc020051166834127b62413fd"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libchromaprint1",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libchromaprint1/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "6d03e845fffaaae6ab6a871c3823818689e17b350667ef85095ed051ade593a5"
+      },
+      {
+        "path": "/usr/share/doc/libchromaprint1/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "358082aa7a5ea746e6faeeee25f4bbddfc85db063bb1b30726f042047857788c"
+      },
+      {
+        "path": "/usr/share/doc/libchromaprint1/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "23dfbeb067dc73487dce9a90bfb42a5e8e69d985c6a890cbb41068f53a2bb8f9"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libchromaprint.so.1",
+        "type": "symlink",
+        "link": "libchromaprint.so.1.5.1",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "276adb9a27aac98a260053add8ea43f78dc42e080942c4a3267a998308086f7d",
+      "md5sums": "dc3906e2d93c46966daa8e2a915bb57812d68a1e072be521fcfbb49fd5b67368",
+      "shlibs": "795f5c927f48b3a583bd4a62d6d5a844e52782da6c661d60fe2164d986be71be",
+      "symbols": "484727a0e257bc510e8a73aad63eb7f85859ee8663952ea4f023eda82aef3890",
+      "triggers": "c0e5984317d90a62bd6cd8ae3085701c41be739887d9a341762669f9da1d5f57"
+    }
+  },
+  {
+    "archive": "libgcrypt20_1.11.0-7_armhf.deb",
+    "package": "libgcrypt20",
+    "version": "1.11.0-7",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.38), libgpg-error0 (>= 1.50)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "postinst": "#!/bin/sh\nset -e\n\ncleanup () {\n\t/usr/share/libgcrypt20/clean-up-unmanaged-libraries \\\n\t\t--bug-ref=984884 \\\n\t\t\"$@\" \\\n\t\tarm-linux-gnueabihf \\\n\t\tlibgcrypt.so.20\n}\n\n# Clean up stale shared libraries on upgrades if necessary.\nif [ -n \"$2\" ] && ! cleanup; then\n\techo \"$0: Trying cleanup again with more logging...\"\n\tcleanup --verbose\nfi\n\n\n\n",
+      "triggers": "# Triggers added by dh_makeshlibs/13.22\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libgcrypt.so.20.5.0",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "8220bebd609e93e99c36622418fec9593227ba2d99381daec898d5de12db5300"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libgcrypt20",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libgcrypt20/AUTHORS.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "6a349980953228754aca6cc9ec0e62243b4a0dc3329ce660dd7adb2624826968"
+      },
+      {
+        "path": "/usr/share/doc/libgcrypt20/NEWS.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "76af356de24818c6f6d73ff33a65febce99031105fb7c1b6032b3bbaff291297"
+      },
+      {
+        "path": "/usr/share/doc/libgcrypt20/README.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "80d687e3e78b5acd9d01a5dde64798e0a6ba4cd3b8991d9f188e272460bc8536"
+      },
+      {
+        "path": "/usr/share/doc/libgcrypt20/THANKS.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "b4ab3b58942af018d013470746311e868557e5b664a20ddaf20bf9e9907aa5fb"
+      },
+      {
+        "path": "/usr/share/doc/libgcrypt20/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "eac3bcf5fcf4e974fb3e0c383cf5ee914c125afd1a68bb7521b5d7614e344417"
+      },
+      {
+        "path": "/usr/share/doc/libgcrypt20/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "89597fd725ccbb5637f0c16ad2c4a90a87f378bebb21dd6e1ef243fb1c793220"
+      },
+      {
+        "path": "/usr/share/doc/libgcrypt20/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "4feae258cab1ad4743fb569a77e0b2a5b7a0199520bdbc0a613916291b9aa8a8"
+      },
+      {
+        "path": "/usr/share/libgcrypt20",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/libgcrypt20/clean-up-unmanaged-libraries",
+        "type": "file",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "99b0c51687292125bcc4486fc173b331d0ef4f07b7dc8a39575a075e8b8f0407"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libgcrypt.so.20",
+        "type": "symlink",
+        "link": "libgcrypt.so.20.5.0",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "010ba4ada18ad65e862bef62afa3f91d6df756008027ba3cd0b829da2c5dd11c",
+      "md5sums": "7e6063ce7eeebce7254edfc5440b5964f95949fe6eec99e1d2fd7f274ac21899",
+      "postinst": "6fcd9f820f023a321d458b0647fa8eeea81edb5c93377ddea627da754e805aa9",
+      "shlibs": "ca3a5328342d23d2a5b076f563b78ea1dc923d18f5695abfb1602ff3b4d146cc",
+      "symbols": "ed823416f08050eb01090f251dcbf86519b3a84287bf34f32e770c7906f3446d",
+      "triggers": "c6eb5c39739bda9db0861fce57626b155e183567b6ff6b84e480a0202d70fa93"
+    }
+  },
+  {
+    "archive": "libgme0_0.6.3-7+b2_armhf.deb",
+    "package": "libgme0",
+    "version": "0.6.3-7+b2",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.38), libgcc-s1 (>= 3.5), libstdc++6 (>= 11), zlib1g (>= 1:1.2.3.4)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.20\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libgme.so.0.6.3",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "c37fad94e6635803b906582a0a2410ce1774283b2b6a4d94ca036143771dce85"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libgme0",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libgme0/changelog.Debian.armhf.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "35e15af9c87aec1c7cb000ad5281f254d4f0e63aa65a7b0e7022501f7af8d8e5"
+      },
+      {
+        "path": "/usr/share/doc/libgme0/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "902f45c9a0bf576aaef253cbe6531bbe3abc779ab2d21114c671168b8960104d"
+      },
+      {
+        "path": "/usr/share/doc/libgme0/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "528fe4eebbba3752da24212d30104bd322fd14a6385320d14467b97758f93420"
+      },
+      {
+        "path": "/usr/share/doc/libgme0/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "05a592c9b5923026691840dd10f5f08b407a8ca94fb237850354a4128b2cdc6c"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libgme.so.0",
+        "type": "symlink",
+        "link": "libgme.so.0.6.3",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "c068bb0e19e1a703960c0532e32c70f51fa97f2d569b429ef49c2691a8fefe1f",
+      "md5sums": "0dfbba141131c3aaeb1fb4ccc5288ea217d9dab0525e0412247861424a8f5858",
+      "shlibs": "a671c1e5610a1ad2a65acf050cf6073027f3632c6f4c2dc0deff6b5cfb337827",
+      "symbols": "035ff2d3a8f16efc26130bc05096d3901ab7fe89eb79bb7060fd8e045a4812b2",
+      "triggers": "1dbe55839bbaebb58e032a4d423751e5a53fc12f159a1deda90daaec8b3dc500"
+    }
+  },
+  {
+    "archive": "libgpg-error0_1.51-4_armhf.deb",
+    "package": "libgpg-error0",
+    "version": "1.51-4",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.38)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.24.1\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libgpg-error.so.0.38.0",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "e8181115fe188de79fc9739c85cd2d1d3bbfd5e48de137b15a325648f3b6a496"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libgpg-error0",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libgpg-error0/README.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "ba795280489043e22269601673eb5c9adf714c7a0b85544439a2161a32504611"
+      },
+      {
+        "path": "/usr/share/doc/libgpg-error0/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "55550d005594376782ab6f59e03ac07c67fb6bf221afa6ca6893e5bcecc713e9"
+      },
+      {
+        "path": "/usr/share/doc/libgpg-error0/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "c839bbff27e696b51c806498126e50b1d5e1bdab983bdf88349a204ee74810ff"
+      },
+      {
+        "path": "/usr/share/doc/libgpg-error0/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "1edb3be55cf9371e8e7a71e53fadc2a3d33b44d7d7f15c78a7669c92ce0fade2"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libgpg-error.so.0",
+        "type": "symlink",
+        "link": "libgpg-error.so.0.38.0",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "8e83e58a557499a70a1bc3b3fc2bffb20cf0e77f4a9ca4fe5ebc7b0e9adf7abd",
+      "md5sums": "850198ca5cb3e35ca68efe040b0c09b0514fda9cd7cce1fa3fc5f280b02e1c58",
+      "shlibs": "306f996a2a869ffdc73f36f0f70971a2c7c594db1bbea5b22fe91fadb3442dc7",
+      "symbols": "9970a3627cf214cadf5957bd6f10a2c7106ee4f280922a0bdc204d790f7a205f",
+      "triggers": "d375177f2ddeec375a8af756e66177c556566ad114898ad292bfd205b4fcdd74"
+    }
+  },
+  {
+    "archive": "libgsm1_1.0.22-1+b2_armhf.deb",
+    "package": "libgsm1",
+    "version": "1.0.22-1+b2",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.4)",
+    "pre_depends": null,
+    "conflicts": "libgsm-dev",
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.20\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libgsm.so.1.0.19",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "53e7b6fc2868b17e7af641558f3ec985f330d597b8f54024dd7d09aede5149c5"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libgsm1",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libgsm1/MACHINES",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "fccbe9ec3787c9c49f97e1ef0e3d3386aae50a4ed00ed98431b2b7f88304d395"
+      },
+      {
+        "path": "/usr/share/doc/libgsm1/README",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "31856eee76c7e2d0a8d93d43e3debd1b5380f04c9f713551917cb9ad432d6daa"
+      },
+      {
+        "path": "/usr/share/doc/libgsm1/README.Debian",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "47cdc728e88861b302b2e4bec2d7b43d9dbdf78714a7215ede86831af7b213b0"
+      },
+      {
+        "path": "/usr/share/doc/libgsm1/changelog.Debian.armhf.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "95a4244ece14d1b7b47c47d4fe478c9f6c30669232ca1363d41a264cdacb90e4"
+      },
+      {
+        "path": "/usr/share/doc/libgsm1/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "adc9790519faf905890c8423690579b015807b12accad0ca20853f389c09b992"
+      },
+      {
+        "path": "/usr/share/doc/libgsm1/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "6ec8ff8493d4cabb1672c26a987ec727d8f22d69a46d6f952e2e8c9d094e509a"
+      },
+      {
+        "path": "/usr/share/doc/libgsm1/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "546515a7de6c93db62b6b32bd4ad35bce0314055c255889a70a51a8aae6f3cd8"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libgsm.so.1",
+        "type": "symlink",
+        "link": "libgsm.so.1.0.19",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "89c11ae7aac49edf39983a7ee761808104ac3f43e7f2b0ec65c75f0fa1dc45a3",
+      "md5sums": "0bcefa1e5afc35f79f0f9e49f81d5650b77b031318b79e1e4daba7417d0b623c",
+      "shlibs": "33116d9658047277302da12d011562ed9a3367bbcc5cd87a1533ddb711336f62",
+      "symbols": "d626d73e27a49457f12a376246d1771eee8edb88f9134e59638593fb768039dd",
+      "triggers": "1dbe55839bbaebb58e032a4d423751e5a53fc12f159a1deda90daaec8b3dc500"
+    }
+  },
+  {
+    "archive": "libnorm1t64_1.5.9+dfsg-3.1+b2_armhf.deb",
+    "package": "libnorm1t64",
+    "version": "1.5.9+dfsg-3.1+b2",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.38), libgcc-s1 (>= 3.5), libstdc++6 (>= 5)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": "libnorm1 (<< 1.5.9+dfsg-3.1)",
+    "replaces": "libnorm1",
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.23\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libnorm.so.1",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "2fc51e09db04db6ef1e12656f1fe148c68b20ac3c5b876df5ca02b8b38622c7d"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libnorm1t64",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libnorm1t64/changelog.Debian.armhf.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "a13c262f60dfcfe4d7a6f12b44b862124a26efcfd750a8ccdfbfd61db673daaf"
+      },
+      {
+        "path": "/usr/share/doc/libnorm1t64/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "77a949c63d3b5c41e2e0384dd61c21f24602b1be4c0924a5194b1b59f34426a5"
+      },
+      {
+        "path": "/usr/share/doc/libnorm1t64/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "88c38443da2ea7d228b3d3e4e13138c02b41448e1210ad0e6277516c9ad493ef"
+      },
+      {
+        "path": "/usr/share/lintian",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/lintian/overrides",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/lintian/overrides/libnorm1t64",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "87ea450f871eb2b1985517e97fd08ce99e195919ddb62fb1dc6b0b3bf1d593ab"
+      }
+    ],
+    "control_files_sha256": {
+      "control": "626eb7479696520e77a994e435541ba3bac182840eb08aedc02c1711b06ed697",
+      "md5sums": "0d05b606d3f74a03216243307c6eaae6c8436b69980971f5bca08b1c321566c7",
+      "shlibs": "2ded5cbf44fc70496a284ea8f939c7f84cda26c1f19f95662d8f97ec5394e0f9",
+      "symbols": "13b55839982ced5d607b88cbacaf2cf405d0b5f1f052949d352e95e25d49b91b",
+      "triggers": "c0e5984317d90a62bd6cd8ae3085701c41be739887d9a341762669f9da1d5f57"
+    }
+  },
+  {
+    "archive": "libopenjp2-7_2.5.3-2.1~deb13u1_armhf.deb",
+    "package": "libopenjp2-7",
+    "version": "2.5.3-2.1~deb13u1",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.34)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.24.2\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libopenjp2.so.2.5.3",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "96c86a4e9aa2307b3bef06cf1febc8d6aa383b62e2660c675d020dbed9a2f8bb"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libopenjp2-7",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libopenjp2-7/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "1f083979f2c4919e86d17d2015f977caa82420e40fcb1c6c83761bcc58c1b67f"
+      },
+      {
+        "path": "/usr/share/doc/libopenjp2-7/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "70e48e80e44e2207029d1badd9dd89f7765403d8928b92b1dd39fe43bf41e428"
+      },
+      {
+        "path": "/usr/share/doc/libopenjp2-7/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "ba3ae385ad2337d6cfc862e280a9f155bb421b43f6ee47e77ebcaaf24e992151"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libopenjp2.so.7",
+        "type": "symlink",
+        "link": "libopenjp2.so.2.5.3",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "df446e5ff6423d8047687036592f8972aa3316c5d5ec0791e5001b665449a5fe",
+      "md5sums": "09c7548502f222eb378d49a3479c29562944868b3882bd57b8b15237d11606bf",
+      "shlibs": "a7626edaa71a4291ff675329600c3e1189641ef55d64552ce366996ea9b6bdac",
+      "symbols": "7ff7294401a5b4af9bbfd8a0004ad5e9274331bc633e1c9c95fb025e8902a841",
+      "triggers": "c67ab4558a59eb1e96d899a5bdbb153d6a2ab0e580f4acf5bfb1e4e6150ad2f4"
+    }
+  },
+  {
+    "archive": "libopenmpt0t64_0.7.13-1+b1_armhf.deb",
+    "package": "libopenmpt0t64",
+    "version": "0.7.13-1+b1",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.32), libgcc-s1 (>= 4.0), libmpg123-0t64 (>= 1.28.0), libstdc++6 (>= 13.1), libvorbis0a (>= 1.1.2), libvorbisfile3 (>= 1.1.2), zlib1g (>= 1:1.1.4)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": "libopenmpt0 (<< 0.7.13-1)",
+    "replaces": "libopenmpt0",
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.24.1\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libopenmpt.so.0.4.4",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "17fdbe14b5072c0a5935de15ec34d38330fb5138b68e0f7cb3832f2caae182dd"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libopenmpt0t64",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libopenmpt0t64/changelog.Debian.armhf.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "22eda05b5d435e73fb5e9b28e7c5264c4f5a66460f888afc755a205cdbebd672"
+      },
+      {
+        "path": "/usr/share/doc/libopenmpt0t64/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "a2bbb2a489a0ad1f4842c8600a7bb24bfc7ca413a2d18a705a6b658be6516ba1"
+      },
+      {
+        "path": "/usr/share/doc/libopenmpt0t64/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "d4a4fc58f105c928ff4661e8eeacde2403e1aa787791587de2e637ae8eb511ba"
+      },
+      {
+        "path": "/usr/share/doc/libopenmpt0t64/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "5998a8ed3e0b53886019f9cdb54a2048ee3c26308db7fc692585c9721fb42e6b"
+      },
+      {
+        "path": "/usr/share/lintian",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/lintian/overrides",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/lintian/overrides/libopenmpt0t64",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "69773c76cd9d5a8f87c8179170d5008add70cff710eeeb739ecb4042d9aedc18"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libopenmpt.so.0",
+        "type": "symlink",
+        "link": "libopenmpt.so.0.4.4",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "e2b25a0a229dc8d43b997625aa990a880ddd3fc05d20825b39b35cee0a2eed2e",
+      "md5sums": "eb74aead99898925dfcf359d099a6ab9af934a564fbaceda339da25399194f63",
+      "shlibs": "9351f2ee3dbe1ac0fa5bee2ff739c80c1ec96422f9c9c9fea74355b69ae10c8a",
+      "symbols": "2ed9540220cb4860a2abc1e109b4a0d032abb5e86781618ceb0343aab23e022e",
+      "triggers": "d375177f2ddeec375a8af756e66177c556566ad114898ad292bfd205b4fcdd74"
+    }
+  },
+  {
+    "archive": "libpgm-5.3-0t64_5.3.128~dfsg-2.1+b1_armhf.deb",
+    "package": "libpgm-5.3-0t64",
+    "version": "5.3.128~dfsg-2.1+b1",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.34)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": "libpgm-5.3-0 (<< 5.3.128~dfsg-2.1)",
+    "replaces": "libpgm-5.3-0",
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.20\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libpgm-5.3.so.0.0.128",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "722f1df0b78938bf9411eebf17b532616f067eaf376b4ecf8f8c2888998dc514"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libpgm-5.3-0t64",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libpgm-5.3-0t64/changelog.Debian.armhf.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "219a085a1544c50a43c674d2d34a114955db671be8e2c4aca9d2187bb569b330"
+      },
+      {
+        "path": "/usr/share/doc/libpgm-5.3-0t64/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "fb7acd1e5d3f54b086cdf43fc630fdbaaeec49fef5b5c52ded7d5e7d068f4944"
+      },
+      {
+        "path": "/usr/share/doc/libpgm-5.3-0t64/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "07836d892d92dcef15583e4e01569805498b95769f1c85d79bc996821dace2cf"
+      },
+      {
+        "path": "/usr/share/lintian",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/lintian/overrides",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/lintian/overrides/libpgm-5.3-0t64",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "527fecb8e3d341dab167ae2f349e7f40027fa1da06c018b576586909a609d503"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libpgm-5.3.so.0",
+        "type": "symlink",
+        "link": "libpgm-5.3.so.0.0.128",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "013c9034171a24218d5fefb0fe7a91c795470cd45d9fef9a79259361bed3b75d",
+      "md5sums": "3f6c0f0ef8cace5b550a9cfd9d6fa8a348e3a441c8e9b63c9fa5083aaa4194cf",
+      "shlibs": "c2e0e003487fed28484597d5b74c3f1babcade1d8d96418e7a856643f69d46d1",
+      "symbols": "603c9704c16f90dc6b48c4c01bbcced9823c5423df0502e819b093259b363232",
+      "triggers": "1dbe55839bbaebb58e032a4d423751e5a53fc12f159a1deda90daaec8b3dc500"
+    }
+  },
+  {
+    "archive": "librabbitmq4_0.15.0-1_armhf.deb",
+    "package": "librabbitmq4",
+    "version": "0.15.0-1",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.34), libssl3t64 (>= 3.0.0)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.20\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/librabbitmq.so.0.15.0",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "5636eb6cb0c10f0daf748bcb841d91f3fe843f080dd544b6be24743fee9becb0"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/librabbitmq4",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/librabbitmq4/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "c055fd1ecc28b33cf99787af99460356e451793cc53c78c0e2700b36d1a791c4"
+      },
+      {
+        "path": "/usr/share/doc/librabbitmq4/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "13328a3f93142b7f4c67cc27ecd6379905be8ae4c02b5b8f7bf415a57ced3f24"
+      },
+      {
+        "path": "/usr/share/doc/librabbitmq4/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "99f53e190f9ca2ec8a8cbd98f2ccd34f885e91e0e36bceacfa763582dfa2f8f7"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/librabbitmq.so.4",
+        "type": "symlink",
+        "link": "librabbitmq.so.0.15.0",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "ad7a8a090653307d49a1b4744820ced60d88c18b5ea4985bed697db736fda3db",
+      "md5sums": "bfdef2bd60404f6c1d62053d107b1c5a6415a6e0cec1b8d1df4358d90cd92873",
+      "shlibs": "06997f10ef4593b248852472765606ec55a0620428d144fb7f48369789095306",
+      "symbols": "2bbd8afcab5ff505b89aced658c38df64debad1da4afa6a186d7ac9efbd368d1",
+      "triggers": "1dbe55839bbaebb58e032a4d423751e5a53fc12f159a1deda90daaec8b3dc500"
+    }
+  },
+  {
+    "archive": "libshine3_3.1.1-2+b2_armhf.deb",
+    "package": "libshine3",
+    "version": "3.1.1-2+b2",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.29)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.20\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libshine.so.3.0.1",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "fece3876ce98fc833016922684ee8845cffdb0f1ab3e623b20dd383e3f9c0ce7"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libshine3",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libshine3/changelog.Debian.armhf.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "6a3837c9b706e8041c26851eac38be4bad5ed0bd2cfeb56aa9db9141693a6949"
+      },
+      {
+        "path": "/usr/share/doc/libshine3/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "21075040e88728fb33c0d9ffb7748db6c6353eab5b16387187b2550432cfa707"
+      },
+      {
+        "path": "/usr/share/doc/libshine3/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "43d1321a1603eced2fe23dcddbbe2c2177d4a140ec52a28f0d0b8507257b2e85"
+      },
+      {
+        "path": "/usr/share/doc/libshine3/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "b631215db51471d41765f415b55a76fabc553f4a33760c7740c9e31d33a4aba8"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libshine.so.3",
+        "type": "symlink",
+        "link": "libshine.so.3.0.1",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "5825ff7be41eea306917c4feaca5f02fa0b9c423119761a723c4a79ba56126a3",
+      "md5sums": "a735f2ee1cdadba4332d26dd44d50885e0392f6372c0c9e7ed7e70a33d4e36f1",
+      "shlibs": "c079fb0cec147018a0970cfd1814a7c99c97a3a406fef8c94341fdb5ada22182",
+      "symbols": "99ec66586469c0c557c70e87ca92b9bdbd1c7ca4e83c95dbb26120836b188e87",
+      "triggers": "1dbe55839bbaebb58e032a4d423751e5a53fc12f159a1deda90daaec8b3dc500"
+    }
+  },
+  {
+    "archive": "libsnappy1v5_1.2.2-1_armhf.deb",
+    "package": "libsnappy1v5",
+    "version": "1.2.2-1",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.4), libgcc-s1 (>= 3.5), libstdc++6 (>= 5.2)",
+    "pre_depends": null,
+    "conflicts": "libsnappy1",
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.24.2\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libsnappy.so.1.2.2",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "d9f20d7b5e64216fe24dee3243ec54f31e0048d4f3c0cff781bab71e86d0e5e3"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libsnappy1v5",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libsnappy1v5/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "6217ad9819928366482bfc175be5d895db394c90bdf68a41efa2b705c7beea0b"
+      },
+      {
+        "path": "/usr/share/doc/libsnappy1v5/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "6e3b7206a2a68d959274c289922e06bd19788a3d48d3bf74e92db43ee21593e6"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libsnappy.so.1",
+        "type": "symlink",
+        "link": "libsnappy.so.1.2.2",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "dfd3ede63413bb089a9fce655e063888c4cea2ba7131e75330f283a0959082b5",
+      "md5sums": "facf62bf6c4445de91a927df0940b63555db21b16e9aee494ea361d24e110501",
+      "shlibs": "c36962a80b43bd50b37ee676fe6389015a6b28e42d0502e57880bdc3fb5f63f3",
+      "triggers": "c67ab4558a59eb1e96d899a5bdbb153d6a2ab0e580f4acf5bfb1e4e6150ad2f4"
+    }
+  },
+  {
+    "archive": "libsodium23_1.0.18-1+b2_armhf.deb",
+    "package": "libsodium23",
+    "version": "1.0.18-1+b2",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.34)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.20\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libsodium.so.23.3.0",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "c2815312e40c843a55776d7d294c6f3025ae8f0dcbfa6c80a89633d2ea4bddd2"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libsodium23",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libsodium23/AUTHORS.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "c8ae11cfa5aacc0a6e90b4f3daef4c045962e165466f1d775b9b8a0d5ba3df8b"
+      },
+      {
+        "path": "/usr/share/doc/libsodium23/README.markdown",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "464d35ee88d03b9d3635b192f82910b25ae7f8c9f47e460bffc17c9221b7771f"
+      },
+      {
+        "path": "/usr/share/doc/libsodium23/THANKS",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "88b4a9ac9d3cd423cc6888ef04e43bee7fd9b474f380436604578f170da8e3ad"
+      },
+      {
+        "path": "/usr/share/doc/libsodium23/changelog.Debian.armhf.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "62f1fc2152529b89eb35312bb37e17ccdfbfb71a275442e9bf7f4b83c59fb1e2"
+      },
+      {
+        "path": "/usr/share/doc/libsodium23/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "3c1c1701209c1a2713f589fd957c420d0da39578339b941a51e9cf8839063a91"
+      },
+      {
+        "path": "/usr/share/doc/libsodium23/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "9f28144eaca90fbbafe5d27215b316594d18ed7d8f26f2f76599c2ab69ecee64"
+      },
+      {
+        "path": "/usr/share/doc/libsodium23/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "10d3576a7a0af8afb5601f358c06eb8c24b02192bb71ed4fb9a328a0979ec74b"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libsodium.so.23",
+        "type": "symlink",
+        "link": "libsodium.so.23.3.0",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "4cc1ca64515d5351541b1578770490696bb7d8531b64cc31b688edb8ac0e6584",
+      "md5sums": "c7da7a522387e4651cae4fd286a6306d707e17dfad561815f431ad2adec82216",
+      "shlibs": "42443b9f9fc456e0c3f1c139bc821e7973c204ecbc9cbe65a571fb6ef3243e23",
+      "symbols": "e5aaefdd62cddb6420235d3d200beb221e5049ae21692e12ac3a8c9551de76a0",
+      "triggers": "1dbe55839bbaebb58e032a4d423751e5a53fc12f159a1deda90daaec8b3dc500"
+    }
+  },
+  {
+    "archive": "libsoxr0_0.1.3-4+b2_armhf.deb",
+    "package": "libsoxr0",
+    "version": "0.1.3-4+b2",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.34), libgomp1 (>= 4.9)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.20\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libsoxr.so.0.1.2",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "7d65008fb8ffb29cbad4bb75d535e3f916b768d5f93f5db28490d6c4125c966e"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libsoxr0",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libsoxr0/changelog.Debian.armhf.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "4f6fbd5f254b8f08f436e17a4539cfbf9361b8cca83981122dd3eca34aa1d654"
+      },
+      {
+        "path": "/usr/share/doc/libsoxr0/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "112ecf10fbaadcaa22106897a2421de8059a7752bf2cff9a322ed5d13f66c85a"
+      },
+      {
+        "path": "/usr/share/doc/libsoxr0/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "a56a0046bfa8ae9907f9847d50158dadee4ae4884db2f3841a3184f5f627a729"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libsoxr.so.0",
+        "type": "symlink",
+        "link": "libsoxr.so.0.1.2",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "069a97965237a1799e6405a28a9e3ea92729c861e2010d186ee56d6695c0d8aa",
+      "md5sums": "811d9f33c96464b3ee3a8208d01a81678c1abf61e6711b4e27d2910d12392881",
+      "shlibs": "21f8b695c5666ab8c8cd0fce3d7caa63929b9be843218552129cae7dae87993b",
+      "symbols": "75f332d91a310e390953730758abeedc6017da353a143aebefbe45acfe19c861",
+      "triggers": "1dbe55839bbaebb58e032a4d423751e5a53fc12f159a1deda90daaec8b3dc500"
+    }
+  },
+  {
+    "archive": "libspeex1_1.2.1-3_armhf.deb",
+    "package": "libspeex1",
+    "version": "1.2.1-3",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.29)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.20\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libspeex.so.1.5.2",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "c2eb78ca95004ac9c42539b1942bcc84d86feaf7ac1a2c2c936f81062e0e06e8"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libspeex1",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libspeex1/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "bda7de93d87e138bf275e35d15290aa5c39680b64cce58b48e0c67f7b45bd446"
+      },
+      {
+        "path": "/usr/share/doc/libspeex1/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "737f8e4ed53a51b8a6efd779ff22445fd4c83714df9bbd6d33d9d76f790f56b5"
+      },
+      {
+        "path": "/usr/share/doc/libspeex1/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "9bd13b2ec0f10da92819d14c44cf6ddca15a191a23ee360e665fa1f68a53d984"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libspeex.so.1",
+        "type": "symlink",
+        "link": "libspeex.so.1.5.2",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "fadca68083b198f572bb6ecc74d48a3329cf8ba60795e812be0ffc6439c777bd",
+      "md5sums": "0765548fc2d1b6a8674bbb038cba767dc59c57518e7ef738a98dc0f6241d1045",
+      "shlibs": "386195a221c1f2839b72fc477b3a4d9c481770f9a312fb203633ca6ca35210c6",
+      "triggers": "1dbe55839bbaebb58e032a4d423751e5a53fc12f159a1deda90daaec8b3dc500"
+    }
+  },
+  {
+    "archive": "libtwolame0_0.4.0-2+b2_armhf.deb",
+    "package": "libtwolame0",
+    "version": "0.4.0-2+b2",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.29)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.20\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libtwolame.so.0.0.0",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "315496526ab493e39ff349bf61552486cfe2f2fee972234ae7eda17869d968f3"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libtwolame0",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libtwolame0/changelog.Debian.armhf.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "ae6b82c53de32b369a1fe5b80e1016321af44c0fee74ff6042a50dd11e84293c"
+      },
+      {
+        "path": "/usr/share/doc/libtwolame0/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "e55a5990973446b6adbf72184d366e12023f76d42c740ac5f64d3cce4789ac5d"
+      },
+      {
+        "path": "/usr/share/doc/libtwolame0/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "7f084353755d4592f39539d49248b9b9ac0c1280adfcf3b88fcbdcfef762efe6"
+      },
+      {
+        "path": "/usr/share/doc/libtwolame0/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "147113a009ccf1c952c6903f248ac66581a3496aff7b5331fdec5e2c37f71f24"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libtwolame.so.0",
+        "type": "symlink",
+        "link": "libtwolame.so.0.0.0",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "f53975276273acd60ebb7b8c57ce708f0e790de4dfb74b3a4e6b9b5e8c6a160d",
+      "md5sums": "4aa9b67ea87f4821a5149c23987d0d986e4a6399d6b2a676beaffbeded16a947",
+      "shlibs": "54ace6c4745badc4a2b5094d19f9beb45f129bca8b55bea0c40901b04cf19d6a",
+      "symbols": "952a3118aa03212eac261843c4c14616b02dcc375c5e4fce43527fa88ea6c8db",
+      "triggers": "1dbe55839bbaebb58e032a4d423751e5a53fc12f159a1deda90daaec8b3dc500"
+    }
+  },
+  {
+    "archive": "libudfread0_1.1.2-1+b2_armhf.deb",
+    "package": "libudfread0",
+    "version": "1.1.2-1+b2",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.4)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.20\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libudfread.so.0.1.0",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "2cd53663b065b8ef35177b86b670b448cfb655e4bd115e9f2889c1f329e744bd"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libudfread0",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libudfread0/changelog.Debian.armhf.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "c96c88e9a56313a0d61a99115f57d53d0e9e3b98300bf07447ab75c50208231a"
+      },
+      {
+        "path": "/usr/share/doc/libudfread0/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "f1de9aaa6cb02a68c262e2dd56accbbf0208b67adfb61b84274b6eb245810209"
+      },
+      {
+        "path": "/usr/share/doc/libudfread0/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "f294c647ef04c33c702528b8ad5a463b161a6b3c439abae71a34207ffa5491a3"
+      },
+      {
+        "path": "/usr/share/doc/libudfread0/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "2e591d4448d6a5d38a3b2c1a2412651bd015f798ef5ac0a4bcba2b1a9a227297"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libudfread.so.0",
+        "type": "symlink",
+        "link": "libudfread.so.0.1.0",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "d915be5adb41699e92c6b465f93dfddd68bae4c8e3e6adddb6a8337be8c3371d",
+      "md5sums": "0a48d26bc5c77e6394c9ff9ab560d386f8c883804b880b6946be38be42a68d2b",
+      "shlibs": "964640450473fdccd509126c65136c0ef538727a5f3aadc29e94b12c5c355cad",
+      "symbols": "43a55072f23a6406eae7b860699395a3c3bb3d2d53fd57fd6aa9a66787c705c3",
+      "triggers": "1dbe55839bbaebb58e032a4d423751e5a53fc12f159a1deda90daaec8b3dc500"
+    }
+  },
+  {
+    "archive": "libva-drm2_2.22.0-3_armhf.deb",
+    "package": "libva-drm2",
+    "version": "2.22.0-3",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.34), libdrm2 (>= 2.4.60), libva2 (>= 2.22.0), libva2 (<< 2.22.0.1)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.24.1\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libva-drm.so.2.2200.0",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "3eb26ad4cd19c98c71b8f80613595ab252789dd2cad149b5331b2565afe53bdf"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libva-drm2",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libva-drm2/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "c7329d48e0a49a7540571506a834d2f60713e7e4ada9f10a74ef4ca80690ea63"
+      },
+      {
+        "path": "/usr/share/doc/libva-drm2/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "07a50f91f92638473cdbe8de3c5d34d2b3f8fee7b2f582f70032d788b03cd1b9"
+      },
+      {
+        "path": "/usr/share/doc/libva-drm2/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "8d234a9a0e094a1c13a4e21e2a28856763a1890306e17679502c894606f8638c"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libva-drm.so.2",
+        "type": "symlink",
+        "link": "libva-drm.so.2.2200.0",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "6b4d4dc00cc1b050c08f4ca5861ac82a8c6dbd4a45c61585020b3445ecf4f966",
+      "md5sums": "cf65a7ff32b81a0ad2dee75a9036494150a98d86bff15bdebde9f665144da2ad",
+      "shlibs": "aa5448c536767c736ce5039890d3a31716f650485be1d41f976d19adc7526bce",
+      "symbols": "aef1e3902a5718fdddd185e615d129f92529420b452eb0f26c2c2afbe465791b",
+      "triggers": "d375177f2ddeec375a8af756e66177c556566ad114898ad292bfd205b4fcdd74"
+    }
+  },
+  {
+    "archive": "libva-x11-2_2.22.0-3_armhf.deb",
+    "package": "libva-x11-2",
+    "version": "2.22.0-3",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.34), libdrm2 (>= 2.4.60), libva2 (>= 2.22.0), libva2 (<< 2.22.0.1), libx11-6 (>= 2:1.4.99.1), libx11-xcb1, libxcb-dri3-0, libxcb1, libxext6, libxfixes3",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.24.1\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libva-x11.so.2.2200.0",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "3b612e05db4809e1ba94d1f75cd6979e852bf204f5ece6bf1317cf20a9f86f4a"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libva-x11-2",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libva-x11-2/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "4dbb8da6faab5af7daca5206891112ebeccd45d1a512d6fe3b33055a12d57e35"
+      },
+      {
+        "path": "/usr/share/doc/libva-x11-2/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "07a50f91f92638473cdbe8de3c5d34d2b3f8fee7b2f582f70032d788b03cd1b9"
+      },
+      {
+        "path": "/usr/share/doc/libva-x11-2/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "8d234a9a0e094a1c13a4e21e2a28856763a1890306e17679502c894606f8638c"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libva-x11.so.2",
+        "type": "symlink",
+        "link": "libva-x11.so.2.2200.0",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "0c1ab9379db9b4ff838c14ab6abf90147ef1c68d2f47b2049b78004088015030",
+      "md5sums": "a897a09257fe15cc8f23722954399f9b6df958d45bb769a330dec6893c4ff4d0",
+      "shlibs": "0fa84d8d171956e03f443cc876cf5ef4e4aeeadc531ef1043fea8523a336f391",
+      "symbols": "a4516a0ddc7a352cd01213a499d762988024bc599f8b60072e95bda8330fa91c",
+      "triggers": "d375177f2ddeec375a8af756e66177c556566ad114898ad292bfd205b4fcdd74"
+    }
+  },
+  {
+    "archive": "libva2_2.22.0-3_armhf.deb",
+    "package": "libva2",
+    "version": "2.22.0-3",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.38)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.24.1\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libva.so.2.2200.0",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "08d44adcd2e49d0f4d34e9290ad7f6752a11e61ce55320e7528f8afc2f6ce7df"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libva2",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libva2/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "e9d93f12c74c0b1073d5493480a619c5c4ca3655de1417778e1130e6003699af"
+      },
+      {
+        "path": "/usr/share/doc/libva2/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "07a50f91f92638473cdbe8de3c5d34d2b3f8fee7b2f582f70032d788b03cd1b9"
+      },
+      {
+        "path": "/usr/share/doc/libva2/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "8d234a9a0e094a1c13a4e21e2a28856763a1890306e17679502c894606f8638c"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libva.so.2",
+        "type": "symlink",
+        "link": "libva.so.2.2200.0",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "2c5616999db97cd70783662a94b42df6cb8196bd4902e520acf892c56c1e206a",
+      "md5sums": "bb9cf3a87d3d4c46fa3127964147e96a3c4cc4a6d37a22bee44fddc1efebf3f2",
+      "shlibs": "6cebd66c5a4a06a2656ccd37e418b796df1f6e61c054dcf52c7d36f78ba6f0c5",
+      "symbols": "1351152bdedc7a8bb9fd6c3f038d2dc181b9d634cbb08d7f4f358672296b44bb",
+      "triggers": "d375177f2ddeec375a8af756e66177c556566ad114898ad292bfd205b4fcdd74"
+    }
+  },
+  {
+    "archive": "libvdpau1_1.5-3+b1_armhf.deb",
+    "package": "libvdpau1",
+    "version": "1.5-3+b1",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.38), libgcc-s1 (>= 3.5), libx11-6 (>= 2:1.4.99.1), libxext6",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "conffiles": "/etc/vdpau_wrapper.cfg\n",
+      "triggers": "# Triggers added by dh_makeshlibs/13.20\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/etc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/etc/vdpau_wrapper.cfg",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "938aa62078aef1bced7b85a3dc0d10de6df631b06d23244531553f93b5966378"
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libvdpau.so.1.0.0",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "b8124339662e50df8c0671612121f30849b3ae790c09e466119648a2a77db04c"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/vdpau",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/vdpau/libvdpau_trace.so.1.0.0",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "6f2dba6a6cb95c19c8ed66a58a46e06b7ad241cd087a198d6f1fc74666593a3e"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/bug",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/bug/libvdpau1",
+        "type": "file",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "62ef379a02f7caf68115b035d9ff307e1f985f134db6e3a9b2ec4b6cec7fa673"
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libvdpau1",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libvdpau1/changelog.Debian.armhf.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "5a6e08d999d469f57bfc58da404a93be0594306f22a4fec259b1364e40546097"
+      },
+      {
+        "path": "/usr/share/doc/libvdpau1/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "e59366787d1a96d5b012098165330d730ff76f5053879bf1e333ee37fab0b3ad"
+      },
+      {
+        "path": "/usr/share/doc/libvdpau1/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "d14bf5148c76e0d329f918b97d458bc4ada79a016289d298ad72464a5ad0e18e"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libvdpau.so.1",
+        "type": "symlink",
+        "link": "libvdpau.so.1.0.0",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/vdpau/libvdpau_trace.so.1",
+        "type": "symlink",
+        "link": "libvdpau_trace.so.1.0.0",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "conffiles": "1abf00f8cf8a7aa22e033e1c569677d9f0752f12c0b210b22f8913c2bb97f443",
+      "control": "07e94b59b5e9b8ce743f9d772a0391506315eea76f08023102de42eb557b5949",
+      "md5sums": "bcb2e1272084a13eb12115d234d20ad4422b00f21d4a3196d8ec74a556205f52",
+      "shlibs": "80909a6c9ff3b8e8348c2d5c37d7c5a69afa15c6b7e926857346a17db0dcc738",
+      "symbols": "e6fde6a8c5f294708b77bfb5f81fee994777fca61977a9cef10a2f8b630e9e74",
+      "triggers": "1dbe55839bbaebb58e032a4d423751e5a53fc12f159a1deda90daaec8b3dc500"
+    }
+  },
+  {
+    "archive": "libxvidcore4_1.3.7-1+b2_armhf.deb",
+    "package": "libxvidcore4",
+    "version": "2:1.3.7-1+b2",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.34)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.20\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libxvidcore.so.4.3",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "b5d852762da13ae5d33bccae269ca5c4faba726419023edeeffd37dc39731368"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libxvidcore4",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libxvidcore4/changelog.Debian.armhf.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "42fe600040cac761b618b0f11b178627bb78027a2a5f8b8c91af63048948caec"
+      },
+      {
+        "path": "/usr/share/doc/libxvidcore4/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "4f270abf64cb3b7bc394d49ff7a5ab565c295cae4f45cb53ff0cd4d955e616be"
+      },
+      {
+        "path": "/usr/share/doc/libxvidcore4/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "11db8294e4356ebbfa5e14b56ffb7e4cb81fb8b65fe1fa5af98c0ad0932b8d5a"
+      },
+      {
+        "path": "/usr/share/doc/libxvidcore4/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "c3baa7a8b91984e32d4a53031bcf61c9b1d5aface9f592f70ae00b980b5e95c2"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libxvidcore.so.4",
+        "type": "symlink",
+        "link": "libxvidcore.so.4.3",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "29444ad2db5d0ff5c664f1977bab3efda51f2197fe0bf95a5703df94a7f03198",
+      "md5sums": "892e54294aa5dadcf18b7694a55f7242b14595a0b0d4f2c90358256069e99aa9",
+      "shlibs": "51e9efb1d674463f81ccfadff1ada992ad0d2475b95687885188a1af4e09873a",
+      "symbols": "52d99e45e2eda33d4f66888690835b527730df0d4910a508cd2497a9fc1b811c",
+      "triggers": "1dbe55839bbaebb58e032a4d423751e5a53fc12f159a1deda90daaec8b3dc500"
+    }
+  },
+  {
+    "archive": "libzmq5_4.3.5-1+b3_armhf.deb",
+    "package": "libzmq5",
+    "version": "4.3.5-1+b3",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libbsd0 (>= 0.0), libc6 (>= 2.38), libgcc-s1 (>= 3.5), libgssapi-krb5-2 (>= 1.17), libnorm1t64 (>= 1.5r6), libpgm-5.3-0t64 (>= 5.1.116~dfsg), libsodium23 (>= 1.0.3), libstdc++6 (>= 12)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": null,
+    "replaces": null,
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.20\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libzmq.so.5.2.5",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "6bdda6b95fecf2013c4f66e3443330488be3e82c1b6c3291437f58d485f9a1d8"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libzmq5",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libzmq5/AUTHORS",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "9c7e32ac52c546ce6c9b328f348b2053ff6d56630cba06727e2e5abf644f4aed"
+      },
+      {
+        "path": "/usr/share/doc/libzmq5/NEWS.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "f908fa2498d44b480c23e9c5768ded26c8290e7a150e1e3aa1f0039696919d4d"
+      },
+      {
+        "path": "/usr/share/doc/libzmq5/changelog.Debian.armhf.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "b771e637469e12dd7ae54728c7ac8a28cebc83cb5f1f858c45cb9232a911c2cd"
+      },
+      {
+        "path": "/usr/share/doc/libzmq5/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "ce27e3e561bc8401841113d697dfd132714d5577c84cffdd19a60db6fbe8f082"
+      },
+      {
+        "path": "/usr/share/doc/libzmq5/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "78a1462a7c5ab0488ddacdde2fc1cdd10815f8139acac01dcab13f03dbef3a17"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libzmq.so.5",
+        "type": "symlink",
+        "link": "libzmq.so.5.2.5",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "0553eb81e83191e75a8abb6870b271032c80436b1588b4b0b713784b24f7f2c3",
+      "md5sums": "88dbab004a94a3162779c9d232f7b3d0e5ce4b9688c868e32681b356e188905b",
+      "shlibs": "e3ef14c852c021505107fcd6cdc57558569130977ba529a7044fa0620fc502ea",
+      "symbols": "42a8e83a11b2b646b9dd588b8a704a13e6dd6e2d3347ea70db76d7e87315e561",
+      "triggers": "1dbe55839bbaebb58e032a4d423751e5a53fc12f159a1deda90daaec8b3dc500"
+    }
+  },
+  {
+    "archive": "libzvbi0t64_0.2.44-1_armhf.deb",
+    "package": "libzvbi0t64",
+    "version": "0.2.44-1",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.38), libpng16-16t64 (>= 1.6.46), libzvbi-common (= 0.2.44-1)",
+    "pre_depends": null,
+    "conflicts": null,
+    "breaks": "libzvbi0 (<< 0.2.44-1)",
+    "replaces": "libzvbi-0.1 (<= 0.2.1-3), libzvbi0",
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.24.1\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libzvbi-chains.so.0.0.0",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "4452516abcda9195ff0649593259f36cc6b6f07b8bcbc0263fa68192512b6446"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libzvbi.so.0.13.2",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "ab517907f269233da17d029b21616ae2b6934cb1eb622092b0825cd825798a3d"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libzvbi0t64",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/libzvbi0t64/AUTHORS.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "254368350f1f4ebc0ba12abdf6aa845e70b1f081bd0e76b461ffd4acfe311115"
+      },
+      {
+        "path": "/usr/share/doc/libzvbi0t64/NEWS.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "c0eea30f700926e984d79c618cce89b07edad7c4b496a1800adba40fded4fb35"
+      },
+      {
+        "path": "/usr/share/doc/libzvbi0t64/README.md.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "502d2e189bf126e7661e1c24018aaaffd52318d5de0351b583e1a08c21ca9ac1"
+      },
+      {
+        "path": "/usr/share/doc/libzvbi0t64/TODO",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "a9a86ce0c3672ecf6cca8bc4cb53f2027e886ac5cb7d97cf31058a060fb4f307"
+      },
+      {
+        "path": "/usr/share/doc/libzvbi0t64/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "d06b347c3f8010f2387bd1b70fecf5b95a9a95ac1c953707b7bbff70ec668f69"
+      },
+      {
+        "path": "/usr/share/doc/libzvbi0t64/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "847d23a6da45a4c8b8624512029133c0835533b4d5ebe41ca4851dffb709a8d8"
+      },
+      {
+        "path": "/usr/share/doc/libzvbi0t64/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "e25dd401f7454b6d4b631e53e2f69d42d5bc132038c467d8d492da5952a2d6a5"
+      },
+      {
+        "path": "/usr/share/lintian",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/lintian/overrides",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/lintian/overrides/libzvbi0t64",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "5f34866d880df53b898ef3977a9a97cbaef6efa6c5bfa10acf643457af888a86"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libzvbi-chains.so.0",
+        "type": "symlink",
+        "link": "libzvbi-chains.so.0.0.0",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libzvbi.so.0",
+        "type": "symlink",
+        "link": "libzvbi.so.0.13.2",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "fd8908e2d22162cd09f7ccb1a77f31b1ae26efc83ec07f06b8810d014e4ebc97",
+      "md5sums": "57feb662c2c4306a970fad2617c77165a934e3a38019e78d6c9bfce2f750967a",
+      "shlibs": "3bc65b7a9f331ad3f62cd371f82a3c078d6c72623633cea3fb0dd06155c7d420",
+      "symbols": "a22b3422b531632eb7de26d1ea016b56d9a35e62a960eb48cd5be59b1f4be7b1",
+      "triggers": "d375177f2ddeec375a8af756e66177c556566ad114898ad292bfd205b4fcdd74"
+    }
+  },
+  {
+    "archive": "ocl-icd-libopencl1_2.3.3-1_armhf.deb",
+    "package": "ocl-icd-libopencl1",
+    "version": "2.3.3-1",
+    "architecture": "armhf",
+    "multi_arch": "same",
+    "depends": "libc6 (>= 2.34)",
+    "pre_depends": null,
+    "conflicts": "amd-app, libopencl1, nvidia-libopencl1-dev",
+    "breaks": null,
+    "replaces": "amd-app, libopencl1, nvidia-libopencl1-dev",
+    "maintainer_scripts": {
+      "triggers": "# Triggers added by dh_makeshlibs/13.24.2\nactivate-noawait ldconfig\n"
+    },
+    "payload": [
+      {
+        "path": "/",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libOpenCL.so.1.0.0",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "64dabfcf6433f204e844815c4e14459650804d21748c938b344ee35454756e9a"
+      },
+      {
+        "path": "/usr/share",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/ocl-icd-libopencl1",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/ocl-icd-libopencl1/README",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "595cfb0dbf009b3befa202d91a3e0371a4a9df92c8fde66d3904d838144511dc"
+      },
+      {
+        "path": "/usr/share/doc/ocl-icd-libopencl1/README.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "3abf5e688ee2d754d0113227cce79983d063a4cacda90b7fb2f39357e5ceabbf"
+      },
+      {
+        "path": "/usr/share/doc/ocl-icd-libopencl1/changelog.Debian.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "6b65c21fe9b6ef9038f9f97e3620fe43a215a2679a81b466f7965b85b87110ca"
+      },
+      {
+        "path": "/usr/share/doc/ocl-icd-libopencl1/changelog.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "92af033b59acbcf5c6ac0fa5251b825e1b594909a970a22ad78c520af2839713"
+      },
+      {
+        "path": "/usr/share/doc/ocl-icd-libopencl1/copyright",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "69b388028066ab453fa7ad403530f7b8aafe753f9c0818653692438329d9aa07"
+      },
+      {
+        "path": "/usr/share/doc/ocl-icd-libopencl1/html",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc/ocl-icd-libopencl1/html/libOpenCL.html",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "3394f6697a7ddc878384a093424707fbc1e0ae686ae27ed86fa0afb495da5c6e"
+      },
+      {
+        "path": "/usr/share/doc-base",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/doc-base/ocl-icd-libopencl1.ocl-icd-libopencl1",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "bc40c8598099fcffdf3bd035a236291a4d4770cef410be58ab8747b3727b8709"
+      },
+      {
+        "path": "/usr/share/lintian",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/lintian/overrides",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/lintian/overrides/ocl-icd-libopencl1",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "dfae57670447709fa7a2489262f741889ed35188abd57ffe6c631f69e708f59c"
+      },
+      {
+        "path": "/usr/share/man",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/man/man7",
+        "type": "dir",
+        "link": null,
+        "mode": "0o755",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/man/man7/libOpenCL.7.gz",
+        "type": "file",
+        "link": null,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0,
+        "sha256": "74ff3277cfa22647a2265a906aae3871ea0694ee6bc0a0d6c5a81b5dccd0ad1d"
+      },
+      {
+        "path": "/usr/lib/arm-linux-gnueabihf/libOpenCL.so.1",
+        "type": "symlink",
+        "link": "libOpenCL.so.1.0.0",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      },
+      {
+        "path": "/usr/share/man/man7/libOpenCL.so.7.gz",
+        "type": "symlink",
+        "link": "libOpenCL.7.gz",
+        "mode": "0o777",
+        "uid": 0,
+        "gid": 0
+      }
+    ],
+    "control_files_sha256": {
+      "control": "bff0b75051b650a44c29d76aee4fab9d2a1b2a74b8c8c4d5274637bccccac993",
+      "md5sums": "3d63102666c3f0055600138f4f8a94de4a8e549369539865e276495b5e32e3b4",
+      "shlibs": "df106c5b1f9ad4377f95cc87861935f2559fda1415007c01913b9b63776599bf",
+      "symbols": "219092b4118a1b380d2a1bd3ad405c47481d53594dad40d3f8fde074e21e4280",
+      "triggers": "c67ab4558a59eb1e96d899a5bdbb153d6a2ab0e580f4acf5bfb1e4e6150ad2f4"
+    }
+  }
+]

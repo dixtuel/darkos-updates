@@ -82,3 +82,9 @@ backward-compatible migration is reviewed.
 The `upstream` Git remote should remain pointed at `southoz/darkos-updates` so
 future changes can be compared and intentionally integrated. The `origin`
 remote is this maintained fork.
+
+## Verified runtime and compatibility follow-ups
+
+`10032026-r3` is the exact nineteen-target runtime package verified on the R36S: reboot, metadata, ROM2 preservation, zram and the user-confirmed NFS controls/FN/audio/save test. The separate `10032026-compat` installs26 pinned local ARMhf packages and repairs only reviewed WebP mux paths before R2. It does not run APT, change the firmware version or reboot. The exact public bundle was verified on the physical R36S; all10 main legacy FFmpeg loader checks pass across both ABIs. PortMaster gameplay remains a separate test.
+
+The feed requires both R3 and compatibility markers before reporting no updates. Scoped compatibility serialization uses a new caller-held root maintenance lock; dpkg still acquires its own database lock. See each dated directory for archive/wrapper hashes, recovery notes and test limits.

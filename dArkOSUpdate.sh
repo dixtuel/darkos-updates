@@ -6,8 +6,12 @@ LOG_FILE="/home/ark/update$UPDATE_DATE.log"
 BASE_UPDATE_DONE="/home/ark/.config/.update$UPDATE_DATE"
 # The terminal guard must name the newest wired step, not the prior patch.
 PATCH_UPDATE_DONE="/home/ark/.config/.update10032026-r3"
+COMPAT_UPDATE_DONE="/home/ark/.config/.update10032026-compat"
 if [ -f "$BASE_UPDATE_DONE" ]; then
 	UPDATE_DONE="$PATCH_UPDATE_DONE"
+	if [ -f "$PATCH_UPDATE_DONE" ] && [ ! -f "$COMPAT_UPDATE_DONE" ]; then
+		UPDATE_DONE="$COMPAT_UPDATE_DONE"
+	fi
 else
 	UPDATE_DONE="$BASE_UPDATE_DONE"
 fi
@@ -825,6 +829,52 @@ PY
   exit 187
 fi
 
+# Dependency packages precede R2's legacy-library loader checks. This stage
+# does not advance .VERSION or reboot; its own marker records only its scope.
+COMPAT_VERSION="10032026-compat"
+if [ ! -f "$COMPAT_UPDATE_DONE" ]; then
+  COMPAT_STAGE="$(mktemp -d /tmp/darkos-compat.XXXXXX)" || exit 1
+  COMPAT_ZIP="$COMPAT_STAGE/darkosupdate$COMPAT_VERSION.zip"
+  COMPAT_WRAPPER="$COMPAT_STAGE/apply_portmaster_compat.py"
+  COMPAT_ZIP_SHA256="86049c53e45c551078a260c346215f7254ea90cb0de967a124f0ae588625e8f7"
+  COMPAT_WRAPPER_SHA256="8fd59c13fe81c35cc95bc252c4a057b93e78ff35ec223d023bb4d9e3006a79cd"
+  if ! wget -t 3 -T 120 --no-check-certificate "$LOCATION/$COMPAT_VERSION/darkosupdate$COMPAT_VERSION.zip" -O "$COMPAT_ZIP" -a "$LOG_FILE" || \
+     ! wget -t 3 -T 120 --no-check-certificate "$LOCATION/$COMPAT_VERSION/apply_portmaster_compat.py" -O "$COMPAT_WRAPPER" -a "$LOG_FILE"; then
+    rm -rf -- "$COMPAT_STAGE"
+    printf "\nCould not download the compatibility package.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  if ! printf '%s  %s\n' "$COMPAT_ZIP_SHA256" "$COMPAT_ZIP" "$COMPAT_WRAPPER_SHA256" "$COMPAT_WRAPPER" | sha256sum -c -; then
+    rm -rf -- "$COMPAT_STAGE"
+    printf "\nCompatibility package checksum failed; no package was installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  # New scoped maintenance lock; dpkg acquires its own database lock.
+  sudo env PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+    flock -n /run/lock/darkos-update-maintenance.lock \
+    python3 "$COMPAT_WRAPPER" "$COMPAT_ZIP" >> "$LOG_FILE" 2>&1
+  COMPAT_STATUS=$?
+  rm -rf -- "$COMPAT_STAGE"
+  if [ "$COMPAT_STATUS" -ne 0 ]; then
+    printf "\nCompatibility stage stopped. Its marker remains unset; retain the recorded ROM-card recovery backup.\n" | tee -a "$LOG_FILE"
+    exit "$COMPAT_STATUS"
+  fi
+  COMPAT_BASE_VERSION="$(cat /home/ark/.config/.VERSION 2>/dev/null)"
+  if [[ "$COMPAT_BASE_VERSION" == "10032026-r2" || "$COMPAT_BASE_VERSION" == "10032026-r3" ]]; then
+    for COMPAT_ABI in arm-linux-gnueabihf aarch64-linux-gnu; do
+      if [ "$COMPAT_ABI" = arm-linux-gnueabihf ]; then COMPAT_LOADER=/lib/ld-linux-armhf.so.3; else COMPAT_LOADER=/lib/ld-linux-aarch64.so.1; fi
+      for COMPAT_LIB in libavcodec.so.58 libavformat.so.58 libavutil.so.56 libswresample.so.3 libswscale.so.5; do
+        if ! "$COMPAT_LOADER" --list "/usr/lib/$COMPAT_ABI/$COMPAT_LIB" >> "$LOG_FILE" 2>&1; then
+          printf "\nExisting R2/R3 library check failed; compatibility marker remains unset.\n" | tee -a "$LOG_FILE"
+          exit 1
+        fi
+      done
+    done
+  fi
+  touch "$COMPAT_UPDATE_DONE" || exit 1
+  printf "\nCompatibility packages verified. The current firmware version is unchanged.\n" | tee -a "$LOG_FILE"
+fi
+
 PATCH_VERSION="10032026-r2"
 if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
   BASE_VERSION="$(cat /home/ark/.config/.VERSION 2>/dev/null)"
@@ -939,3 +989,6 @@ fi
 # Follow-up R36S-only adaptation release. Keep the already-published base OTA
 # unchanged and version the patch separately. It only replaces scoped scripts
 # and applies the two known Atari command fixes without touching ROM paths.
+
+# A compatibility-only run on an already installed R3 is also successful.
+exit 187

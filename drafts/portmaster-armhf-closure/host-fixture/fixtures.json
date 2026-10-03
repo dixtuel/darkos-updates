@@ -1,0 +1,55 @@
+{
+  "manifest_subset": {
+    "new_armhf_packages": [
+      {"Package": "libudfread0", "Version": "1.1.2-1+b2"},
+      {"Package": "libgcrypt20", "Version": "1.11.0-7"},
+      {"Package": "libvdpau1", "Version": "1.5-3+b1"}
+    ]
+  },
+  "cases": [
+    {
+      "name": "clean status",
+      "status": "",
+      "expected_exit": 0,
+      "expected": "3 absent, 0 exact, 0 stops"
+    },
+    {
+      "name": "some exact packages already installed",
+      "status": "Package: libudfread0\nStatus: install ok installed\nArchitecture: armhf\nVersion: 1.1.2-1+b2\n\nPackage: libgcrypt20\nStatus: install ok installed\nArchitecture: armhf\nVersion: 1.11.0-7\n",
+      "expected_exit": 0,
+      "expected": "1 absent, 2 exact, 0 stops"
+    },
+    {
+      "name": "different ARMhf version",
+      "status": "Package: libudfread0\nStatus: install ok installed\nArchitecture: armhf\nVersion: 1.1.2-1+b2\n\nPackage: libgcrypt20\nStatus: install ok installed\nArchitecture: armhf\nVersion: 1.10.1-1\n",
+      "expected_exit": 1,
+      "expected": "reject with ARMhf version stop"
+    },
+    {
+      "name": "Multi-Arch same version conflict",
+      "status": "Package: libgcrypt20\nStatus: install ok installed\nArchitecture: arm64\nVersion: 1.10.1-1\n",
+      "expected_exit": 1,
+      "expected": "reject with ARM64 version stop"
+    },
+    {
+      "name": "half-configured ARMhf package",
+      "status": "Package: libgcrypt20\nStatus: install ok unpacked\nArchitecture: armhf\nVersion: 1.11.0-7\n",
+      "expected_exit": 1,
+      "expected": "reject with non-installed state stop"
+    }
+  ],
+  "installer_helpers": {
+    "partial_resume_status": "Package: libgcrypt20\nStatus: install ok unpacked\nArchitecture: armhf\nVersion: 1.11.0-7\n\nPackage: libgcrypt20\nStatus: install ok installed\nArchitecture: arm64\nVersion: 1.11.0-7\n",
+    "partial_resume_expected_candidate": "libgcrypt20",
+    "shared_owner_lines": [
+      "libvdpau1:arm64: /etc/vdpau_wrapper.cfg",
+      "libvdpau1:arm64, libvdpau1:armhf: /usr/lib/arm-linux-gnueabihf/libvdpau.so.1"
+    ],
+    "shared_owner_arch_sets": [["arm64"], ["arm64", "armhf"]],
+    "reject_owner_lines": [
+      "other-package:armhf: /etc/vdpau_wrapper.cfg",
+      "libvdpau1: /etc/vdpau_wrapper.cfg"
+    ],
+    "unsupported_relation": "libc6:any (>= 2.34)"
+  }
+}

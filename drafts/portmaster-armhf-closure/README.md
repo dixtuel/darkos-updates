@@ -1,7 +1,28 @@
-# Legacy FFmpeg ARMhf dependency plan (not an active OTA)
+# Legacy FFmpeg ARMhf dependency closure (design only; not an active OTA)
 
-Pinned inputs are preserved in firmware fork commit `cf060259334e7fc5f5909e354e9605970ebf9869` under `resources/third-party/portmaster-legacy-compat/trixie-armhf-dependencies/`. 26 archive hashes/versions/dependencies are mirrored here for OTA planning. No dated ZIP or updater step consumes this directory.
+The 26 pinned ARMhf `.deb` inputs and hashes are mirrored from the firmware
+fork's `resources/third-party/portmaster-legacy-compat/trixie-armhf-dependencies/`.
+No dated ZIP or raw-updater step consumes them. The historical official-base
+and device-status simulations each selected 26 ARMhf additions, zero upgrades,
+and zero removals. Those are snapshot results, not a current device preflight.
 
-Two isolated APT solves against copied official-base and live-device statuses show 26 new ARMhf packages, zero upgrades/removals. The 26 downloaded archives match signed-index hashes and include licensing notices in the firmware fork. Temporary R36S loader checks pass for five main FFmpeg objects in both ABIs, using the staged ARMhf closure + R2 WebP mux. No installed package/library/cache was changed and no actual PortMaster game was tested.
+Temporary R36S loader checks pass for five principal ARMhf FFmpeg objects when
+the staged dependency closure and R2 WebP mux are supplied. The clean-base
+execution closure and actual PortMaster gameplay are not proven. The device's
+older R2 completion marker does not validate the rebuilt R2 archive or these
+packages.
 
-Before packaging: verify each target device's installed versions/architecture and complete dependencies; do not downgrade newer packages to these pins. Design explicit package installation/metadata/rollback behavior, backup to actual mounted active ROM card, preserve enable states and ROM paths, review maintainer scripts (including libgcrypt upgrade-only cleanup), inspect generated ZIP and test OTA/reboot/real games. The dependencies are system libraries and do not belong under either ROM game tree. Firmware image work remains paused.
+`plan_armhf_closure.py` is an offline, read-only classifier for captured
+`dpkg` status. `install_armhf_closure.py` is a separate fail-closed draft helper:
+by default it audits local `.deb` inputs; `--apply` is required for its local
+dpkg transaction, and `--resume` replays exact archives from its preinstall
+backup. It is not wired to the raw updater and has not been run on the device.
+See `INSTALL-DESIGN.md`, `HOST-REVIEW-2026-10-03.md`, and `host-fixture/` for
+the install gates, live metadata snapshot, and package-control findings. A
+device transaction, interrupted-transaction recovery, loader/game behavior,
+and any OTA packaging remain unverified.
+
+The intended package layer is `/usr/lib/arm-linux-gnueabihf`; libraries do not
+belong under `/roms` or `/roms2`. Any eventual backup must select the actual
+mounted active card and store a numeric-owner tar under its `backup/` tree.
+Firmware image work and broad Debian upgrades remain separate.

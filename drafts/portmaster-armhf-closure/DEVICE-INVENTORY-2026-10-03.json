@@ -1,0 +1,948 @@
+{
+  "capture_date": "2026-10-03",
+  "method": "read-only SSH capture; raw dpkg status retained only in temporary host scratch",
+  "primary_architecture": "arm64",
+  "foreign_architectures": [
+    "armhf"
+  ],
+  "dpkg_audit": "clean (no output)",
+  "status_records": 1276,
+  "dpkg_status_sha256": "f5d21b4f4b087088a4f2f3c0a9a0c69544b767290f2ad51c8e2096df3410c2df",
+  "historical_status_sha256_matches": true,
+  "pinned_armhf_candidates": 26,
+  "exact_armhf_already_installed": 0,
+  "absent_armhf_candidates": 26,
+  "arm64_multiarch_exact_matches": 26,
+  "arm64_multiarch_version_conflicts": [],
+  "package_states": [
+    {
+      "package": "libudfread0",
+      "candidate_version": "1.1.2-1+b2",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "1.1.2-1+b2",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libbluray2",
+      "candidate_version": "1:1.3.4-1+b2",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "1:1.3.4-1+b2",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libchromaprint1",
+      "candidate_version": "1.5.1-7",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "1.5.1-7",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libgpg-error0",
+      "candidate_version": "1.51-4",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "1.51-4",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libgcrypt20",
+      "candidate_version": "1.11.0-7",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "1.11.0-7",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libgme0",
+      "candidate_version": "0.6.3-7+b2",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "0.6.3-7+b2",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libgsm1",
+      "candidate_version": "1.0.22-1+b2",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "1.0.22-1+b2",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libnorm1t64",
+      "candidate_version": "1.5.9+dfsg-3.1+b2",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "1.5.9+dfsg-3.1+b2",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libopenjp2-7",
+      "candidate_version": "2.5.3-2.1~deb13u1",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "2.5.3-2.1~deb13u1",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libopenmpt0t64",
+      "candidate_version": "0.7.13-1+b1",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "0.7.13-1+b1",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libpgm-5.3-0t64",
+      "candidate_version": "5.3.128~dfsg-2.1+b1",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "5.3.128~dfsg-2.1+b1",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "librabbitmq4",
+      "candidate_version": "0.15.0-1",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "0.15.0-1",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libshine3",
+      "candidate_version": "3.1.1-2+b2",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "3.1.1-2+b2",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libsnappy1v5",
+      "candidate_version": "1.2.2-1",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "1.2.2-1",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libsodium23",
+      "candidate_version": "1.0.18-1+b2",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "1.0.18-1+b2",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libsoxr0",
+      "candidate_version": "0.1.3-4+b2",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "0.1.3-4+b2",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libspeex1",
+      "candidate_version": "1.2.1-3",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "1.2.1-3",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libtwolame0",
+      "candidate_version": "0.4.0-2+b2",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "0.4.0-2+b2",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libva2",
+      "candidate_version": "2.22.0-3",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "2.22.0-3",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libva-drm2",
+      "candidate_version": "2.22.0-3",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "2.22.0-3",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libva-x11-2",
+      "candidate_version": "2.22.0-3",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "2.22.0-3",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libvdpau1",
+      "candidate_version": "1.5-3+b1",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "1.5-3+b1",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libxvidcore4",
+      "candidate_version": "2:1.3.7-1+b2",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "2:1.3.7-1+b2",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libzmq5",
+      "candidate_version": "4.3.5-1+b3",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "4.3.5-1+b3",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "libzvbi0t64",
+      "candidate_version": "0.2.44-1",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "0.2.44-1",
+      "arm64_exact_match": true
+    },
+    {
+      "package": "ocl-icd-libopencl1",
+      "candidate_version": "2.3.3-1",
+      "armhf_status": "absent",
+      "armhf_version": null,
+      "arm64_status": "install ok installed",
+      "arm64_version": "2.3.3-1",
+      "arm64_exact_match": true
+    }
+  ],
+  "candidate_armhf_library_paths": [
+    {
+      "package": "libbluray2",
+      "path": "/usr/lib/arm-linux-gnueabihf/libbluray.so.2.4.3",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libbluray2",
+      "path": "/usr/lib/arm-linux-gnueabihf/libbluray.so.2",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libchromaprint1",
+      "path": "/usr/lib/arm-linux-gnueabihf/libchromaprint.so.1.5.1",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libchromaprint1",
+      "path": "/usr/lib/arm-linux-gnueabihf/libchromaprint.so.1",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libgcrypt20",
+      "path": "/usr/lib/arm-linux-gnueabihf/libgcrypt.so.20.5.0",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libgcrypt20",
+      "path": "/usr/lib/arm-linux-gnueabihf/libgcrypt.so.20",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libgme0",
+      "path": "/usr/lib/arm-linux-gnueabihf/libgme.so.0.6.3",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libgme0",
+      "path": "/usr/lib/arm-linux-gnueabihf/libgme.so.0",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libgpg-error0",
+      "path": "/usr/lib/arm-linux-gnueabihf/libgpg-error.so.0.38.0",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libgpg-error0",
+      "path": "/usr/lib/arm-linux-gnueabihf/libgpg-error.so.0",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libgsm1",
+      "path": "/usr/lib/arm-linux-gnueabihf/libgsm.so.1.0.19",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libgsm1",
+      "path": "/usr/lib/arm-linux-gnueabihf/libgsm.so.1",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libnorm1t64",
+      "path": "/usr/lib/arm-linux-gnueabihf/libnorm.so.1",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libopenjp2-7",
+      "path": "/usr/lib/arm-linux-gnueabihf/libopenjp2.so.2.5.3",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libopenjp2-7",
+      "path": "/usr/lib/arm-linux-gnueabihf/libopenjp2.so.7",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libopenmpt0t64",
+      "path": "/usr/lib/arm-linux-gnueabihf/libopenmpt.so.0.4.4",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libopenmpt0t64",
+      "path": "/usr/lib/arm-linux-gnueabihf/libopenmpt.so.0",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libpgm-5.3-0t64",
+      "path": "/usr/lib/arm-linux-gnueabihf/libpgm-5.3.so.0.0.128",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libpgm-5.3-0t64",
+      "path": "/usr/lib/arm-linux-gnueabihf/libpgm-5.3.so.0",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "librabbitmq4",
+      "path": "/usr/lib/arm-linux-gnueabihf/librabbitmq.so.0.15.0",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "librabbitmq4",
+      "path": "/usr/lib/arm-linux-gnueabihf/librabbitmq.so.4",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libshine3",
+      "path": "/usr/lib/arm-linux-gnueabihf/libshine.so.3.0.1",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libshine3",
+      "path": "/usr/lib/arm-linux-gnueabihf/libshine.so.3",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libsnappy1v5",
+      "path": "/usr/lib/arm-linux-gnueabihf/libsnappy.so.1.2.2",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libsnappy1v5",
+      "path": "/usr/lib/arm-linux-gnueabihf/libsnappy.so.1",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libsodium23",
+      "path": "/usr/lib/arm-linux-gnueabihf/libsodium.so.23.3.0",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libsodium23",
+      "path": "/usr/lib/arm-linux-gnueabihf/libsodium.so.23",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libsoxr0",
+      "path": "/usr/lib/arm-linux-gnueabihf/libsoxr.so.0.1.2",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libsoxr0",
+      "path": "/usr/lib/arm-linux-gnueabihf/libsoxr.so.0",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libspeex1",
+      "path": "/usr/lib/arm-linux-gnueabihf/libspeex.so.1.5.2",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libspeex1",
+      "path": "/usr/lib/arm-linux-gnueabihf/libspeex.so.1",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libtwolame0",
+      "path": "/usr/lib/arm-linux-gnueabihf/libtwolame.so.0.0.0",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libtwolame0",
+      "path": "/usr/lib/arm-linux-gnueabihf/libtwolame.so.0",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libudfread0",
+      "path": "/usr/lib/arm-linux-gnueabihf/libudfread.so.0.1.0",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libudfread0",
+      "path": "/usr/lib/arm-linux-gnueabihf/libudfread.so.0",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libva-drm2",
+      "path": "/usr/lib/arm-linux-gnueabihf/libva-drm.so.2.2200.0",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libva-drm2",
+      "path": "/usr/lib/arm-linux-gnueabihf/libva-drm.so.2",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libva-x11-2",
+      "path": "/usr/lib/arm-linux-gnueabihf/libva-x11.so.2.2200.0",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libva-x11-2",
+      "path": "/usr/lib/arm-linux-gnueabihf/libva-x11.so.2",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libva2",
+      "path": "/usr/lib/arm-linux-gnueabihf/libva.so.2.2200.0",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libva2",
+      "path": "/usr/lib/arm-linux-gnueabihf/libva.so.2",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libvdpau1",
+      "path": "/usr/lib/arm-linux-gnueabihf/libvdpau.so.1.0.0",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libvdpau1",
+      "path": "/usr/lib/arm-linux-gnueabihf/vdpau/libvdpau_trace.so.1.0.0",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libvdpau1",
+      "path": "/usr/lib/arm-linux-gnueabihf/libvdpau.so.1",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libvdpau1",
+      "path": "/usr/lib/arm-linux-gnueabihf/vdpau/libvdpau_trace.so.1",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libxvidcore4",
+      "path": "/usr/lib/arm-linux-gnueabihf/libxvidcore.so.4.3",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libxvidcore4",
+      "path": "/usr/lib/arm-linux-gnueabihf/libxvidcore.so.4",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libzmq5",
+      "path": "/usr/lib/arm-linux-gnueabihf/libzmq.so.5.2.5",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libzmq5",
+      "path": "/usr/lib/arm-linux-gnueabihf/libzmq.so.5",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libzvbi0t64",
+      "path": "/usr/lib/arm-linux-gnueabihf/libzvbi-chains.so.0.0.0",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libzvbi0t64",
+      "path": "/usr/lib/arm-linux-gnueabihf/libzvbi.so.0.13.2",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "libzvbi0t64",
+      "path": "/usr/lib/arm-linux-gnueabihf/libzvbi-chains.so.0",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "libzvbi0t64",
+      "path": "/usr/lib/arm-linux-gnueabihf/libzvbi.so.0",
+      "type": "symlink",
+      "status": "absent"
+    },
+    {
+      "package": "ocl-icd-libopencl1",
+      "path": "/usr/lib/arm-linux-gnueabihf/libOpenCL.so.1.0.0",
+      "type": "file",
+      "status": "absent"
+    },
+    {
+      "package": "ocl-icd-libopencl1",
+      "path": "/usr/lib/arm-linux-gnueabihf/libOpenCL.so.1",
+      "type": "symlink",
+      "status": "absent"
+    }
+  ],
+  "non_directory_archive_paths_checked": 172,
+  "existing_non_directory_paths": 32,
+  "existing_path_content_mismatches": 0,
+  "existing_path_owner_mismatches": 0,
+  "existing_path_mode_or_numeric_owner_mismatches": 0,
+  "existing_armhf_library_directory_paths": 0,
+  "existing_paths": [
+    {
+      "path": "/etc/vdpau_wrapper.cfg",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "938aa62078aef1bced7b85a3dc0d10de6df631b06d23244531553f93b5966378",
+      "dpkg_owner": "libvdpau1:arm64: /etc/vdpau_wrapper.cfg"
+    },
+    {
+      "path": "/usr/share/bug/libvdpau1",
+      "type": "file",
+      "mode": "0o755",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "62ef379a02f7caf68115b035d9ff307e1f985f134db6e3a9b2ec4b6cec7fa673",
+      "dpkg_owner": "libvdpau1:arm64: /usr/share/bug/libvdpau1"
+    },
+    {
+      "path": "/usr/share/doc-base/ocl-icd-libopencl1.ocl-icd-libopencl1",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "bc40c8598099fcffdf3bd035a236291a4d4770cef410be58ab8747b3727b8709",
+      "dpkg_owner": "ocl-icd-libopencl1:arm64: /usr/share/doc-base/ocl-icd-libopencl1.ocl-icd-libopencl1"
+    },
+    {
+      "path": "/usr/share/doc/libbluray2/changelog.Debian.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "bed0d553455a25ba558fd380fa6494dd948ec9fb1a7b5674b3f3d6adda71f608",
+      "dpkg_owner": "libbluray2:arm64: /usr/share/doc/libbluray2/changelog.Debian.gz"
+    },
+    {
+      "path": "/usr/share/doc/libbluray2/changelog.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "7e04b2d53d7be409d2612f21361911ad4b15ccf4eda93783dccc9e21c89a43a4",
+      "dpkg_owner": "libbluray2:arm64: /usr/share/doc/libbluray2/changelog.gz"
+    },
+    {
+      "path": "/usr/share/doc/libbluray2/copyright",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "4e890ce8aa03539f2a76b929552e1c4791a4a1619317c9379d0c506a2faedf0d",
+      "dpkg_owner": "libbluray2:arm64: /usr/share/doc/libbluray2/copyright"
+    },
+    {
+      "path": "/usr/share/doc/libchromaprint1/changelog.Debian.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "6d03e845fffaaae6ab6a871c3823818689e17b350667ef85095ed051ade593a5",
+      "dpkg_owner": "libchromaprint1:arm64: /usr/share/doc/libchromaprint1/changelog.Debian.gz"
+    },
+    {
+      "path": "/usr/share/doc/libchromaprint1/changelog.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "358082aa7a5ea746e6faeeee25f4bbddfc85db063bb1b30726f042047857788c",
+      "dpkg_owner": "libchromaprint1:arm64: /usr/share/doc/libchromaprint1/changelog.gz"
+    },
+    {
+      "path": "/usr/share/doc/libchromaprint1/copyright",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "23dfbeb067dc73487dce9a90bfb42a5e8e69d985c6a890cbb41068f53a2bb8f9",
+      "dpkg_owner": "libchromaprint1:arm64: /usr/share/doc/libchromaprint1/copyright"
+    },
+    {
+      "path": "/usr/share/doc/libgcrypt20/AUTHORS.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "6a349980953228754aca6cc9ec0e62243b4a0dc3329ce660dd7adb2624826968",
+      "dpkg_owner": "libgcrypt20:arm64: /usr/share/doc/libgcrypt20/AUTHORS.gz"
+    },
+    {
+      "path": "/usr/share/doc/libgcrypt20/NEWS.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "76af356de24818c6f6d73ff33a65febce99031105fb7c1b6032b3bbaff291297",
+      "dpkg_owner": "libgcrypt20:arm64: /usr/share/doc/libgcrypt20/NEWS.gz"
+    },
+    {
+      "path": "/usr/share/doc/libgcrypt20/README.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "80d687e3e78b5acd9d01a5dde64798e0a6ba4cd3b8991d9f188e272460bc8536",
+      "dpkg_owner": "libgcrypt20:arm64: /usr/share/doc/libgcrypt20/README.gz"
+    },
+    {
+      "path": "/usr/share/doc/libgcrypt20/THANKS.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "b4ab3b58942af018d013470746311e868557e5b664a20ddaf20bf9e9907aa5fb",
+      "dpkg_owner": "libgcrypt20:arm64: /usr/share/doc/libgcrypt20/THANKS.gz"
+    },
+    {
+      "path": "/usr/share/doc/libgcrypt20/changelog.Debian.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "eac3bcf5fcf4e974fb3e0c383cf5ee914c125afd1a68bb7521b5d7614e344417",
+      "dpkg_owner": "libgcrypt20:arm64: /usr/share/doc/libgcrypt20/changelog.Debian.gz"
+    },
+    {
+      "path": "/usr/share/doc/libgcrypt20/changelog.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "89597fd725ccbb5637f0c16ad2c4a90a87f378bebb21dd6e1ef243fb1c793220",
+      "dpkg_owner": "libgcrypt20:arm64: /usr/share/doc/libgcrypt20/changelog.gz"
+    },
+    {
+      "path": "/usr/share/doc/libgcrypt20/copyright",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "4feae258cab1ad4743fb569a77e0b2a5b7a0199520bdbc0a613916291b9aa8a8",
+      "dpkg_owner": "libgcrypt20:arm64: /usr/share/doc/libgcrypt20/copyright"
+    },
+    {
+      "path": "/usr/share/doc/libgme0/changelog.Debian.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "902f45c9a0bf576aaef253cbe6531bbe3abc779ab2d21114c671168b8960104d",
+      "dpkg_owner": "libgme0:arm64: /usr/share/doc/libgme0/changelog.Debian.gz"
+    },
+    {
+      "path": "/usr/share/doc/libgme0/changelog.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "528fe4eebbba3752da24212d30104bd322fd14a6385320d14467b97758f93420",
+      "dpkg_owner": "libgme0:arm64: /usr/share/doc/libgme0/changelog.gz"
+    },
+    {
+      "path": "/usr/share/doc/libgme0/copyright",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "05a592c9b5923026691840dd10f5f08b407a8ca94fb237850354a4128b2cdc6c",
+      "dpkg_owner": "libgme0:arm64: /usr/share/doc/libgme0/copyright"
+    },
+    {
+      "path": "/usr/share/doc/libgpg-error0/README.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "ba795280489043e22269601673eb5c9adf714c7a0b85544439a2161a32504611",
+      "dpkg_owner": "libgpg-error0:arm64: /usr/share/doc/libgpg-error0/README.gz"
+    },
+    {
+      "path": "/usr/share/doc/libgpg-error0/changelog.Debian.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "55550d005594376782ab6f59e03ac07c67fb6bf221afa6ca6893e5bcecc713e9",
+      "dpkg_owner": "libgpg-error0:arm64: /usr/share/doc/libgpg-error0/changelog.Debian.gz"
+    },
+    {
+      "path": "/usr/share/doc/libgpg-error0/changelog.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "c839bbff27e696b51c806498126e50b1d5e1bdab983bdf88349a204ee74810ff",
+      "dpkg_owner": "libgpg-error0:arm64: /usr/share/doc/libgpg-error0/changelog.gz"
+    },
+    {
+      "path": "/usr/share/doc/libgpg-error0/copyright",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "1edb3be55cf9371e8e7a71e53fadc2a3d33b44d7d7f15c78a7669c92ce0fade2",
+      "dpkg_owner": "libgpg-error0:arm64: /usr/share/doc/libgpg-error0/copyright"
+    },
+    {
+      "path": "/usr/share/doc/libgsm1/MACHINES",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "fccbe9ec3787c9c49f97e1ef0e3d3386aae50a4ed00ed98431b2b7f88304d395",
+      "dpkg_owner": "libgsm1:arm64: /usr/share/doc/libgsm1/MACHINES"
+    },
+    {
+      "path": "/usr/share/doc/libgsm1/README",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "31856eee76c7e2d0a8d93d43e3debd1b5380f04c9f713551917cb9ad432d6daa",
+      "dpkg_owner": "libgsm1:arm64: /usr/share/doc/libgsm1/README"
+    },
+    {
+      "path": "/usr/share/doc/libgsm1/README.Debian",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "47cdc728e88861b302b2e4bec2d7b43d9dbdf78714a7215ede86831af7b213b0",
+      "dpkg_owner": "libgsm1:arm64: /usr/share/doc/libgsm1/README.Debian"
+    },
+    {
+      "path": "/usr/share/doc/libgsm1/changelog.Debian.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "adc9790519faf905890c8423690579b015807b12accad0ca20853f389c09b992",
+      "dpkg_owner": "libgsm1:arm64: /usr/share/doc/libgsm1/changelog.Debian.gz"
+    },
+    {
+      "path": "/usr/share/doc/libgsm1/changelog.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "6ec8ff8493d4cabb1672c26a987ec727d8f22d69a46d6f952e2e8c9d094e509a",
+      "dpkg_owner": "libgsm1:arm64: /usr/share/doc/libgsm1/changelog.gz"
+    },
+    {
+      "path": "/usr/share/doc/libgsm1/copyright",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "546515a7de6c93db62b6b32bd4ad35bce0314055c255889a70a51a8aae6f3cd8",
+      "dpkg_owner": "libgsm1:arm64: /usr/share/doc/libgsm1/copyright"
+    },
+    {
+      "path": "/usr/share/doc/libnorm1t64/changelog.Debian.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "77a949c63d3b5c41e2e0384dd61c21f24602b1be4c0924a5194b1b59f34426a5",
+      "dpkg_owner": "libnorm1t64:arm64: /usr/share/doc/libnorm1t64/changelog.Debian.gz"
+    },
+    {
+      "path": "/usr/share/doc/libnorm1t64/copyright",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "88c38443da2ea7d228b3d3e4e13138c02b41448e1210ad0e6277516c9ad493ef",
+      "dpkg_owner": "libnorm1t64:arm64: /usr/share/doc/libnorm1t64/copyright"
+    },
+    {
+      "path": "/usr/share/doc/libopenjp2-7/changelog.Debian.gz",
+      "type": "file",
+      "mode": "0o644",
+      "uid": 0,
+      "gid": 0,
+      "link": null,
+      "sha256": "1f083979f2c4919e86d17d2015f977caa82420e40fcb1c6c83761bcc58c1b67f",
+      "dpkg_owner": "libopenjp2-7:arm64: /usr/share/doc/libopenjp2-7/changelog.Debian.gz"
+    }
+  ],
+  "libvdpau_conffile_sha256": "938aa62078aef1bced7b85a3dc0d10de6df631b06d23244531553f93b5966378",
+  "planner_result": "26 absent ARMhf candidates; status classification only; installation not approved",
+  "read_only_followup_capture": {
+    "time_local": "2026-10-03 21:31 TRT",
+    "status_sha256": "f5d21b4f4b087088a4f2f3c0a9a0c69544b767290f2ad51c8e2096df3410c2df",
+    "matches_prior_capture": true,
+    "primary_architecture": "arm64",
+    "foreign_architectures": [
+      "armhf"
+    ],
+    "dpkg_audit": "clean (exit 0, no output)",
+    "armhf_candidates": "26 absent",
+    "arm64_peers": "26 exact pinned versions installed",
+    "replaces_and_conflicts_target_records": "none; all ten unique referenced names returned not-installed",
+    "vdpau_conffile": {
+      "path": "/etc/vdpau_wrapper.cfg",
+      "owner": "libvdpau1:arm64",
+      "sha256": "938aa62078aef1bced7b85a3dc0d10de6df631b06d23244531553f93b5966378"
+    },
+    "rom_mounts": [
+      {
+        "target": "/roms2",
+        "source": "/dev/mmcblk1p1",
+        "filesystem": "vfat",
+        "read_write": true
+      },
+      {
+        "target": "/roms",
+        "source": "/dev/mmcblk0p3",
+        "filesystem": "exfat",
+        "read_write": true
+      }
+    ],
+    "writes_performed": false
+  }
+}

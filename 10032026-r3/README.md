@@ -1,6 +1,6 @@
 # dArkOSRE-R36 RK3326 runtime follow-up — 10032026-r3
 
-This is the maintained `dixtuel/darkos-updates` feed package for R36S RK3326. The raw updater invokes it only after OTA `10032026-r2` is complete. It is staged in the feed repository locally; it has not been committed or pushed.
+This is the maintained `dixtuel/darkos-updates` feed package for R36S RK3326. The raw updater invokes it only after OTA `10032026-r2` is complete. The dated directory is the raw-main delivery input; release metadata follows the same archive and checksum.
 
 ## Package
 
@@ -22,7 +22,7 @@ The ScreenScraper/TheGamesDB frontend candidate, compatibility-package closure, 
 
 The 19-target archive passed the host installer fixtures and the repository OTA validator. The R36S installation used `/roms2`; the device run and post-boot readback verified all 19 targets. The user also confirmed NFS Most Wanted audio and an existing save loaded after launch. These are device outcomes for this exact archive; they do not establish PPSSPP GUI Restore Defaults parity, every game, or unrelated frontend changes.
 
-Repeatable repository checks from the project root:
+Maintainer workspace checks from the project root (source mirrors and host fixtures require the recorded project workspace):
 
 ```sh
 python3 repositories/update-fork/10032026-r3/verify-r3-stage.py
@@ -32,4 +32,4 @@ bash -n repositories/update-fork/dArkOSUpdate.sh
 python3 build/validation/ota-review-20261003/host-fixture.qVuKoL/run-runtime-fixtures.py build/validation/ota-review-20261003/host-fixture.qVuKoL
 ```
 
-The staged verification helper also checks all 19 source/draft/payload mirrors, archive members and the installer copy; it exercises terminal-marker combinations for base, R1, R2 and R3, and verifies that R2/R3 installer failures retain their status while success maps to `187`. The device installation is already complete, and the updater feed wiring is not public until its repository changes are committed and pushed through the user's release process.
+The staged verification helper also checks all 19 source/draft/payload mirrors, archive members and the installer copy; it exercises terminal-marker combinations for base, R1, R2 and R3, and verifies that R2/R3 installer failures retain their status while success maps to `187`. The device installation is already complete, and the publication commit is recorded separately from these physical test outcomes.

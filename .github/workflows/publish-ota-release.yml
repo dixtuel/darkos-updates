@@ -21,7 +21,7 @@ jobs:
           set -euo pipefail
           tag="${GITHUB_REF_NAME}"
           date="${tag#ota-}"
-          [[ "$date" =~ ^[0-9]{8}(-r[1-9][0-9]*)?$ ]]
+          [[ "$date" =~ ^[0-9]{8}(-r[1-9][0-9]*|-compat)?$ ]]
           git fetch origin main
           git merge-base --is-ancestor "$GITHUB_SHA" origin/main
           archive="$date/darkosupdate${date}.zip"
@@ -35,8 +35,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           date="${GITHUB_REF_NAME#ota-}"
+          assets=("$date/darkosupdate${date}.zip" "$date/SHA256SUMS")
+          if [ -f "$date/apply_portmaster_compat.py" ]; then
+            assets+=("$date/apply_portmaster_compat.py")
+          fi
           gh release create "$GITHUB_REF_NAME" \
-            "$date/darkosupdate${date}.zip" \
-            "$date/SHA256SUMS" \
+            "${assets[@]}" \
             --title "dArkOSRE-R36 OTA $date" \
             --notes-file "$date/README.md"

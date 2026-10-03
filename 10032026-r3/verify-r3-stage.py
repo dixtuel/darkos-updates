@@ -52,6 +52,8 @@ subprocess.run(["bash", "-n", str(updater)], check=True)
 text = updater.read_text()
 header = text.split('if [ -f "$LOG_FILE" ]; then', 1)[0]
 assert 'PATCH_UPDATE_DONE="/home/ark/.config/.update10032026-r3"' in header
+assert 'COMPAT_UPDATE_DONE="/home/ark/.config/.update10032026-compat"' in header
+assert 'if [ -f "$PATCH_UPDATE_DONE" ] && [ ! -f "$COMPAT_UPDATE_DONE" ]; then' in header
 r2 = text.split('PATCH_VERSION="10032026-r2"', 1)[1].split('PATCH_VERSION="10032026-r3"', 1)[0]
 r3 = text.split('PATCH_VERSION="10032026-r3"', 1)[1].split('# Follow-up R36S-only adaptation release', 1)[0]
 for block in (r2, r3):
@@ -72,7 +74,9 @@ with tempfile.TemporaryDirectory(prefix="r3-marker-flow-") as temporary:
         ({".update10032026"}, 0, "base complete"),
         ({".update10032026", ".update10032026-r1"}, 0, "R1 complete"),
         ({".update10032026", ".update10032026-r1", ".update10032026-r2"}, 0, "R2 complete; R3 eligible"),
-        ({".update10032026", ".update10032026-r1", ".update10032026-r2", ".update10032026-r3"}, 187, "R3 terminal"),
+        ({".update10032026", ".update10032026-r1", ".update10032026-r2", ".update10032026-r3"}, 0, "R3 complete; compatibility eligible"),
+        ({".update10032026", ".update10032026-r1", ".update10032026-r2", ".update10032026-compat"}, 0, "compatibility complete; R3 eligible"),
+        ({".update10032026", ".update10032026-r1", ".update10032026-r2", ".update10032026-r3", ".update10032026-compat"}, 187, "R3 and compatibility terminal"),
     ]
     for index, (markers, expected, label) in enumerate(scenarios):
         for marker in config.iterdir():
@@ -92,6 +96,11 @@ fixture = project / "build/validation/ota-review-20261003/host-fixture.qVuKoL"
 subprocess.run(
     ["python3", str(fixture / "run-runtime-fixtures.py"), str(fixture)],
     cwd=project,
+    check=True,
+)
+subprocess.run(
+    ["python3", str(update_repo / "10032026-compat/verify-updater-stage.py")],
+    cwd=update_repo,
     check=True,
 )
 print("R3 archive, 19 source mirrors, updater guards/statuses, marker flow, and host fixtures passed.")

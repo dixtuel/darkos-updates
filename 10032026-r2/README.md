@@ -128,3 +128,9 @@ establish validation of this rebuilt archive.
 ## Existing-library collision guard (2026-10-03)
 
 The installer now preserves byte-identical installed libraries and matching links. It aborts before installation when a differing existing library/link would be overwritten. Only the documented zero-byte AArch64 libavcodec.so.58 placeholder is eligible for repair. Six isolated filesystem cases passed; this does not establish package ownership/dependency closure or clean-base/device gameplay validation. The candidate remains unpublished.
+
+## Superseding physical closure evidence — 2026-10-03
+
+The guarded exact26-package ARMhf transaction completed on the physical R36S without upgrades/removals or changes to any pre-existing dpkg record. The reviewed two-path WebP mux correction was applied only to absent paths in the older live R2; it did not replay the older marker. All54 payload objects of this exact55-entry R2 archive subsequently matched device readback byte-for-byte/type-for-type, and all10 main FFmpeg system-path loader checks passed across ARMhf/AArch64 without staging libraries. Production ES remained active and versionR3 unchanged. This supersedes the missing-mux/native-loader pending statements for this specific physical device.
+
+The public feed must install the dedicated compatibility closure before R2 so a clean base gets those26 packages too. No broad Debian upgrade is part of this work. Actual DSperate gameplay, controller/BIOS/save tests and clean-image physical boot remain pending; native loader and byte equality do not establish those outcomes.
