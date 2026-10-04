@@ -10,8 +10,9 @@ firmware.
 
 The repository mirrors the full upstream `southoz/darkos-updates` history
 through `01302026` (latest upstream commit: 2026-03-14) and adds documented
-R36-specific packages `10032026`, `10032026-r1`, `10032026-r2`, and staged
-`10032026-r3`. Existing upstream payloads remain unchanged.
+R36-specific packages `10032026`, `10032026-r1`, `10032026-r2`, `10032026-r3`,
+`10032026-r4`, and the separate `10032026-compat` dependency closure. Existing
+upstream payloads remain unchanged.
 The new package is assembled from RK3326-selected artifacts in vanilla
 06072026, 07262026, and 08272026 releases; it does not install a vanilla image
 or rewrite R36 ROM-card configuration. See
@@ -30,8 +31,11 @@ See [`10032026-r2/README.md`](10032026-r2/README.md) for the binary/source
 provenance, device checks, limitations, and rollback location.
 The `10032026-r3` runtime follow-up applies only after R2 is complete. Its exact
 package hash, target scope and device validation are documented in
-[`10032026-r3/README.md`](10032026-r3/README.md). The R3 follow-up is staged in
-the working tree and has not been committed or pushed.
+[`10032026-r3/README.md`](10032026-r3/README.md). R4 surgically repairs the
+stale Advanced SD2 Singe rewrite and fails closed on unknown files; see
+[`10032026-r4/README.md`](10032026-r4/README.md). Both the R4 SD2 safe-absence
+path and the SD1-selected present-file mutation/rollback-card routing were
+validated on the physical R36S; see the linked dated device-validation record.
 
 The upstream update repository has no GitHub Actions workflows or GitHub
 Releases. This fork validates shell/archive structure on pushes and pull
@@ -44,14 +48,28 @@ on raw `main`.
 
 1. The firmware's `/opt/system/Update.sh` downloads `dArkOSUpdate.sh` and
    `LICENSE` from this repository's raw `main` branch.
-2. `dArkOSUpdate.sh` selects dated ZIP files using per-update marker files in
-   `/home/ark/.config/` and extracts the selected payloads to `/`.
-3. A successful update records its marker and updates the displayed version.
-   The R36/R36S `10032026` update is started from the device's Update menu; it
-   does not ask the user to type on a keyboard and reboots after installation.
-   The `10032026-r1` follow-up requires the base OTA marker/version `10032026`.
-   The `10032026-r2` follow-up applies after `10032026` and/or `10032026-r1`.
-   The `10032026-r3` follow-up requires completed `10032026-r2` on RK3326.
+2. `dArkOSUpdate.sh` reads `.VERSION`, verifies the RK3326 target and required
+   completion markers, then resolves the first missing dated step. It processes
+   `10032026`, R1, compatibility, R2, R3 and R4 in order; it never treats a
+   later marker as permission to skip an incomplete prerequisite. Unknown or
+   inconsistent version/marker states stop before any payload is installed.
+3. The selected dated ZIP is checksum/structure verified by its stage logic.
+   Installers that reboot end the current run; after boot, run the regular
+   EmulationStation Update action again to continue at the next missing stage.
+
+The supported `03082026` image already carries its prior vanilla dated-update
+markers. If any are missing, the updater stops; it does not replay old broad
+upstream packages or infer completion from `.VERSION`.
+
+For devices whose built-in entrypoint still targets the upstream `southoz`
+feed, the firmware repository's GitHub release attaches
+`tools/upgrade-to-maintained-updater.sh`. Copy it to the first card's
+`/roms/tools/` and launch it from EmulationStation. It validates the supported
+R36 release/version, backs up the prior entrypoint on the selected ROM card,
+and changes only the reviewed feed URL to `dixtuel/darkos-updates` before
+starting the normal update flow. It does not flash an image or change either
+ROM card. See `repositories/firmware-fork/tools/README.md` for its limits and
+recovery details.
 
 Because the updater writes into the live root filesystem, update payloads are
 release artifacts, not ordinary application data. Review every ZIP entry and

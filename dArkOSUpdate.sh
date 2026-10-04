@@ -2,31 +2,112 @@
 
 clear
 UPDATE_DATE="10032026"
-LOG_FILE="/home/ark/update$UPDATE_DATE.log"
-BASE_UPDATE_DONE="/home/ark/.config/.update$UPDATE_DATE"
-# The terminal guard must name the newest wired step, not the prior patch.
-PATCH_UPDATE_DONE="/home/ark/.config/.update10032026-r4"
-COMPAT_UPDATE_DONE="/home/ark/.config/.update10032026-compat"
-if [ -f "$BASE_UPDATE_DONE" ]; then
-	UPDATE_DONE="$PATCH_UPDATE_DONE"
-	if [ -f "$PATCH_UPDATE_DONE" ] && [ ! -f "$COMPAT_UPDATE_DONE" ]; then
-		UPDATE_DONE="$COMPAT_UPDATE_DONE"
-	fi
-else
-	UPDATE_DONE="$BASE_UPDATE_DONE"
+LOG_FILE="${DARKOS_UPDATE_LOG_FILE:-/home/ark/update$UPDATE_DATE.log}"
+CONFIG_DIR="${DARKOS_UPDATE_CONFIG_DIR:-/home/ark/.config}"
+VERSION_FILE="$CONFIG_DIR/.VERSION"
+BASE_UPDATE_DONE="$CONFIG_DIR/.update$UPDATE_DATE"
+R1_UPDATE_DONE="$CONFIG_DIR/.update10032026-r1"
+R2_UPDATE_DONE="$CONFIG_DIR/.update10032026-r2"
+R3_UPDATE_DONE="$CONFIG_DIR/.update10032026-r3"
+R4_UPDATE_DONE="$CONFIG_DIR/.update10032026-r4"
+COMPAT_UPDATE_DONE="$CONFIG_DIR/.update10032026-compat"
+CURRENT_VERSION="$(tr -d '\r\n' < "$VERSION_FILE" 2>/dev/null)"
+DEVICE_COMPAT="$(tr -d '\0' < "${DARKOS_DEVICE_COMPAT_FILE:-/proc/device-tree/compatible}" 2>/dev/null)"
+
+show_update_error() {
+	printf '\n%s\n' "$1" | tee -a "$LOG_FILE"
+	msgbox "$1" 2>/dev/null || true
+	exit 1
+}
+
+if [[ "$DEVICE_COMPAT" != *"rk3326"* ]]; then
+	show_update_error "This updater is only for dArkOSRE-R36 RK3326 devices. No files were changed."
+fi
+case "$CURRENT_VERSION" in
+	03082026|10032026|10032026-r1|10032026-r2|10032026-r3|10032026-r4) ;;
+	*) show_update_error "Unsupported firmware version '$CURRENT_VERSION'. Install the latest dArkOSRE-R36 image (03082026) first. This updater will not flash or repartition the card." ;;
+esac
+
+LEGACY_MARKERS=(
+	"$CONFIG_DIR/.update12242025"
+	"$CONFIG_DIR/.update12312025"
+	"$CONFIG_DIR/.update01082026"
+	"$CONFIG_DIR/.update01162026"
+	"$CONFIG_DIR/.update01302026"
+)
+for marker in "${LEGACY_MARKERS[@]}"; do
+	[ -f "$marker" ] || show_update_error "Firmware state is inconsistent: $CURRENT_VERSION is set but required base-image marker $(basename "$marker") is missing. Install the latest dArkOSRE-R36 image first; this updater will not replay older upstream updates."
+done
+if [ "$CURRENT_VERSION" != "03082026" ]; then
+	[ -f "$BASE_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: $CURRENT_VERSION is set but the base OTA marker is missing. No files were changed."
 fi
 
-if [ -f "$UPDATE_DONE" ] || [ -z "$UPDATE_DONE" ]; then
-	msgbox "No more updates available.  Check back later."
-	rm -- "$0"
-	exit 187
-fi
+case "$CURRENT_VERSION" in
+	03082026)
+		for marker in "$BASE_UPDATE_DONE" "$R1_UPDATE_DONE" "$R2_UPDATE_DONE" "$R3_UPDATE_DONE" "$R4_UPDATE_DONE" "$COMPAT_UPDATE_DONE"; do
+			[ ! -e "$marker" ] || show_update_error "Firmware state is inconsistent: .VERSION is 03082026 but $(basename "$marker") exists. No files were changed."
+	done
+		;;
+	10032026)
+		for marker in "$R1_UPDATE_DONE" "$R2_UPDATE_DONE" "$R3_UPDATE_DONE" "$R4_UPDATE_DONE" "$COMPAT_UPDATE_DONE"; do
+			[ ! -e "$marker" ] || show_update_error "Firmware state is inconsistent: .VERSION is 10032026 but $(basename "$marker") exists. No files were changed."
+	done
+		;;
+	10032026-r1)
+		[ -f "$R1_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: R1 is in .VERSION but its completion marker is missing. No files were changed."
+		for marker in "$R2_UPDATE_DONE" "$R3_UPDATE_DONE" "$R4_UPDATE_DONE"; do
+			[ ! -e "$marker" ] || show_update_error "Firmware state is inconsistent: .VERSION is R1 but $(basename "$marker") exists. No files were changed."
+	done
+		;;
+	10032026-r2)
+		[ -f "$R1_UPDATE_DONE" ] && [ -f "$R2_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: R2 requires the base, R1, and R2 completion markers. No files were changed."
+		for marker in "$R3_UPDATE_DONE" "$R4_UPDATE_DONE"; do
+			[ ! -e "$marker" ] || show_update_error "Firmware state is inconsistent: .VERSION is R2 but $(basename "$marker") exists. No files were changed."
+	done
+		;;
+	10032026-r3)
+		[ -f "$R1_UPDATE_DONE" ] && [ -f "$R2_UPDATE_DONE" ] && [ -f "$R3_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: R3 requires the base, R1, R2, and R3 completion markers. No files were changed."
+		[ ! -e "$R4_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: .VERSION is R3 but the R4 marker exists. No files were changed."
+		;;
+	10032026-r4)
+		[ -f "$R1_UPDATE_DONE" ] && [ -f "$R2_UPDATE_DONE" ] && [ -f "$R3_UPDATE_DONE" ] && [ -f "$COMPAT_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: R4 requires the base, R1, R2, R3, and compatibility markers. No files were changed."
+		;;
+esac
 
 if [ -f "$LOG_FILE" ]; then
 	sudo rm "$LOG_FILE"
 fi
 
 LOCATION="https://raw.githubusercontent.com/dixtuel/darkos-updates/main"
+
+# Resolve one missing dated step from the installed version and its completion
+# markers. Package blocks below download/apply only missing stages in order;
+# stages that reboot use the normal EmulationStation Update action after boot.
+NEXT_STAGE=""
+if [ "$CURRENT_VERSION" = "03082026" ]; then
+	if [ ! -f "$BASE_UPDATE_DONE" ]; then NEXT_STAGE="$UPDATE_DATE"; fi
+else
+	if [ ! -f "$R1_UPDATE_DONE" ]; then NEXT_STAGE="10032026-r1"
+	elif [ ! -f "$COMPAT_UPDATE_DONE" ]; then NEXT_STAGE="10032026-compat"
+	elif [ ! -f "$R2_UPDATE_DONE" ]; then NEXT_STAGE="10032026-r2"
+	elif [ ! -f "$R3_UPDATE_DONE" ]; then NEXT_STAGE="10032026-r3"
+	elif [ ! -f "$R4_UPDATE_DONE" ]; then NEXT_STAGE="10032026-r4"
+	fi
+fi
+if [ -z "$NEXT_STAGE" ]; then
+	if [[ "${DARKOS_UPDATE_PLAN_ONLY:-0}" == "1" ]]; then
+		printf 'version=%s\nnext=none\n' "$CURRENT_VERSION"
+		exit 0
+	fi
+	msgbox "No more updates available. Current version: $CURRENT_VERSION."
+	rm -- "$0"
+	exit 187
+fi
+printf '\nDetected dArkOSRE-R36 version %s. Next update: %s.\n' "$CURRENT_VERSION" "$NEXT_STAGE" | tee -a "$LOG_FILE"
+if [[ "${DARKOS_UPDATE_PLAN_ONLY:-0}" == "1" ]]; then
+	printf 'version=%s\nnext=%s\n' "$CURRENT_VERSION" "$NEXT_STAGE"
+	exit 0
+fi
 
 c_brightness="$(cat /sys/class/backlight/backlight/brightness)"
 max_brightness="$(cat /sys/class/backlight/backlight/max_brightness 2>/dev/null)"
@@ -411,7 +492,7 @@ if [ ! -f "/home/ark/.config/.update01302026" ]; then
 	sudo sed -i "/title\=/c\title\=dArkOSRE ($UPDATE_DATE)" /usr/share/plymouth/themes/text.plymouth
 	echo "$UPDATE_DATE" > /home/ark/.config/.VERSION
 
-	touch "$UPDATE_DONE"
+	touch "/home/ark/.config/.update01302026"
 	rm -v -- "$0" | tee -a "$LOG_FILE"
 	printf "\033c" >> /dev/tty1
 	msgbox "Updates have been completed.  System will now restart after you hit the A button to continue.  If the system doesn't restart after pressing A, just restart the system manually."

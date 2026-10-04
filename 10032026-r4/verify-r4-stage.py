@@ -155,11 +155,20 @@ def test_safe_absence_and_refusal():
 
 def test_flow_guards_and_exit_mapping():
     text = UPDATE_SCRIPT.read_text(encoding="utf-8")
-    require('PATCH_UPDATE_DONE="/home/ark/.config/.update10032026-r4"' in text,
-            "terminal guard is not wired to R4")
-    require('"/home/ark/.config/.update10032026-compat"' in text and
-            '"/home/ark/.config/.update10032026-r3"' in text,
+    require('R4_UPDATE_DONE="$CONFIG_DIR/.update10032026-r4"' in text,
+            "R4 completion marker is not wired into the version resolver")
+    require('COMPAT_UPDATE_DONE="$CONFIG_DIR/.update10032026-compat"' in text and
+            'R3_UPDATE_DONE="$CONFIG_DIR/.update10032026-r3"' in text,
             "R4 stage prerequisites are missing")
+    ordered_stages = (
+        'NEXT_STAGE="10032026-r1"',
+        'NEXT_STAGE="10032026-compat"',
+        'NEXT_STAGE="10032026-r2"',
+        'NEXT_STAGE="10032026-r3"',
+        'NEXT_STAGE="10032026-r4"',
+    )
+    offsets = [text.index(stage) for stage in ordered_stages]
+    require(offsets == sorted(offsets), "missing-update resolver does not preserve stage order")
     require("flock -n /run/lock/darkos-update-maintenance.lock" in text,
             "R4 installer lacks the maintenance lock")
     require('if [ "$INSTALL_STATUS" -ne 0 ]; then' in text and
