@@ -105,7 +105,12 @@ if "No further updater run is needed" not in r4_block:
 if "systemctl reboot || {" not in r4_block or "automatic restart failed" not in r4_block:
     raise AssertionError("final reboot failure must be shown to the user")
 no_update_start = text.index('if [ -z "$NEXT_STAGE" ]; then')
-no_update_end = text.index("fi", no_update_start)
-if "reboot" in text[no_update_start:no_update_end].lower():
+no_update_end = text.index('msgbox "No more updates available.', no_update_start)
+no_update_block = text[no_update_start:no_update_end]
+if "sudo systemctl reboot" in no_update_block or "sudo reboot" in no_update_block:
     raise AssertionError("opening the updater when already current must not trigger a reboot")
+if ('[ "$CURRENT_VERSION" = "10032026-r4" ]' not in no_update_block or
+        'grep -Fxq "title=dArkOSRE (10032026-r4)"' not in no_update_block or
+        'sudo sed -i "/^title=/c\\\\title=dArkOSRE (10032026-r4)"' not in no_update_block):
+    raise AssertionError("the already-current R4 path must repair a stale Plymouth title without rebooting")
 print("Updater sequence passed 14 isolated version/marker cases, continuation/final-reboot policy checks, and the legacy-marker assertion; no system paths were changed.")

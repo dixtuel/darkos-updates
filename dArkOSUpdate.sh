@@ -259,6 +259,19 @@ fi
 prune_superseded_backups "$CONFIG_DIR" "$ROM_ROOT" "$ROM_BACKUP_ROOT"
 
 if [ -z "$NEXT_STAGE" ]; then
+	# A completed R4 install sets this title before reboot. Reconcile it again
+	# on the no-update path so a failed/stale Plymouth write cannot leave the
+	# boot screen showing R3 while .VERSION and the stage markers are at R4.
+	if [ "$CURRENT_VERSION" = "10032026-r4" ]; then
+		PLYMOUTH_TITLE_FILE="/usr/share/plymouth/themes/text.plymouth"
+		if [ -f "$PLYMOUTH_TITLE_FILE" ] && ! grep -Fxq "title=dArkOSRE (10032026-r4)" "$PLYMOUTH_TITLE_FILE"; then
+			if ! sudo sed -i "/^title=/c\\title=dArkOSRE (10032026-r4)" "$PLYMOUTH_TITLE_FILE"; then
+				printf "\\nR4 is installed, but the boot-screen title could not be refreshed.\\n" | tee -a "$LOG_FILE"
+				msgbox "R4 is installed, but the boot-screen title could not be refreshed."
+				exit 1
+			fi
+		fi
+	fi
 	msgbox "No more updates available. Current version: $CURRENT_VERSION."
 	rm -- "$0"
 	exit 187
