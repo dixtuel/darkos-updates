@@ -61,6 +61,117 @@ resolve_rom_root() {
 }
 # END ROM_ROOT_RESOLVER
 
+# BEGIN BACKUP_RETENTION
+# Keep the newest verified OTA rollback snapshot plus any markerless/incomplete
+# stage snapshots. Delete only known older completed OTA directories on the
+# selected, mounted ROM card; never touch unrelated backup folders.
+verify_completed_stage_backup() {
+	local stage="$1"
+	local backup_root="$2"
+	local backup_dir=""
+	case "$stage" in
+		10032026|10032026-r1|10032026-r2|10032026-r3)
+			backup_dir="$backup_root/$stage"
+			[[ -d "$backup_dir" && ! -L "$backup_dir" && -f "$backup_dir/backup-ready" && \
+				! -L "$backup_dir/rollback.tar" && -f "$backup_dir/rollback.tar" && \
+				! -L "$backup_dir/rollback.sha256" && -f "$backup_dir/rollback.sha256" ]] || return 1
+			(cd "$backup_dir" && sha256sum -c rollback.sha256 >/dev/null && tar -tf rollback.tar >/dev/null 2>&1)
+			;;
+		10032026-compat)
+			backup_dir="$backup_root/10032026-compat-webpmux"
+			[[ -d "$backup_dir" && ! -L "$backup_dir" && ! -L "$backup_dir/rollback.tar" && \
+				-f "$backup_dir/rollback.tar" && ! -L "$backup_dir/rollback-state.json" && \
+				-f "$backup_dir/rollback-state.json" ]] || return 1
+			python3 - "$backup_dir" <<'PY'
+import hashlib, json, pathlib, stat, sys
+base = pathlib.Path(sys.argv[1])
+tar = base / "rollback.tar"
+state_path = base / "rollback-state.json"
+if not stat.S_ISREG(tar.lstat().st_mode) or not stat.S_ISREG(state_path.lstat().st_mode):
+    raise SystemExit(1)
+state = json.loads(state_path.read_text(encoding="utf-8"))
+digest = hashlib.sha256(tar.read_bytes()).hexdigest()
+raise SystemExit(0 if state.get("tar_sha256") == digest else 1)
+PY
+			[[ "$?" -eq 0 ]] && tar -tf "$backup_dir/rollback.tar" >/dev/null 2>&1
+			;;
+		10032026-r4)
+			backup_dir="$backup_root/$stage"
+			local archive="$backup_dir/advanced-sd2-wrapper.before.tar"
+			[[ -d "$backup_dir" && ! -L "$backup_dir" && ! -L "$archive" && -f "$archive" && \
+				! -L "$archive.sha256" && -f "$archive.sha256" ]] || return 1
+			(cd "$backup_dir" && sha256sum -c advanced-sd2-wrapper.before.tar.sha256 >/dev/null && \
+				tar -tf advanced-sd2-wrapper.before.tar >/dev/null 2>&1)
+			;;
+		*) return 1 ;;
+	esac
+}
+
+prune_superseded_backups() {
+	local config_dir="$1"
+	local rom_root="$2"
+	local backup_root="$3"
+	local rom_mount_path="${4:-/$2}"
+	local latest=""
+	local stage marker candidate
+	local -a stages=(10032026 10032026-r1 10032026-compat 10032026-r2 10032026-r3 10032026-r4)
+	local -A stage_markers=(
+		[10032026]="$config_dir/.update10032026"
+		[10032026-r1]="$config_dir/.update10032026-r1"
+		[10032026-compat]="$config_dir/.update10032026-compat"
+		[10032026-r2]="$config_dir/.update10032026-r2"
+		[10032026-r3]="$config_dir/.update10032026-r3"
+		[10032026-r4]="$config_dir/.update10032026-r4"
+	)
+	local -A backup_dirs=(
+		[10032026]="$backup_root/10032026"
+		[10032026-r1]="$backup_root/10032026-r1"
+		[10032026-compat]="$backup_root/10032026-compat-webpmux"
+		[10032026-r2]="$backup_root/10032026-r2"
+		[10032026-r3]="$backup_root/10032026-r3"
+		[10032026-r4]="$backup_root/10032026-r4"
+	)
+	for stage in "${stages[@]}"; do
+		marker="${stage_markers[$stage]}"
+		[[ -f "$marker" && ! -L "$marker" ]] && latest="$stage"
+	done
+	[[ -n "$latest" ]] || return 0
+	if [[ "$backup_root" != "$rom_mount_path/backup/darkosre-update" ]]; then
+		printf 'Backup cleanup skipped: selected-card backup path does not match the active ROM mount.\n' | tee -a "$LOG_FILE"
+		return 0
+	fi
+	for candidate in "$rom_mount_path/backup" "$rom_mount_path/backup/darkosre-update" "$backup_root"; do
+		if [[ -L "$candidate" || ( -e "$candidate" && ! -d "$candidate" ) ]]; then
+			printf 'Backup cleanup skipped: unsafe rollback path %s.\n' "$candidate" | tee -a "$LOG_FILE"
+			return 0
+		fi
+	done
+	[[ -d "$backup_root" ]] || return 0
+	if ! verify_completed_stage_backup "$latest" "$backup_root"; then
+		printf 'Backup cleanup skipped: latest completed stage %s has no verified rollback snapshot.\n' "$latest" | tee -a "$LOG_FILE"
+		return 0
+	fi
+	for stage in "${stages[@]}"; do
+		[[ "$stage" == "$latest" ]] && continue
+		marker="${stage_markers[$stage]}"
+		# A markerless backup may belong to a failed/incomplete installation.
+		[[ -f "$marker" && ! -L "$marker" ]] || continue
+		candidate="${backup_dirs[$stage]}"
+		[[ -e "$candidate" ]] || continue
+		if [[ -L "$candidate" || ! -d "$candidate" ]]; then
+			printf 'Backup cleanup skipped unsafe completed-stage path: %s.\n' "$candidate" | tee -a "$LOG_FILE"
+			continue
+		fi
+		if sudo rm -rf -- "$candidate"; then
+			printf 'Removed superseded rollback snapshot for %s; keeping verified %s snapshot on /%s.\n' \
+				"$stage" "$latest" "$rom_root" | tee -a "$LOG_FILE"
+		else
+			printf 'Could not remove superseded rollback snapshot %s; it was left in place.\n' "$candidate" | tee -a "$LOG_FILE"
+		fi
+	done
+}
+# END BACKUP_RETENTION
+
 if [[ "$DEVICE_COMPAT" != *"rk3326"* ]]; then
 	show_update_error "This updater is only for dArkOSRE-R36 RK3326 devices. No files were changed."
 fi
@@ -131,17 +242,8 @@ else
 	elif [ ! -f "$R4_UPDATE_DONE" ]; then NEXT_STAGE="10032026-r4"
 	fi
 fi
-if [ -z "$NEXT_STAGE" ]; then
-	if [[ "${DARKOS_UPDATE_PLAN_ONLY:-0}" == "1" ]]; then
-		printf 'version=%s\nnext=none\n' "$CURRENT_VERSION"
-		exit 0
-	fi
-	msgbox "No more updates available. Current version: $CURRENT_VERSION."
-	rm -- "$0"
-	exit 187
-fi
 if [[ "${DARKOS_UPDATE_PLAN_ONLY:-0}" == "1" ]]; then
-	printf 'version=%s\nnext=%s\n' "$CURRENT_VERSION" "$NEXT_STAGE"
+	printf 'version=%s\nnext=%s\n' "$CURRENT_VERSION" "${NEXT_STAGE:-none}"
 	exit 0
 fi
 
@@ -151,10 +253,17 @@ if [[ "$ROM_ROOT_STATUS" -ne 0 ]]; then
 	show_update_error "$ROM_ROOT"
 fi
 ROM_BACKUP_ROOT="/$ROM_ROOT/backup/darkosre-update"
-
 if [ -f "$LOG_FILE" ]; then
 	sudo rm "$LOG_FILE"
 fi
+prune_superseded_backups "$CONFIG_DIR" "$ROM_ROOT" "$ROM_BACKUP_ROOT"
+
+if [ -z "$NEXT_STAGE" ]; then
+	msgbox "No more updates available. Current version: $CURRENT_VERSION."
+	rm -- "$0"
+	exit 187
+fi
+
 printf '\nDetected dArkOSRE-R36 version %s. Next update: %s. Active ROM root: /%s.\n' \
 	"$CURRENT_VERSION" "$NEXT_STAGE" "$ROM_ROOT" | tee -a "$LOG_FILE"
 

@@ -66,6 +66,13 @@ selected ROM card. Package-specific notes describe any scoped changes to
 launchers or SD-switch support. The OTAs do not contain users' ROM collections;
 check each package's notes for its exact targets and recovery procedure.
 
+After a later stage has a completion marker and its own rollback archive passes
+integrity checks, the next updater run removes older completed OTA snapshots on
+that selected card and keeps the newest verified rollback. Markerless or
+incomplete-stage backups, PortMaster dpkg-recovery data, unrelated backups,
+and files on the inactive ROM card are left alone. If the newest snapshot is
+missing or invalid, cleanup is skipped.
+
 ## Contributing and release format
 
 - Keep each OTA in a dated directory with the archive, `README.md`, and
