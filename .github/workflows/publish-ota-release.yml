@@ -4,6 +4,15 @@ on:
   push:
     tags:
       - 'ota-*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing OTA tag to verify, or new tag to publish
+        required: true
+        type: string
+
+env:
+  TARGET_TAG: ${{ github.event.inputs.tag || github.ref_name }}
 
 permissions:
   contents: write
@@ -19,11 +28,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          tag="${GITHUB_REF_NAME}"
+          tag="$TARGET_TAG"
           date="${tag#ota-}"
           [[ "$date" =~ ^[0-9]{8}(-r[1-9][0-9]*|-compat)?$ ]]
+          git fetch origin "refs/tags/$tag:refs/tags/$tag"
+          git checkout --detach "$tag"
           git fetch origin main
-          git merge-base --is-ancestor "$GITHUB_SHA" origin/main
+          git merge-base --is-ancestor "${tag}^{commit}" origin/main
           archive="$date/darkosupdate${date}.zip"
           test -f "$archive"
           test -f "$date/README.md"
@@ -34,12 +45,25 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          date="${GITHUB_REF_NAME#ota-}"
+          set -euo pipefail
+          tag="$TARGET_TAG"
+          date="${tag#ota-}"
           assets=("$date/darkosupdate${date}.zip" "$date/SHA256SUMS")
           if [ -f "$date/apply_portmaster_compat.py" ]; then
             assets+=("$date/apply_portmaster_compat.py")
           fi
-          gh release create "$GITHUB_REF_NAME" \
-            "${assets[@]}" \
-            --title "dArkOSRE-R36 OTA $date" \
-            --notes-file "$date/README.md"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            download_dir="$(mktemp -d)"
+            trap 'rm -rf "$download_dir"' EXIT
+            gh release download "$tag" --repo "$GITHUB_REPOSITORY" --dir "$download_dir"
+            for asset in "${assets[@]}"; do
+              cmp -- "$asset" "$download_dir/$(basename "$asset")"
+            done
+            echo "Existing release $tag has the exact validated payload assets."
+          else
+            gh release create "$tag" \
+              "${assets[@]}" \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "dArkOSRE-R36 OTA $date" \
+              --notes-file "$date/README.md"
+          fi
