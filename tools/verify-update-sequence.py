@@ -69,6 +69,7 @@ run_case("10032026-r3", all_legacy | {BASE, R1, R2, R3}, "10032026-compat")
 run_case("10032026-r3", all_legacy | {BASE, R1, R2, R3, COMPAT}, "10032026-r4")
 run_case("10032026-r4", all_legacy | {BASE, R1, R2, R3, COMPAT}, "10032026-r4")
 run_case("10032026-r4", all_legacy | {BASE, R1, R2, R3, R4, COMPAT}, "10032026-r5")
+run_case("10032026-r4", all_legacy | {BASE, R1, R2, R3, R4, R5, COMPAT}, "", success=False)
 run_case("10032026-r5", all_legacy | {BASE, R1, R2, R3, R4, R5, COMPAT}, "none")
 run_case("02062026", all_legacy, "", success=False)
 run_case("10032026-r2", all_legacy | {BASE, R2}, "", success=False)
@@ -120,4 +121,4 @@ if ('CURRENT_VERSION" == 10032026-r4 || "$CURRENT_VERSION" == 10032026-r5' not i
         'sudo sed -i "/^title=/c\\\\title=dArkOSRE ($CURRENT_VERSION)"' not in no_update_block):
     raise AssertionError("the already-current R4/R5 path must repair stale Plymouth titles without rebooting")
 
-print("Updater sequence passed 15 isolated version/marker cases, continuation/final-reboot policy checks, and the legacy-marker assertion; no system paths were changed.")
+print("Updater sequence passed 16 isolated version/marker cases, continuation/final-reboot policy checks, and the legacy-marker assertion; no system paths were changed.")

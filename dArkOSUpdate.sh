@@ -235,6 +235,7 @@ case "$CURRENT_VERSION" in
 		;;
 	10032026-r4)
 		[ -f "$R1_UPDATE_DONE" ] && [ -f "$R2_UPDATE_DONE" ] && [ -f "$R3_UPDATE_DONE" ] && [ -f "$COMPAT_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: R4 requires the base, R1, R2, R3, and compatibility markers. No files were changed."
+		[ ! -e "$R5_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: .VERSION is R4 but the R5 marker exists. No files were changed."
 		;;
 	10032026-r5)
 		[ -f "$R1_UPDATE_DONE" ] && [ -f "$R2_UPDATE_DONE" ] && [ -f "$R3_UPDATE_DONE" ] && [ -f "$R4_UPDATE_DONE" ] && [ -f "$COMPAT_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: R5 requires the base, R1, compatibility, R2, R3, and R4 markers. No files were changed."
