@@ -57,10 +57,13 @@ assert 'CURRENT_VERSION="$(tr -d' in header
 assert 'Unsupported firmware version' in header
 assert 'NEXT_STAGE="10032026-r3"' in text
 r2 = text.split('PATCH_VERSION="10032026-r2"', 1)[1].split('PATCH_VERSION="10032026-r3"', 1)[0]
-r3 = text.split('PATCH_VERSION="10032026-r3"', 1)[1].split('# Follow-up R36S-only adaptation release', 1)[0]
+r3 = text.split('PATCH_VERSION="10032026-r3"', 1)[1].split('PATCH_VERSION="10032026-r4"', 1)[0]
 for block in (r2, r3):
-    assert 'if [ "$INSTALL_STATUS" -eq 0 ]; then exit 187; fi' in block
+    assert 'if [ "$INSTALL_STATUS" -ne 0 ]; then exit "$INSTALL_STATUS"; fi' in block
     assert 'exit "$INSTALL_STATUS"' in block
+    assert 'exit 187' not in block
+assert 'R2 completed successfully; continuing to the next missing update in this run.' in r2
+assert 'R3 completed successfully; continuing to R4 in this run.' in r3
 assert 'sudo bash "$INSTALLER" "$UPDATE_ZIP" "$UPDATE_SHA256"' in r3
 assert '[[ "$BASE_VERSION" != "10032026-r2" ]]' in r3
 assert '[ ! -f "/home/ark/.config/.update10032026-r2" ]' in r3

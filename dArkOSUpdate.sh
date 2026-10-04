@@ -842,7 +842,11 @@ if [ ! -f "/home/ark/.config/.update10032026" ]; then
   sudo sed -i "/title\=/c\title\=dArkOSRE (10032026)" /usr/share/plymouth/themes/text.plymouth
   printf "\nInstalled RK3326 update. ROM library remains on /$ROM_ROOT; rollback files are in $BACKUP_BASE.\n" | tee -a "$LOG_FILE"
   msgbox "Base update 10032026 is installed and a restart is required. After the device starts again, run upgrade-to-maintained-updater.sh from /roms/tools or choose Update from EmulationStation to continue with R1. Press A to restart now."
-  sudo systemctl reboot
+  if ! sudo systemctl reboot; then
+    printf "\nBase update is installed, but automatic restart failed. Restart manually; after startup, run the migration helper or EmulationStation Update to continue with R1.\n" | tee -a "$LOG_FILE"
+    msgbox "The base update is installed, but automatic restart failed. Restart the device manually. After startup, rerun the migration helper or choose Update from EmulationStation to continue with R1."
+    exit 1
+  fi
   exit 187
 fi
 
@@ -1054,7 +1058,11 @@ PY
   sudo sed -i "/title=/c\\title=dArkOSRE ($PATCH_VERSION)" /usr/share/plymouth/themes/text.plymouth
   printf "\nInstalled R36S fixes. ROM library remains on /$ROM_ROOT; rollback is saved under $BACKUP_BASE.\n" | tee -a "$LOG_FILE"
   msgbox "R1 is installed and a restart is required. After the device starts again, run upgrade-to-maintained-updater.sh from /roms/tools or choose Update from EmulationStation to continue the remaining updates. Press A to restart now."
-  sudo systemctl reboot
+  if ! sudo systemctl reboot; then
+    printf "\nR1 is installed, but automatic restart failed. Restart manually; after startup, run the migration helper or EmulationStation Update to continue the remaining updates.\n" | tee -a "$LOG_FILE"
+    msgbox "R1 is installed, but automatic restart failed. Restart the device manually. After startup, rerun the migration helper or choose Update from EmulationStation to continue the remaining updates."
+    exit 1
+  fi
   exit 187
 fi
 
@@ -1251,6 +1259,7 @@ if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
   msgbox "All available updates through R4 are complete. No further updater run is needed. Press A to restart the device now."
   sudo systemctl reboot || {
     printf "\nAll OTA stages completed, but the final system reboot command failed. Please restart the device manually.\n" | tee -a "$LOG_FILE"
+    msgbox "All updates are complete, but automatic restart failed. Restart the device manually; no further updater run is needed."
     exit 1
   }
   exit 187

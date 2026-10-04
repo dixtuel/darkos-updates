@@ -94,8 +94,12 @@ r1_block = text[r1_start:compat_start]
 for name, block in (("base", base_block), ("R1", r1_block)):
     if "msgbox" not in block or "/roms/tools" not in block or "choose Update from EmulationStation" not in block:
         raise AssertionError(f"{name} mandatory reboot must tell users how to resume updates")
+    if "if ! sudo systemctl reboot; then" not in block or "automatic restart failed" not in block:
+        raise AssertionError(f"{name} must report a failed automatic reboot instead of returning updater success")
 if "No further updater run is needed" not in r4_block:
     raise AssertionError("final reboot message must tell users the update chain is complete")
+if "systemctl reboot || {" not in r4_block or "automatic restart failed" not in r4_block:
+    raise AssertionError("final reboot failure must be shown to the user")
 no_update_start = text.index('if [ -z "$NEXT_STAGE" ]; then')
 no_update_end = text.index("fi", no_update_start)
 if "reboot" in text[no_update_start:no_update_end].lower():
