@@ -16,6 +16,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check updater shell syntax
         run: bash -n dArkOSUpdate.sh
+      - name: Check sequential stages and ROM-root selection
+        run: |
+          python3 tools/verify-update-sequence.py
+          python3 tools/verify-rom-root-resolver.py
       - name: Validate update archives
         shell: bash
         run: |

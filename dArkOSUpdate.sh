@@ -20,6 +20,47 @@ show_update_error() {
 	exit 1
 }
 
+# BEGIN ROM_ROOT_RESOLVER
+# Resolve the ROM card from EmulationStation's configured game paths, not from
+# whichever card happens to be mounted first. Optional arguments are used only
+# by the isolated host fixture; production uses the live ES config/mountpoints.
+resolve_rom_root() {
+	local es_config="${1:-/etc/emulationstation/es_systems.cfg}"
+	local mount_root="${2:-}"
+	local mount_path
+	local -a configured_roots=()
+
+	if [[ ! -r "$es_config" || ! -f "$es_config" ]]; then
+		printf 'EmulationStation system paths are unavailable; refusing the update.'
+		return 1
+	fi
+
+	mapfile -t configured_roots < <(
+		grep -o '<path>[^<]*</path>' "$es_config" 2>/dev/null |
+			sed -nE 's#<path>(/roms2?)(/[^<]*)?</path>#\1#p' |
+			sort -u
+	)
+	if [[ "${#configured_roots[@]}" -ne 1 ]]; then
+		printf 'EmulationStation must select exactly one ROM root (/roms or /roms2); found %s.' "${#configured_roots[@]}"
+		return 1
+	fi
+
+	case "${configured_roots[0]}" in
+		/roms) mount_path="/roms" ;;
+		/roms2) mount_path="/roms2" ;;
+		*) printf 'EmulationStation selected an unsupported ROM root.'; return 1 ;;
+	esac
+	if [[ -n "$mount_root" ]]; then
+		mount_path="${mount_root%/}$mount_path"
+	fi
+	if ! mountpoint -q "$mount_path"; then
+		printf 'EmulationStation selects %s, but that card is not mounted; no update files were changed.' "${configured_roots[0]}"
+		return 1
+	fi
+	printf '%s' "${configured_roots[0]#/}"
+}
+# END ROM_ROOT_RESOLVER
+
 if [[ "$DEVICE_COMPAT" != *"rk3326"* ]]; then
 	show_update_error "This updater is only for dArkOSRE-R36 RK3326 devices. No files were changed."
 fi
@@ -74,10 +115,6 @@ case "$CURRENT_VERSION" in
 		;;
 esac
 
-if [ -f "$LOG_FILE" ]; then
-	sudo rm "$LOG_FILE"
-fi
-
 LOCATION="https://raw.githubusercontent.com/dixtuel/darkos-updates/main"
 
 # Resolve one missing dated step from the installed version and its completion
@@ -103,11 +140,23 @@ if [ -z "$NEXT_STAGE" ]; then
 	rm -- "$0"
 	exit 187
 fi
-printf '\nDetected dArkOSRE-R36 version %s. Next update: %s.\n' "$CURRENT_VERSION" "$NEXT_STAGE" | tee -a "$LOG_FILE"
 if [[ "${DARKOS_UPDATE_PLAN_ONLY:-0}" == "1" ]]; then
 	printf 'version=%s\nnext=%s\n' "$CURRENT_VERSION" "$NEXT_STAGE"
 	exit 0
 fi
+
+ROM_ROOT="$(resolve_rom_root)"
+ROM_ROOT_STATUS=$?
+if [[ "$ROM_ROOT_STATUS" -ne 0 ]]; then
+	show_update_error "$ROM_ROOT"
+fi
+ROM_BACKUP_ROOT="/$ROM_ROOT/backup/darkosre-update"
+
+if [ -f "$LOG_FILE" ]; then
+	sudo rm "$LOG_FILE"
+fi
+printf '\nDetected dArkOSRE-R36 version %s. Next update: %s. Active ROM root: /%s.\n' \
+	"$CURRENT_VERSION" "$NEXT_STAGE" "$ROM_ROOT" | tee -a "$LOG_FILE"
 
 c_brightness="$(cat /sys/class/backlight/backlight/brightness)"
 max_brightness="$(cat /sys/class/backlight/backlight/max_brightness 2>/dev/null)"
@@ -519,13 +568,7 @@ if [ ! -f "/home/ark/.config/.update10032026" ]; then
   UPDATE_URL="$LOCATION/10032026/darkosupdate10032026.zip"
   UPDATE_SHA256="2d57e123f0172783b1e049701389180ba791d3ce0b5aeaa234574491d39ec3f7"
 
-  if mountpoint -q /roms2; then
-    ROM_ROOT="roms2"
-    BACKUP_BASE="/roms2/backup/darkosre-update/10032026"
-  else
-    ROM_ROOT="roms"
-    BACKUP_BASE="/roms/backup/darkosre-update/10032026"
-  fi
+	BACKUP_BASE="$ROM_BACKUP_ROOT/10032026"
 
   PATH_GUARD_BEFORE="$(sha256sum /etc/emulationstation/es_systems.cfg \
     "/usr/local/bin/Switch to SD2 for Roms.sh" \
@@ -707,13 +750,7 @@ if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
   UPDATE_URL="$LOCATION/$PATCH_VERSION/darkosupdate$PATCH_VERSION.zip"
   UPDATE_SHA256="12987d5fcc7bd889b922f3e0083b2e454c002b0d7dce6a6c26f192b7ea9b429b"
 
-  if mountpoint -q /roms2; then
-    ROM_ROOT="roms2"
-    BACKUP_BASE="/roms2/backup/darkosre-update/$PATCH_VERSION"
-  else
-    ROM_ROOT="roms"
-    BACKUP_BASE="/roms/backup/darkosre-update/$PATCH_VERSION"
-  fi
+	BACKUP_BASE="$ROM_BACKUP_ROOT/$PATCH_VERSION"
 
   PATHS_BEFORE="$(grep -o '<path>[^<]*</path>' /etc/emulationstation/es_systems.cfg 2>/dev/null)"
   SWITCH_GUARD_BEFORE="$(sed '/\/usr\/local\/bin\/singe\.sh/d' "/usr/local/bin/Switch to SD2 for Roms.sh" | sha256sum; \
@@ -964,15 +1001,7 @@ if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
     printf "\nThis update requires dArkOSRE-R36 OTA 10032026 or 10032026-r1 on RK3326; no files were installed.\n" | tee -a "$LOG_FILE"
     exit 1
   fi
-  if mountpoint -q /roms2; then
-    ROM_ROOT="roms2"
-  elif mountpoint -q /roms; then
-    ROM_ROOT="roms"
-  else
-    printf "\nNo mounted ROM card was detected; update stopped.\n" | tee -a "$LOG_FILE"
-    exit 1
-  fi
-  if ! grep -Fq "<path>/$ROM_ROOT/nds" /etc/emulationstation/es_systems.cfg; then
+	if ! grep -Fq "<path>/$ROM_ROOT/nds" /etc/emulationstation/es_systems.cfg; then
     printf "\nThe NDS ROM path does not match the mounted ROM card; update stopped.\n" | tee -a "$LOG_FILE"
     exit 1
   fi
@@ -981,11 +1010,7 @@ if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
   INSTALLER="/tmp/install-$PATCH_VERSION.sh"
   UPDATE_URL="$LOCATION/$PATCH_VERSION/darkosupdate$PATCH_VERSION.zip"
   UPDATE_SHA256="f64e26fe553a1bae6e9af4379b47e37ee0028e769685d952f049d21097bc69e2"
-  if mountpoint -q /roms2; then
-    BACKUP_BASE="/roms2/backup/darkosre-update/$PATCH_VERSION"
-  else
-    BACKUP_BASE="/roms/backup/darkosre-update/$PATCH_VERSION"
-  fi
+	BACKUP_BASE="$ROM_BACKUP_ROOT/$PATCH_VERSION"
   wget -t 3 -T 120 --no-check-certificate "$UPDATE_URL" -O "$UPDATE_ZIP" -a "$LOG_FILE" || {
     rm -f "$UPDATE_ZIP"
     printf "\nCould not download the update package.\n" | tee -a "$LOG_FILE"
@@ -1022,18 +1047,10 @@ if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
     printf "\nThis update requires completed dArkOSRE-R36 RK3326 OTA 10032026-r2; no files were installed.\n" | tee -a "$LOG_FILE"
     exit 1
   fi
-  HAS_ROM2_PATH=0
-  HAS_ROM1_PATH=0
-  grep -Fq '<path>/roms2/' /etc/emulationstation/es_systems.cfg && HAS_ROM2_PATH=1 || true
-  grep -Fq '<path>/roms/' /etc/emulationstation/es_systems.cfg && HAS_ROM1_PATH=1 || true
-  if [[ "$HAS_ROM2_PATH" -eq 1 && "$HAS_ROM1_PATH" -eq 0 ]] && mountpoint -q /roms2; then
-    ROM_ROOT="roms2"
-  elif [[ "$HAS_ROM1_PATH" -eq 1 && "$HAS_ROM2_PATH" -eq 0 ]] && mountpoint -q /roms; then
-    ROM_ROOT="roms"
-  else
-    printf "\nNo mounted ROM card was detected; update stopped.\n" | tee -a "$LOG_FILE"
-    exit 1
-  fi
+	if ! grep -Fq "<path>/$ROM_ROOT/" /etc/emulationstation/es_systems.cfg; then
+		printf "\nThe active EmulationStation ROM root changed during the update; stopping before R3 installation.\n" | tee -a "$LOG_FILE"
+		exit 1
+	fi
 
   UPDATE_ZIP="/dev/shm/darkosupdate$PATCH_VERSION.zip"
   INSTALLER="/tmp/install-$PATCH_VERSION.sh"
@@ -1080,18 +1097,10 @@ if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
     printf "\nThis update requires completed dArkOSRE-R36 R3 and compatibility stages on RK3326; no files were installed.\n" | tee -a "$LOG_FILE"
     exit 1
   fi
-  HAS_ROM2_PATH=0
-  HAS_ROM1_PATH=0
-  grep -Fq '<path>/roms2/' /etc/emulationstation/es_systems.cfg && HAS_ROM2_PATH=1 || true
-  grep -Fq '<path>/roms/' /etc/emulationstation/es_systems.cfg && HAS_ROM1_PATH=1 || true
-  if [[ "$HAS_ROM2_PATH" -eq 1 && "$HAS_ROM1_PATH" -eq 0 ]] && mountpoint -q /roms2; then
-    ROM_ROOT="roms2"
-  elif [[ "$HAS_ROM1_PATH" -eq 1 && "$HAS_ROM2_PATH" -eq 0 ]] && mountpoint -q /roms; then
-    ROM_ROOT="roms"
-  else
-    printf "\nNo uniquely selected mounted ROM card was detected; update stopped.\n" | tee -a "$LOG_FILE"
-    exit 1
-  fi
+	if ! grep -Fq "<path>/$ROM_ROOT/" /etc/emulationstation/es_systems.cfg; then
+		printf "\nThe active EmulationStation ROM root changed during the update; stopping before R4 installation.\n" | tee -a "$LOG_FILE"
+		exit 1
+	fi
 
   UPDATE_STAGE="$(mktemp -d /tmp/darkos-r4.XXXXXX)" || exit 1
   UPDATE_ZIP="$UPDATE_STAGE/darkosupdate$PATCH_VERSION.zip"

@@ -1,108 +1,95 @@
-# dArkOSRE online update files
+# dArkOSRE-R36 update feed
 
-This repository contains the dated ZIP payloads and updater script used by the
-online update menu in [dixtuel/dArkOSRE-R36](https://github.com/dixtuel/dArkOSRE-R36).
-The source firmware repository is the authoritative place for device-specific
-scripts and configuration; this repository hosts files downloaded by that
-firmware.
+This repository hosts the updater script and dated OTA packages used by the
+maintained [dArkOSRE-R36 firmware](https://github.com/dixtuel/dArkOSRE-R36).
+It is an update feed, not a firmware image.
 
-## Current contents
+## Supported firmware
 
-The repository mirrors the full upstream `southoz/darkos-updates` history
-through `01302026` (latest upstream commit: 2026-03-14) and adds documented
-R36-specific packages `10032026`, `10032026-r1`, `10032026-r2`, `10032026-r3`,
-`10032026-r4`, and the separate `10032026-compat` dependency closure. Existing
-upstream payloads remain unchanged.
-The new package is assembled from RK3326-selected artifacts in vanilla
-06072026, 07262026, and 08272026 releases; it does not install a vanilla image
-or rewrite R36 ROM-card configuration. See
-[`10032026/README.md`](10032026/README.md) for its exact contents, device
-checks, limits, and rollback location. The follow-up `10032026-r1` carries
-R36-side auto-suspend, backup/restore, Daphne, Atari, and dual-card Singe/ZLua
-changes. See [`10032026-r1/README.md`](10032026-r1/README.md) for its exact
-payload, ROM-path guards, checksum, and rollback procedure.
-The next `10032026-r2` adds DSperate v3.0.0 as an optional third NDS emulator,
-the legacy FFmpeg SONAME set, the missing ARMhf WebP mux dependency, and the
-RK3326 Mali OpenCL alias correction. It keeps the device's newer AArch64 WebP
-mux library. Its installer patches only the NDS emulator selector and four
-BaRT labels/handler paths while checking that every ROM path and both SD
-switching scripts remain unchanged.
-See [`10032026-r2/README.md`](10032026-r2/README.md) for the binary/source
-provenance, device checks, limitations, and rollback location.
-The `10032026-r3` runtime follow-up applies only after R2 is complete. Its exact
-package hash, target scope and device validation are documented in
-[`10032026-r3/README.md`](10032026-r3/README.md). R4 surgically repairs the
-stale Advanced SD2 Singe rewrite and fails closed on unknown files; see
-[`10032026-r4/README.md`](10032026-r4/README.md). Both the R4 SD2 safe-absence
-path and the SD1-selected present-file mutation/rollback-card routing were
-validated on the physical R36S; see the linked dated device-validation record.
+The feed targets dArkOSRE-R36 devices using the **RK3326** platform. The
+supported starting image is dArkOSRE-R36 **03082026** with its required earlier
+update markers present. Devices already at one of the maintained `10032026`
+stages may continue only when their version and completion markers agree. If
+the expected base markers are missing or inconsistent, the updater stops
+without replaying old upstream packages.
 
-The upstream update repository has no GitHub Actions workflows or GitHub
-Releases. This fork validates shell/archive structure on pushes and pull
-requests. Pushing a tag named `ota-<MMDDYYYY>` or `ota-<MMDDYYYY>-rN` for a
-commit on `main` publishes a GitHub Release with the matching ZIP and checksum
-file; the same ZIP is already available to devices from its versioned directory
-on raw `main`.
+This feed is not for vanilla dArkOS, RK3566 devices, or installing a firmware
+image. It does not perform a Debian release upgrade or repartition an SD card.
 
-## Update flow
+## Update order
 
-1. The firmware's `/opt/system/Update.sh` downloads `dArkOSUpdate.sh` and
-   `LICENSE` from this repository's raw `main` branch.
-2. `dArkOSUpdate.sh` reads `.VERSION`, verifies the RK3326 target and required
-   completion markers, then resolves the first missing dated step. It processes
-   `10032026`, R1, compatibility, R2, R3 and R4 in order; it never treats a
-   later marker as permission to skip an incomplete prerequisite. Unknown or
-   inconsistent version/marker states stop before any payload is installed.
-3. The selected dated ZIP is checksum/structure verified by its stage logic.
-   Installers that reboot end the current run; after boot, run the regular
-   EmulationStation Update action again to continue at the next missing stage.
+The updater reads the installed version and markers, then installs the first
+missing stage in order. The compatibility package is a separate step; it does
+not change `.VERSION`.
 
-The supported `03082026` image already carries its prior vanilla dated-update
-markers. If any are missing, the updater stops; it does not replay old broad
-upstream packages or infer completion from `.VERSION`.
+| Stage | Purpose | Details |
+| --- | --- | --- |
+| `10032026` | Initial maintained R36 OTA from base `03082026` | [Package notes](10032026/README.md) |
+| `10032026-r1` | R36 launcher, suspend, backup/restore, and related fixes | [Package notes](10032026-r1/README.md) |
+| `10032026-compat` | Pinned PortMaster ARMhf compatibility dependencies | [Package notes](10032026-compat/README.md) |
+| `10032026-r2` | Adds DSperate as an optional DS emulator, plus scoped runtime compatibility changes | [Package notes](10032026-r2/README.md) |
+| `10032026-r3` | R36 runtime and control follow-up | [Package notes](10032026-r3/README.md) |
+| `10032026-r4` | Advanced SD2 launcher repair | [Package notes](10032026-r4/README.md) |
 
-For devices whose built-in entrypoint still targets the upstream `southoz`
-feed, the firmware repository's GitHub release attaches
-`tools/upgrade-to-maintained-updater.sh`. Copy it to the first card's
-`/roms/tools/` and launch it from EmulationStation. It validates the supported
-R36 release/version, backs up the prior entrypoint on the selected ROM card,
-and changes only the reviewed feed URL to `dixtuel/darkos-updates` before
-starting the normal update flow. It does not flash an image or change either
-ROM card. See `repositories/firmware-fork/tools/README.md` for its limits and
-recovery details.
+The current feed release is [`ota-10032026-r4`](https://github.com/dixtuel/darkos-updates/releases/tag/ota-10032026-r4).
+After an update reboots the device, choose **Update** again from EmulationStation
+to continue with the next stage. No keyboard confirmation is required.
 
-Because the updater writes into the live root filesystem, update payloads are
-release artifacts, not ordinary application data. Review every ZIP entry and
-the matching updater code before publishing a new dated payload. Keep package
-names and paths consistent with the existing updater until a deliberate,
-backward-compatible migration is reviewed.
+## How the device gets updates
 
-## Preparing a payload
+The firmware's `/opt/system/Update.sh` downloads the updater from this
+repository's raw `main` branch:
 
-- Use the exact dated directory and archive naming convention expected by the
-  updater.
-- Build the ZIP with paths relative to the filesystem root (for example
-  `usr/local/bin/example.sh`), never absolute paths or `..` traversal entries.
-- Record the target device/chipset, base firmware version, changes, rollback
-  procedure, and test result in the update commit or release notes.
-- Validate shell syntax and every ZIP before merging. The repository workflow
-  performs those structural checks; it does not prove that a package is safe
-  or works on hardware.
-- Commit the updater and payload together when the updater depends on the new
-  package. Do not publish an update from a partially completed commit.
+```text
+https://raw.githubusercontent.com/dixtuel/darkos-updates/main/dArkOSUpdate.sh
+```
+
+The updater downloads each package from its dated directory on the same raw
+`main` branch. GitHub Releases provide the matching ZIP and checksum for people
+reviewing or downloading a package; they are not the device's feed endpoint.
+
+Devices whose installed update entrypoint still points to the upstream feed
+must first use the migration helper attached to the
+[firmware repository's migration release](https://github.com/dixtuel/dArkOSRE-R36/releases/tag/r36-updater-migration-20261004).
+Follow that helper's instructions and compatibility limits; it changes the
+reviewed updater URL and does not flash an image.
+
+## `/roms` and `/roms2`
+
+Before installing a maintained OTA, the updater reads EmulationStation's game
+paths and requires exactly one selected ROM root: `/roms` or `/roms2`. It also
+checks that the selected path is mounted. If the paths are mixed, unsupported,
+or the selected card is not mounted, it stops before applying a package.
+
+Rollback files are stored under `backup/darkosre-update/<stage>/` on the
+selected ROM card. Package-specific notes describe any scoped changes to
+launchers or SD-switch support. The OTAs do not contain users' ROM collections;
+check each package's notes for its exact targets and recovery procedure.
+
+## Contributing and release format
+
+- Keep each OTA in a dated directory with the archive, `README.md`, and
+  `SHA256SUMS`. Keep the archive name consistent with the directory and updater.
+- Use ZIP paths relative to the device filesystem root; do not include absolute
+  paths or traversal entries (`..`).
+- Document the target, required base/version, exact file changes, rollback, and
+  validation limits in the package notes.
+- Validate shell syntax, archive structure, and checksums before proposing a
+  change. The repository workflow checks these properties; it does not replace
+  physical-device validation.
+- To publish a feed release, push an `ota-<MMDDYYYY>`,
+  `ota-<MMDDYYYY>-rN`, or `ota-<MMDDYYYY>-compat` tag on a commit already on
+  `main`. The workflow validates the dated package and publishes its ZIP and
+  checksum. The dated directory on raw `main` remains the device download
+  source.
+- Keep firmware images and their release process in the firmware repository.
 
 ## Repositories
 
-- Firmware source: <https://github.com/dixtuel/dArkOSRE-R36>
-- Update files: <https://github.com/dixtuel/darkos-updates>
-- Original update source: <https://github.com/southoz/darkos-updates>
+- Maintained firmware: <https://github.com/dixtuel/dArkOSRE-R36>
+- Maintained update feed: <https://github.com/dixtuel/darkos-updates>
+- Original R36 update source: <https://github.com/southoz/darkos-updates>
 
-The `upstream` Git remote should remain pointed at `southoz/darkos-updates` so
-future changes can be compared and intentionally integrated. The `origin`
-remote is this maintained fork.
-
-## Verified runtime and compatibility follow-ups
-
-`10032026-r4` is the latest published OTA and repairs the stale Advanced SD2 Singe rewrite; both `/roms` and `/roms2` selection paths were verified on the physical R36S. The preceding `10032026-r3` is the nineteen-target runtime package verified for reboot, metadata, ROM2 preservation, zram and the user-confirmed NFS controls/FN/audio/save behavior. The separate `10032026-compat` installs 26 pinned local ARMhf packages and repairs only reviewed WebP mux paths before R2. It does not run APT, change the firmware version or reboot. All 10 main legacy FFmpeg loader checks pass across both ABIs; PortMaster gameplay remains a separate test.
-
-The feed requires the base, R1, compatibility, R2, R3 and R4 completion markers before reporting no updates. Scoped compatibility serialization uses a caller-held root maintenance lock; dpkg still acquires its own database lock. See each dated directory for archive/wrapper hashes, recovery notes and test limits.
+The `origin` remote should point to the maintained update fork. The
+`r36-upstream` remote is comparison-only; upstream history is reviewed before
+changes are adapted into this feed.
