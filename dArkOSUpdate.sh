@@ -5,7 +5,7 @@ UPDATE_DATE="10032026"
 LOG_FILE="/home/ark/update$UPDATE_DATE.log"
 BASE_UPDATE_DONE="/home/ark/.config/.update$UPDATE_DATE"
 # The terminal guard must name the newest wired step, not the prior patch.
-PATCH_UPDATE_DONE="/home/ark/.config/.update10032026-r3"
+PATCH_UPDATE_DONE="/home/ark/.config/.update10032026-r4"
 COMPAT_UPDATE_DONE="/home/ark/.config/.update10032026-compat"
 if [ -f "$BASE_UPDATE_DONE" ]; then
 	UPDATE_DONE="$PATCH_UPDATE_DONE"
@@ -984,6 +984,67 @@ if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
   rm -f "$UPDATE_ZIP" "$INSTALLER"
   if [ "$INSTALL_STATUS" -eq 0 ]; then exit 187; fi
   exit "$INSTALL_STATUS"
+fi
+
+# Surgical repair for the SD2 Advanced-menu copy of the ROM switcher. This
+# removes only the stale global Singe path rewrite; it never replaces the
+# switcher or changes EmulationStation/ROM paths.
+PATCH_VERSION="10032026-r4"
+if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
+  BASE_VERSION="$(cat /home/ark/.config/.VERSION 2>/dev/null)"
+  if [[ "$(tr -d '\0' < /proc/device-tree/compatible 2>/dev/null)" != *"rk3326"* ]] || \
+     [[ "$BASE_VERSION" != "10032026-r3" && "$BASE_VERSION" != "10032026-r4" ]] || \
+     [ ! -f "/home/ark/.config/.update10032026-r3" ] || \
+     [ ! -f "/home/ark/.config/.update10032026-compat" ]; then
+    printf "\nThis update requires completed dArkOSRE-R36 R3 and compatibility stages on RK3326; no files were installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  HAS_ROM2_PATH=0
+  HAS_ROM1_PATH=0
+  grep -Fq '<path>/roms2/' /etc/emulationstation/es_systems.cfg && HAS_ROM2_PATH=1 || true
+  grep -Fq '<path>/roms/' /etc/emulationstation/es_systems.cfg && HAS_ROM1_PATH=1 || true
+  if [[ "$HAS_ROM2_PATH" -eq 1 && "$HAS_ROM1_PATH" -eq 0 ]] && mountpoint -q /roms2; then
+    ROM_ROOT="roms2"
+  elif [[ "$HAS_ROM1_PATH" -eq 1 && "$HAS_ROM2_PATH" -eq 0 ]] && mountpoint -q /roms; then
+    ROM_ROOT="roms"
+  else
+    printf "\nNo uniquely selected mounted ROM card was detected; update stopped.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+
+  UPDATE_STAGE="$(mktemp -d /tmp/darkos-r4.XXXXXX)" || exit 1
+  UPDATE_ZIP="$UPDATE_STAGE/darkosupdate$PATCH_VERSION.zip"
+  INSTALLER="$UPDATE_STAGE/install-r4.py"
+  UPDATE_URL="$LOCATION/$PATCH_VERSION/darkosupdate$PATCH_VERSION.zip"
+  UPDATE_SHA256="60a9e26fad0010b9a00c97f89d54aeaf32566910c182af40b75bd424abb04796"
+  if ! wget -t 3 -T 120 --no-check-certificate "$UPDATE_URL" -O "$UPDATE_ZIP" -a "$LOG_FILE"; then
+    rm -rf -- "$UPDATE_STAGE"
+    printf "\nCould not download the R4 update package.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  if ! printf '%s  %s\n' "$UPDATE_SHA256" "$UPDATE_ZIP" | sha256sum -c -; then
+    rm -rf -- "$UPDATE_STAGE"
+    printf "\nR4 package checksum failed; no files were installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  if ! unzip -t "$UPDATE_ZIP" >/dev/null || ! unzip -p "$UPDATE_ZIP" install-r4.py > "$INSTALLER"; then
+    rm -rf -- "$UPDATE_STAGE"
+    printf "\nR4 package validation failed or the installer is missing.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  chmod 755 "$INSTALLER"
+  sudo env PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+    flock -n /run/lock/darkos-update-maintenance.lock \
+    python3 "$INSTALLER" "$ROM_ROOT"
+  INSTALL_STATUS=$?
+  rm -rf -- "$UPDATE_STAGE"
+  if [ "$INSTALL_STATUS" -ne 0 ]; then
+    printf "\nR4 stopped without recording completion; see the installer output.\n" | tee -a "$LOG_FILE"
+    exit "$INSTALL_STATUS"
+  fi
+  sudo sed -i "/title=/c\\title=dArkOSRE ($PATCH_VERSION)" /usr/share/plymouth/themes/text.plymouth
+  printf "\nAdvanced SD2 Singe rewrite repair completed. No ROM paths or switch scripts were replaced. Returning updater restart status 187.\n" | tee -a "$LOG_FILE"
+  exit 187
 fi
 
 # Follow-up R36S-only adaptation release. Keep the already-published base OTA
