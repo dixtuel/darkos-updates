@@ -841,6 +841,7 @@ if [ ! -f "/home/ark/.config/.update10032026" ]; then
   echo "10032026" > /home/ark/.config/.VERSION
   sudo sed -i "/title\=/c\title\=dArkOSRE (10032026)" /usr/share/plymouth/themes/text.plymouth
   printf "\nInstalled RK3326 update. ROM library remains on /$ROM_ROOT; rollback files are in $BACKUP_BASE.\n" | tee -a "$LOG_FILE"
+  msgbox "Base update 10032026 is installed and a restart is required. After the device starts again, run upgrade-to-maintained-updater.sh from /roms/tools or choose Update from EmulationStation to continue with R1. Press A to restart now."
   sudo systemctl reboot
   exit 187
 fi
@@ -1052,6 +1053,7 @@ PY
   echo "$PATCH_VERSION" > /home/ark/.config/.VERSION
   sudo sed -i "/title=/c\\title=dArkOSRE ($PATCH_VERSION)" /usr/share/plymouth/themes/text.plymouth
   printf "\nInstalled R36S fixes. ROM library remains on /$ROM_ROOT; rollback is saved under $BACKUP_BASE.\n" | tee -a "$LOG_FILE"
+  msgbox "R1 is installed and a restart is required. After the device starts again, run upgrade-to-maintained-updater.sh from /roms/tools or choose Update from EmulationStation to continue the remaining updates. Press A to restart now."
   sudo systemctl reboot
   exit 187
 fi
@@ -1246,6 +1248,7 @@ if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
   prune_superseded_backups "$CONFIG_DIR" "$ROM_ROOT" "$ROM_BACKUP_ROOT"
   sudo sed -i "/title=/c\\title=dArkOSRE ($PATCH_VERSION)" /usr/share/plymouth/themes/text.plymouth
   printf "\nAll available updates through R4 completed. No ROM paths or switch scripts were replaced. Restarting the device now.\n" | tee -a "$LOG_FILE"
+  msgbox "All available updates through R4 are complete. No further updater run is needed. Press A to restart the device now."
   sudo systemctl reboot || {
     printf "\nAll OTA stages completed, but the final system reboot command failed. Please restart the device manually.\n" | tee -a "$LOG_FILE"
     exit 1

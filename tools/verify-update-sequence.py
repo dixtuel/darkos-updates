@@ -86,6 +86,16 @@ if "R3 completed successfully; continuing to R4" not in r3_block or "exit 187" i
     raise AssertionError("successful R3 must prune older backups and continue to R4 in the same invocation")
 if "All available updates through R4 completed" not in r4_block or "sudo systemctl reboot" not in r4_block or "prune_superseded_backups" not in r4_block:
     raise AssertionError("successful R4 must trigger the final device reboot")
+base_start = text.index('if [ ! -f "/home/ark/.config/.update10032026" ]; then')
+r1_start = text.index('PATCH_VERSION="10032026-r1"', base_start)
+compat_start = text.index('COMPAT_VERSION="10032026-compat"', r1_start)
+base_block = text[base_start:r1_start]
+r1_block = text[r1_start:compat_start]
+for name, block in (("base", base_block), ("R1", r1_block)):
+    if "msgbox" not in block or "/roms/tools" not in block or "choose Update from EmulationStation" not in block:
+        raise AssertionError(f"{name} mandatory reboot must tell users how to resume updates")
+if "No further updater run is needed" not in r4_block:
+    raise AssertionError("final reboot message must tell users the update chain is complete")
 no_update_start = text.index('if [ -z "$NEXT_STAGE" ]; then')
 no_update_end = text.index("fi", no_update_start)
 if "reboot" in text[no_update_start:no_update_end].lower():
