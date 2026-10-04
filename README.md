@@ -32,8 +32,14 @@ not change `.VERSION`.
 | `10032026-r4` | Advanced SD2 launcher repair | [Package notes](10032026-r4/README.md) |
 
 The current feed release is [`ota-10032026-r4`](https://github.com/dixtuel/darkos-updates/releases/tag/ota-10032026-r4).
-After an update reboots the device, choose **Update** again from EmulationStation
-to continue with the next stage. No keyboard confirmation is required.
+The migration is split across two reboot boundaries: starting from
+`.VERSION=03082026`, the `10032026` base OTA installs and reboots; after startup,
+run the migration helper again or choose **Update** from EmulationStation to
+install `10032026-r1`, which also reboots. After that startup, run the helper or
+**Update** once more. The compatibility package, R2, R3, and R4 then install
+sequentially in that invocation, and a successful R4 install requests the
+final reboot. If no stage is pending, the updater reports that the device is
+current and does not reboot. No keyboard confirmation is required.
 
 ## How the device gets updates
 
@@ -66,12 +72,12 @@ selected ROM card. Package-specific notes describe any scoped changes to
 launchers or SD-switch support. The OTAs do not contain users' ROM collections;
 check each package's notes for its exact targets and recovery procedure.
 
-After a later stage has a completion marker and its own rollback archive passes
-integrity checks, the next updater run removes older completed OTA snapshots on
-that selected card and keeps the newest verified rollback. Markerless or
-incomplete-stage backups, PortMaster dpkg-recovery data, unrelated backups,
-and files on the inactive ROM card are left alone. If the newest snapshot is
-missing or invalid, cleanup is skipped.
+After successful R2, R3, and R4 stages, the updater prunes older completed OTA
+snapshots on the selected card only when the newest stage has its completion
+marker and its rollback archive passes integrity checks. It keeps the newest
+verified rollback. Markerless or incomplete-stage backups, PortMaster
+dpkg-recovery data, unrelated backups, and files on the inactive ROM card are
+left alone. If the newest snapshot is missing or invalid, cleanup is skipped.
 
 ## Contributing and release format
 

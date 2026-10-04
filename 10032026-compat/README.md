@@ -60,8 +60,10 @@ or exact reviewed target paths. Recovery never changes `.VERSION` or reboots.
 
 ## Validation record
 
-The package closure was installed on the R36S separately from this ZIP. The
-device record reports 26 new ARMhf package records, no other package-record
+In the feed sequence, successful compatibility installation records its
+completion marker and continues directly to R2; it does not create a reboot
+boundary. The package closure was installed on the R36S separately from this
+ZIP. The device record reports 26 new ARMhf package records, no other package-record
 changes or removals, clean `dpkg --audit`, and 10/10 main ARMhf/ARM64 FFmpeg
 loader checks after the WebP repair. That validates the installed package and
 target objects, not execution of this exact bootstrap wrapper or PortMaster

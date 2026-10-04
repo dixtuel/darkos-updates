@@ -43,7 +43,7 @@ preserves owners, modes, and symlinks under:
 
 The installer checks DSperate, each packaged compatibility object with the
 matching ABI loader, and the full EmulationStation loader tree before it
-records the marker and reboots. Empty/wrong-architecture ELF payloads are
+records the marker. Empty/wrong-architecture ELF payloads are
 rejected before installation. The current DSperate card selector also
 survives both directions of the existing SD switch scripts' text rewrites.
 
@@ -76,7 +76,8 @@ claimed. Device gameplay and the visible video-preview/screensaver behavior
 must still be checked after installation.
 
 ZIP SHA-256 is listed in [`SHA256SUMS`](SHA256SUMS). The update has no keyboard
-confirmation step and reboots after a successful install.
+confirmation step. In the feed sequence, successful R2 installation continues
+to R3 without rebooting; successful R4 installation requests the final reboot.
 
 ## Packaging correction before publication
 
@@ -120,9 +121,9 @@ passed checksum, structure and ELF checks.
 The test device received the scoped BaRT and DSperate-selector fixes with
 separate ROM2 rollback archives. Its menu remains active. A prior ARMhf
 loader check failed on the missing mux SONAME; this rebuilt ZIP has not yet
-been applied or verified by the device loader. A clean installation/reboot
-and actual game/controller/audio/save tests remain pending. This archive has
-not been published. A completion marker from an older draft does not
+been applied or verified by the device loader. A clean installation and final
+R4 reboot, plus actual game/controller/audio/save tests, remain pending. This
+archive has not been published. A completion marker from an older draft does
 establish validation of this rebuilt archive.
 
 ## Existing-library collision guard (2026-10-03)

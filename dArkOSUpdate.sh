@@ -1143,8 +1143,9 @@ if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
   chmod 755 "$INSTALLER"
   sudo bash "$INSTALLER" "$UPDATE_ZIP" "$ROM_ROOT" "$BACKUP_BASE" "$UPDATE_SHA256"
   INSTALL_STATUS=$?
-  if [ "$INSTALL_STATUS" -eq 0 ]; then exit 187; fi
-  exit "$INSTALL_STATUS"
+  if [ "$INSTALL_STATUS" -ne 0 ]; then exit "$INSTALL_STATUS"; fi
+  prune_superseded_backups "$CONFIG_DIR" "$ROM_ROOT" "$ROM_BACKUP_ROOT"
+  printf "\nR2 completed successfully; continuing to the next missing update in this run.\n" | tee -a "$LOG_FILE"
 fi
 
 PATCH_VERSION="10032026-r3"
@@ -1189,8 +1190,9 @@ if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
   sudo bash "$INSTALLER" "$UPDATE_ZIP" "$UPDATE_SHA256"
   INSTALL_STATUS=$?
   rm -f "$UPDATE_ZIP" "$INSTALLER"
-  if [ "$INSTALL_STATUS" -eq 0 ]; then exit 187; fi
-  exit "$INSTALL_STATUS"
+  if [ "$INSTALL_STATUS" -ne 0 ]; then exit "$INSTALL_STATUS"; fi
+  prune_superseded_backups "$CONFIG_DIR" "$ROM_ROOT" "$ROM_BACKUP_ROOT"
+  printf "\nR3 completed successfully; continuing to R4 in this run.\n" | tee -a "$LOG_FILE"
 fi
 
 # Surgical repair for the SD2 Advanced-menu copy of the ROM switcher. This
@@ -1241,14 +1243,16 @@ if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
     printf "\nR4 stopped without recording completion; see the installer output.\n" | tee -a "$LOG_FILE"
     exit "$INSTALL_STATUS"
   fi
+  prune_superseded_backups "$CONFIG_DIR" "$ROM_ROOT" "$ROM_BACKUP_ROOT"
   sudo sed -i "/title=/c\\title=dArkOSRE ($PATCH_VERSION)" /usr/share/plymouth/themes/text.plymouth
-  printf "\nAdvanced SD2 Singe rewrite repair completed. No ROM paths or switch scripts were replaced. Returning updater restart status 187.\n" | tee -a "$LOG_FILE"
+  printf "\nAll available updates through R4 completed. No ROM paths or switch scripts were replaced. Restarting the device now.\n" | tee -a "$LOG_FILE"
+  sudo systemctl reboot || {
+    printf "\nAll OTA stages completed, but the final system reboot command failed. Please restart the device manually.\n" | tee -a "$LOG_FILE"
+    exit 1
+  }
   exit 187
 fi
 
-# Follow-up R36S-only adaptation release. Keep the already-published base OTA
-# unchanged and version the patch separately. It only replaces scoped scripts
-# and applies the two known Atari command fixes without touching ROM paths.
-
-# A compatibility-only run on an already installed R3 is also successful.
+# All required stages already have completion markers. This is the success
+# status expected by /opt/system/Update.sh; no additional reboot is needed.
 exit 187

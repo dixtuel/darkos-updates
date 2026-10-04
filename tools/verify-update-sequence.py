@@ -69,4 +69,25 @@ run_case("10032026-r2", all_legacy | {BASE, R2}, "", success=False)
 text = UPDATER.read_text()
 if 'touch "$UPDATE_DONE"' in text or 'touch "/home/ark/.config/.update01302026"' not in text:
     raise AssertionError("legacy update code must use its explicit marker, not an unset sentinel")
-print("Updater sequence resolver passed 10 isolated version/marker cases and the legacy-marker assertion; no system paths were changed.")
+
+# Reboot-required base/R1 installers intentionally stop for a reboot. Once
+# those are complete, the no-reboot compatibility/R2/R3/R4 stages must finish
+# in one updater invocation, with only a successful R4 install rebooting.
+r2_start = text.index('PATCH_VERSION="10032026-r2"')
+r3_start = text.index('PATCH_VERSION="10032026-r3"', r2_start)
+r4_start = text.index('PATCH_VERSION="10032026-r4"', r3_start)
+r4_end = text.index("# All required stages already have completion markers", r4_start)
+r2_block = text[r2_start:r3_start]
+r3_block = text[r3_start:r4_start]
+r4_block = text[r4_start:r4_end]
+if "R2 completed successfully; continuing" not in r2_block or "exit 187" in r2_block or "prune_superseded_backups" not in r2_block:
+    raise AssertionError("successful R2 must prune older backups and continue to R3 in the same invocation")
+if "R3 completed successfully; continuing to R4" not in r3_block or "exit 187" in r3_block or "prune_superseded_backups" not in r3_block:
+    raise AssertionError("successful R3 must prune older backups and continue to R4 in the same invocation")
+if "All available updates through R4 completed" not in r4_block or "sudo systemctl reboot" not in r4_block or "prune_superseded_backups" not in r4_block:
+    raise AssertionError("successful R4 must trigger the final device reboot")
+no_update_start = text.index('if [ -z "$NEXT_STAGE" ]; then')
+no_update_end = text.index("fi", no_update_start)
+if "reboot" in text[no_update_start:no_update_end].lower():
+    raise AssertionError("opening the updater when already current must not trigger a reboot")
+print("Updater sequence passed 10 isolated version/marker cases, continuation/final-reboot policy checks, and the legacy-marker assertion; no system paths were changed.")

@@ -33,4 +33,8 @@ while IFS= read -r item; do rm -rf "/$item"; done < "$B/managed-paths.txt"
 tar --numeric-owner -xpf "$B/rollback.tar" -C /
 ```
 
-The device updater has no keyboard confirmation step and reboots after installation.
+The device updater has no keyboard confirmation step and reboots after
+installation. After startup, run the migration helper from `/roms/tools` or
+choose **Update** again. The updated feed then applies the compatibility
+package, R2, R3, and R4 in sequence; successful R4 installation requests the
+final reboot.

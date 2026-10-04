@@ -8,7 +8,7 @@ This is the maintained `dixtuel/darkos-updates` feed package for R36S RK3326. Th
 - SHA-256: `f6123c9e3a7e95d58b7ca95c7fd653134fac1f5c8236427f2da6637de7755b87` (see `SHA256SUMS`)
 - Payload: 19 reviewed files plus the embedded runtime installer. The archive is byte-for-byte copied from the device-tested candidate at `build/validation/ota-review-20261003/runtime-r3-device-candidate.zip`.
 - The updater checks RK3326, `.VERSION=10032026-r2`, the R2 completion marker, a uniquely selected mounted ROM card consistent with EmulationStation's paths, the archive checksum and ZIP integrity. It then runs the embedded installer with the archive path and expected SHA-256. Installation rollback stays on the selected ROM card.
-- Successful R2 and R3 installer wrappers return the established updater terminal status `187`; nonzero installer errors are passed through unchanged.
+- Successful R2 and R3 installers continue to the next stage in the same updater invocation; they do not return a terminal success status or reboot. Installer errors retain their nonzero status. A successful R4 install requests the final reboot.
 
 ## Included changes
 
@@ -32,4 +32,8 @@ bash -n repositories/update-fork/dArkOSUpdate.sh
 python3 build/validation/ota-review-20261003/host-fixture.qVuKoL/run-runtime-fixtures.py build/validation/ota-review-20261003/host-fixture.qVuKoL
 ```
 
-The staged verification helper also checks all 19 source/draft/payload mirrors, archive members and the installer copy; it exercises terminal-marker combinations for base, R1, R2 and R3, and verifies that R2/R3 installer failures retain their status while success maps to `187`. The device installation is already complete, and the publication commit is recorded separately from these physical test outcomes.
+The staged verification helper also checks all 19 source/draft/payload mirrors
+and archive members. The feed-level sequence verifier checks continuation after
+R2/R3, the final R4 reboot, and the already-current/no-reboot path. The device
+installation is already complete, and the publication commit is recorded
+separately from these physical test outcomes.

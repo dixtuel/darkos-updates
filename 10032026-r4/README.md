@@ -6,7 +6,7 @@ This dated raw-updater feed candidate repairs one stale command in the existing 
 
 - Package: `darkosupdate10032026-r4.zip` (one member: `install-r4.py`), SHA-256 is recorded in `SHA256SUMS` and pinned in `dArkOSUpdate.sh`.
 - The raw updater requires RK3326, `.VERSION=10032026-r3`, the R3 completion marker, and the separate `10032026-compat` marker. It selects the active ROM card only when its mountpoint and all EmulationStation game paths agree.
-- The updater verifies the ZIP SHA-256 and structure before running the installer. Installer success is translated to the established updater terminal code `187`; failures retain their nonzero status. The R4 marker and `.VERSION` advance only after installer success.
+- The updater verifies the ZIP SHA-256 and structure before running the installer. After installer success, the R4 marker and `.VERSION` advance and the updater requests the final system reboot. Installer failures retain their nonzero status. If the device is already current, the updater exits without rebooting.
 - The installer runs under the shared update-maintenance lock. It snapshots the prior `.VERSION` with numeric ownership and the target file (when present) in a checked tar under the selected ROM card; it preserves `.VERSION` and target owner/mode/xattrs when atomically replacing them. A missing marker with `.VERSION=r4` is a recoverable completed-payload state: the installer revalidates and records the marker on retry.
 
 ## Exact change
