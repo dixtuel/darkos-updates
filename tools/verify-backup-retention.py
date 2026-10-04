@@ -74,6 +74,7 @@ def run_case(name, completed, latest, corrupt_latest=False, incomplete=(), unsaf
         stage_names = (
             "10032026", "10032026-r1", "10032026-compat", "10032026-r2",
             "10032026-r3", "10032026-r4", "10032026-r5",
+            "10032026-r6",
         )
         backup_names = {
             "10032026": "10032026",
@@ -83,6 +84,7 @@ def run_case(name, completed, latest, corrupt_latest=False, incomplete=(), unsaf
             "10032026-r3": "10032026-r3",
             "10032026-r4": "10032026-r4",
             "10032026-r5": "10032026-r5",
+            "10032026-r6": "10032026-r6",
         }
         for stage in completed:
             marker = {
@@ -93,6 +95,7 @@ def run_case(name, completed, latest, corrupt_latest=False, incomplete=(), unsaf
                 "10032026-r3": ".update10032026-r3",
                 "10032026-r4": ".update10032026-r4",
                 "10032026-r5": ".update10032026-r5",
+                "10032026-r6": ".update10032026-r6",
             }[stage]
             (config / marker).touch()
 
@@ -161,6 +164,11 @@ run_case(
     "successful R5 keeps only newest verified rollback",
     ("10032026", "10032026-r1", "10032026-compat", "10032026-r2", "10032026-r3", "10032026-r4", "10032026-r5"),
     "10032026-r5",
+)
+run_case(
+    "successful R6 keeps only newest verified rollback",
+    ("10032026", "10032026-r1", "10032026-compat", "10032026-r2", "10032026-r3", "10032026-r4", "10032026-r5", "10032026-r6"),
+    "10032026-r6",
 )
 run_case(
     "successful R2 keeps incomplete later backups",

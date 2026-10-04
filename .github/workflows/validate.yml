@@ -21,6 +21,7 @@ jobs:
           python3 tools/verify-update-sequence.py
           python3 tools/verify-rom-root-resolver.py
           python3 tools/verify-backup-retention.py
+          python3 tools/verify-r6-stage.py
       - name: Validate update archives
         shell: bash
         run: |

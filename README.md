@@ -31,14 +31,15 @@ not change `.VERSION`.
 | `10032026-r3` | R36 runtime and control follow-up | [Package notes](10032026-r3/README.md) |
 | `10032026-r4` | Advanced SD2 launcher repair | [Package notes](10032026-r4/README.md) |
 | `10032026-r5` | Complete the DSperate RK3326 defaults and add a controller-operated reset tool | [Package notes](10032026-r5/README.md) |
+| `10032026-r6` | Add the R36 EmulationStation Wi-Fi indicator toggle and required resources | [Package notes](10032026-r6/README.md) |
 
-The current feed release is [`ota-10032026-r5`](https://github.com/dixtuel/darkos-updates/releases/tag/ota-10032026-r5).
+The current feed release is [`ota-10032026-r6`](https://github.com/dixtuel/darkos-updates/releases/tag/ota-10032026-r6).
 The migration is split across two required reboot boundaries: starting from
 `.VERSION=03082026`, the `10032026` base OTA installs and reboots; after startup,
 run the migration helper again or choose **Update** from EmulationStation to
 install `10032026-r1`, which also reboots. After that startup, run the helper or
-**Update** once more. The compatibility package, R2, R3, R4, and R5 then install
-sequentially in that invocation, and a successful R5 install requests the
+**Update** once more. The compatibility package and R2 through R6 then install
+sequentially in that invocation, and a successful R6 install requests the
 final reboot. If no stage is pending, the updater reports that the device is
 current and does not reboot. No keyboard confirmation is required.
 
@@ -73,7 +74,7 @@ selected ROM card. Package-specific notes describe any scoped changes to
 launchers or SD-switch support. The OTAs do not contain users' ROM collections;
 check each package's notes for its exact targets and recovery procedure.
 
-After successful R2, R3, R4, and R5 stages, the updater prunes older completed OTA
+After successful R2 through R6 stages, the updater prunes older completed OTA
 snapshots on the selected card only when the newest stage has its completion
 marker and its rollback archive passes integrity checks. It keeps the newest
 verified rollback. Markerless or incomplete-stage backups, PortMaster

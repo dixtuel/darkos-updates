@@ -11,6 +11,7 @@ R2_UPDATE_DONE="$CONFIG_DIR/.update10032026-r2"
 R3_UPDATE_DONE="$CONFIG_DIR/.update10032026-r3"
 R4_UPDATE_DONE="$CONFIG_DIR/.update10032026-r4"
 R5_UPDATE_DONE="$CONFIG_DIR/.update10032026-r5"
+R6_UPDATE_DONE="$CONFIG_DIR/.update10032026-r6"
 COMPAT_UPDATE_DONE="$CONFIG_DIR/.update10032026-compat"
 CURRENT_VERSION="$(tr -d '\r\n' < "$VERSION_FILE" 2>/dev/null)"
 DEVICE_COMPAT="$(tr -d '\0' < "${DARKOS_DEVICE_COMPAT_FILE:-/proc/device-tree/compatible}" 2>/dev/null)"
@@ -104,7 +105,7 @@ PY
 			(cd "$backup_dir" && sha256sum -c advanced-sd2-wrapper.before.tar.sha256 >/dev/null && \
 				tar -tf advanced-sd2-wrapper.before.tar >/dev/null 2>&1)
 			;;
-		10032026-r5)
+		10032026-r5|10032026-r6)
 			backup_dir="$backup_root/$stage"
 			[[ -d "$backup_dir" && ! -L "$backup_dir" && ! -L "$backup_dir/backup-ready" && \
 				-f "$backup_dir/backup-ready" && ! -L "$backup_dir/rollback.tar" && \
@@ -124,7 +125,7 @@ prune_superseded_backups() {
 	local rom_mount_path="${4:-/$2}"
 	local latest=""
 	local stage marker candidate
-	local -a stages=(10032026 10032026-r1 10032026-compat 10032026-r2 10032026-r3 10032026-r4 10032026-r5)
+	local -a stages=(10032026 10032026-r1 10032026-compat 10032026-r2 10032026-r3 10032026-r4 10032026-r5 10032026-r6)
 	local -A stage_markers=(
 		[10032026]="$config_dir/.update10032026"
 		[10032026-r1]="$config_dir/.update10032026-r1"
@@ -133,6 +134,7 @@ prune_superseded_backups() {
 		[10032026-r3]="$config_dir/.update10032026-r3"
 		[10032026-r4]="$config_dir/.update10032026-r4"
 		[10032026-r5]="$config_dir/.update10032026-r5"
+		[10032026-r6]="$config_dir/.update10032026-r6"
 	)
 	local -A backup_dirs=(
 		[10032026]="$backup_root/10032026"
@@ -142,6 +144,7 @@ prune_superseded_backups() {
 		[10032026-r3]="$backup_root/10032026-r3"
 		[10032026-r4]="$backup_root/10032026-r4"
 		[10032026-r5]="$backup_root/10032026-r5"
+		[10032026-r6]="$backup_root/10032026-r6"
 	)
 	for stage in "${stages[@]}"; do
 		marker="${stage_markers[$stage]}"
@@ -188,7 +191,7 @@ if [[ "$DEVICE_COMPAT" != *"rk3326"* ]]; then
 	show_update_error "This updater is only for dArkOSRE-R36 RK3326 devices. No files were changed."
 fi
 case "$CURRENT_VERSION" in
-	03082026|10032026|10032026-r1|10032026-r2|10032026-r3|10032026-r4|10032026-r5) ;;
+	03082026|10032026|10032026-r1|10032026-r2|10032026-r3|10032026-r4|10032026-r5|10032026-r6) ;;
 	*) show_update_error "Unsupported firmware version '$CURRENT_VERSION'. Install the latest dArkOSRE-R36 image (03082026) first. This updater will not flash or repartition the card." ;;
 esac
 
@@ -208,37 +211,40 @@ fi
 
 case "$CURRENT_VERSION" in
 	03082026)
-		for marker in "$BASE_UPDATE_DONE" "$R1_UPDATE_DONE" "$R2_UPDATE_DONE" "$R3_UPDATE_DONE" "$R4_UPDATE_DONE" "$R5_UPDATE_DONE" "$COMPAT_UPDATE_DONE"; do
+		for marker in "$BASE_UPDATE_DONE" "$R1_UPDATE_DONE" "$R2_UPDATE_DONE" "$R3_UPDATE_DONE" "$R4_UPDATE_DONE" "$R5_UPDATE_DONE" "$R6_UPDATE_DONE" "$COMPAT_UPDATE_DONE"; do
 			[ ! -e "$marker" ] || show_update_error "Firmware state is inconsistent: .VERSION is 03082026 but $(basename "$marker") exists. No files were changed."
 	done
 		;;
 	10032026)
-		for marker in "$R1_UPDATE_DONE" "$R2_UPDATE_DONE" "$R3_UPDATE_DONE" "$R4_UPDATE_DONE" "$R5_UPDATE_DONE" "$COMPAT_UPDATE_DONE"; do
+		for marker in "$R1_UPDATE_DONE" "$R2_UPDATE_DONE" "$R3_UPDATE_DONE" "$R4_UPDATE_DONE" "$R5_UPDATE_DONE" "$R6_UPDATE_DONE" "$COMPAT_UPDATE_DONE"; do
 			[ ! -e "$marker" ] || show_update_error "Firmware state is inconsistent: .VERSION is 10032026 but $(basename "$marker") exists. No files were changed."
 	done
 		;;
 	10032026-r1)
 		[ -f "$R1_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: R1 is in .VERSION but its completion marker is missing. No files were changed."
-		for marker in "$R2_UPDATE_DONE" "$R3_UPDATE_DONE" "$R4_UPDATE_DONE" "$R5_UPDATE_DONE"; do
+		for marker in "$R2_UPDATE_DONE" "$R3_UPDATE_DONE" "$R4_UPDATE_DONE" "$R5_UPDATE_DONE" "$R6_UPDATE_DONE"; do
 			[ ! -e "$marker" ] || show_update_error "Firmware state is inconsistent: .VERSION is R1 but $(basename "$marker") exists. No files were changed."
 	done
 		;;
 	10032026-r2)
 		[ -f "$R1_UPDATE_DONE" ] && [ -f "$R2_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: R2 requires the base, R1, and R2 completion markers. No files were changed."
-		for marker in "$R3_UPDATE_DONE" "$R4_UPDATE_DONE" "$R5_UPDATE_DONE"; do
+		for marker in "$R3_UPDATE_DONE" "$R4_UPDATE_DONE" "$R5_UPDATE_DONE" "$R6_UPDATE_DONE"; do
 			[ ! -e "$marker" ] || show_update_error "Firmware state is inconsistent: .VERSION is R2 but $(basename "$marker") exists. No files were changed."
 	done
 		;;
 	10032026-r3)
 		[ -f "$R1_UPDATE_DONE" ] && [ -f "$R2_UPDATE_DONE" ] && [ -f "$R3_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: R3 requires the base, R1, R2, and R3 completion markers. No files were changed."
-		[ ! -e "$R4_UPDATE_DONE" ] && [ ! -e "$R5_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: .VERSION is R3 but an R4/R5 marker exists. No files were changed."
+		[ ! -e "$R4_UPDATE_DONE" ] && [ ! -e "$R5_UPDATE_DONE" ] && [ ! -e "$R6_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: .VERSION is R3 but an R4/R5/R6 marker exists. No files were changed."
 		;;
 	10032026-r4)
 		[ -f "$R1_UPDATE_DONE" ] && [ -f "$R2_UPDATE_DONE" ] && [ -f "$R3_UPDATE_DONE" ] && [ -f "$COMPAT_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: R4 requires the base, R1, R2, R3, and compatibility markers. No files were changed."
-		[ ! -e "$R5_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: .VERSION is R4 but the R5 marker exists. No files were changed."
+		[ ! -e "$R5_UPDATE_DONE" ] && [ ! -e "$R6_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: .VERSION is R4 but an R5/R6 marker exists. No files were changed."
 		;;
 	10032026-r5)
 		[ -f "$R1_UPDATE_DONE" ] && [ -f "$R2_UPDATE_DONE" ] && [ -f "$R3_UPDATE_DONE" ] && [ -f "$R4_UPDATE_DONE" ] && [ -f "$COMPAT_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: R5 requires the base, R1, compatibility, R2, R3, and R4 markers. No files were changed."
+		;;
+	10032026-r6)
+		[ -f "$R1_UPDATE_DONE" ] && [ -f "$R2_UPDATE_DONE" ] && [ -f "$R3_UPDATE_DONE" ] && [ -f "$R4_UPDATE_DONE" ] && [ -f "$R5_UPDATE_DONE" ] && [ -f "$COMPAT_UPDATE_DONE" ] && [ -f "$R6_UPDATE_DONE" ] || show_update_error "Firmware state is inconsistent: R6 requires the base, R1, compatibility, R2, R3, R4, R5, and R6 markers. No files were changed."
 		;;
 esac
 
@@ -255,8 +261,9 @@ else
 	elif [ ! -f "$COMPAT_UPDATE_DONE" ]; then NEXT_STAGE="10032026-compat"
 	elif [ ! -f "$R2_UPDATE_DONE" ]; then NEXT_STAGE="10032026-r2"
 	elif [ ! -f "$R3_UPDATE_DONE" ]; then NEXT_STAGE="10032026-r3"
-	elif [ ! -f "$R4_UPDATE_DONE" ]; then NEXT_STAGE="10032026-r4"
-	elif [ ! -f "$R5_UPDATE_DONE" ]; then NEXT_STAGE="10032026-r5"
+		elif [ ! -f "$R4_UPDATE_DONE" ]; then NEXT_STAGE="10032026-r4"
+		elif [ ! -f "$R5_UPDATE_DONE" ]; then NEXT_STAGE="10032026-r5"
+		elif [ ! -f "$R6_UPDATE_DONE" ] || [ "$CURRENT_VERSION" != "10032026-r6" ]; then NEXT_STAGE="10032026-r6"
 	fi
 fi
 if [[ "${DARKOS_UPDATE_PLAN_ONLY:-0}" == "1" ]]; then
@@ -277,7 +284,7 @@ prune_superseded_backups "$CONFIG_DIR" "$ROM_ROOT" "$ROM_BACKUP_ROOT"
 
 if [ -z "$NEXT_STAGE" ]; then
 	# Reconcile the boot title against the installed OTA version without rebooting.
-	if [[ "$CURRENT_VERSION" == 10032026-r4 || "$CURRENT_VERSION" == 10032026-r5 ]]; then
+	if [[ "$CURRENT_VERSION" == 10032026-r4 || "$CURRENT_VERSION" == 10032026-r5 || "$CURRENT_VERSION" == 10032026-r6 ]]; then
 		PLYMOUTH_TITLE_FILE="/usr/share/plymouth/themes/text.plymouth"
 		if [ -f "$PLYMOUTH_TITLE_FILE" ] && ! grep -Fxq "title=dArkOSRE ($CURRENT_VERSION)" "$PLYMOUTH_TITLE_FILE"; then
 			if ! sudo sed -i "/^title=/c\\title=dArkOSRE ($CURRENT_VERSION)" "$PLYMOUTH_TITLE_FILE"; then
@@ -1341,8 +1348,64 @@ if [ ! -f "/home/ark/.config/.update$PATCH_VERSION" ]; then
   fi
   prune_superseded_backups "$CONFIG_DIR" "$ROM_ROOT" "$ROM_BACKUP_ROOT"
   sudo sed -i "/title=/c\\title=dArkOSRE ($PATCH_VERSION)" /usr/share/plymouth/themes/text.plymouth
-  printf "\nAll available updates through R5 completed. DS saves and states were preserved. Restarting the device now.\n" | tee -a "$LOG_FILE"
-  msgbox "All available updates through R5 are complete. No further updater run is needed. Press A to restart the device now."
+  printf "\nR5 completed successfully; continuing to R6 without an intermediate restart.\n" | tee -a "$LOG_FILE"
+fi
+
+# R6 installs the reviewed R36 EmulationStation build and its required status
+# resources. Its installer snapshots every target on the active ROM card.
+PATCH_VERSION="10032026-r6"
+if [ ! -f "$R6_UPDATE_DONE" ] || [ "$(cat /home/ark/.config/.VERSION 2>/dev/null)" != "$PATCH_VERSION" ]; then
+  BASE_VERSION="$(cat /home/ark/.config/.VERSION 2>/dev/null)"
+  if [[ "$(tr -d '\0' < /proc/device-tree/compatible 2>/dev/null)" != *"rk3326"* ]] || \
+     [[ "$BASE_VERSION" != "10032026-r5" && "$BASE_VERSION" != "$PATCH_VERSION" ]] || \
+     [ ! -f "$R5_UPDATE_DONE" ] || [ ! -f "$R4_UPDATE_DONE" ] || \
+     [ ! -f "$R3_UPDATE_DONE" ] || [ ! -f "$COMPAT_UPDATE_DONE" ]; then
+    printf "\nThis update requires completed R5 and compatibility stages on RK3326; no files were installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  if ! grep -Fq "<path>/$ROM_ROOT/" /etc/emulationstation/es_systems.cfg; then
+    printf "\nThe active EmulationStation ROM root changed during the update; stopping before R6 installation.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  UPDATE_STAGE="$(mktemp -d /tmp/darkos-r6.XXXXXX)" || exit 1
+  UPDATE_ZIP="$UPDATE_STAGE/darkosupdate$PATCH_VERSION.zip"
+  INSTALLER="$UPDATE_STAGE/install-r6.py"
+  UPDATE_URL="$LOCATION/$PATCH_VERSION/darkosupdate$PATCH_VERSION.zip"
+  UPDATE_SHA256="e27100b98e104ce028b49dc4fab05b815ff09b89a7406f13cca75b285e32f1c6"
+  if ! wget -t 3 -T 120 --no-check-certificate "$UPDATE_URL" -O "$UPDATE_ZIP" -a "$LOG_FILE"; then
+    rm -rf -- "$UPDATE_STAGE"
+    printf "
+Could not download the R6 update package.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  if ! printf '%s  %s\n' "$UPDATE_SHA256" "$UPDATE_ZIP" | sha256sum -c -; then
+    rm -rf -- "$UPDATE_STAGE"
+    printf "\nR6 package checksum failed; no files were installed.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  if ! unzip -t "$UPDATE_ZIP" >/dev/null || ! unzip -p "$UPDATE_ZIP" install-r6.py > "$INSTALLER"; then
+    rm -rf -- "$UPDATE_STAGE"
+    printf "\nR6 package validation failed or the installer is missing.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  chmod 755 "$INSTALLER"
+  INSTALL_STATUS=0
+  sudo env PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+    flock -n /run/lock/darkos-update-maintenance.lock \
+    python3 "$INSTALLER" "$ROM_ROOT" "$UPDATE_ZIP" "$UPDATE_SHA256" || INSTALL_STATUS=$?
+  rm -rf -- "$UPDATE_STAGE"
+  if [ "$INSTALL_STATUS" -ne 0 ]; then
+    printf "\nR6 stopped without recording completion; see the installer output.\n" | tee -a "$LOG_FILE"
+    exit "$INSTALL_STATUS"
+  fi
+  if [[ "$(cat /home/ark/.config/.VERSION 2>/dev/null)" != "$PATCH_VERSION" ]] || [ ! -f "$R6_UPDATE_DONE" ]; then
+    printf "\nR6 installer returned success without writing its version and completion marker.\n" | tee -a "$LOG_FILE"
+    exit 1
+  fi
+  prune_superseded_backups "$CONFIG_DIR" "$ROM_ROOT" "$ROM_BACKUP_ROOT"
+  sudo sed -i "/title=/c\\title=dArkOSRE ($PATCH_VERSION)" /usr/share/plymouth/themes/text.plymouth
+  printf "\nAll available updates through R6 completed. Restarting the device now.\n" | tee -a "$LOG_FILE"
+  msgbox "All available updates through R6 are complete. No further updater run is needed. Press A to restart the device now."
   sudo systemctl reboot || {
     printf "\nAll OTA stages completed, but the final system reboot command failed. Please restart the device manually.\n" | tee -a "$LOG_FILE"
     msgbox "All updates are complete, but automatic restart failed. Restart the device manually; no further updater run is needed."

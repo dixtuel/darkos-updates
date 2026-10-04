@@ -22,6 +22,7 @@ R2 = ".update10032026-r2"
 R3 = ".update10032026-r3"
 R4 = ".update10032026-r4"
 R5 = ".update10032026-r5"
+R6 = ".update10032026-r6"
 COMPAT = ".update10032026-compat"
 
 
@@ -70,7 +71,9 @@ run_case("10032026-r3", all_legacy | {BASE, R1, R2, R3, COMPAT}, "10032026-r4")
 run_case("10032026-r4", all_legacy | {BASE, R1, R2, R3, COMPAT}, "10032026-r4")
 run_case("10032026-r4", all_legacy | {BASE, R1, R2, R3, R4, COMPAT}, "10032026-r5")
 run_case("10032026-r4", all_legacy | {BASE, R1, R2, R3, R4, R5, COMPAT}, "", success=False)
-run_case("10032026-r5", all_legacy | {BASE, R1, R2, R3, R4, R5, COMPAT}, "none")
+run_case("10032026-r5", all_legacy | {BASE, R1, R2, R3, R4, R5, COMPAT}, "10032026-r6")
+run_case("10032026-r5", all_legacy | {BASE, R1, R2, R3, R4, R5, R6, COMPAT}, "10032026-r6")
+run_case("10032026-r6", all_legacy | {BASE, R1, R2, R3, R4, R5, R6, COMPAT}, "none")
 run_case("02062026", all_legacy, "", success=False)
 run_case("10032026-r2", all_legacy | {BASE, R2}, "", success=False)
 text = UPDATER.read_text()
@@ -84,23 +87,27 @@ r2_start = text.index('PATCH_VERSION="10032026-r2"')
 r3_start = text.index('PATCH_VERSION="10032026-r3"', r2_start)
 r4_start = text.index('PATCH_VERSION="10032026-r4"', r3_start)
 r5_start = text.index('PATCH_VERSION="10032026-r5"', r4_start)
-r5_end = text.index("# All required stages already have completion markers", r5_start)
+r6_start = text.index('PATCH_VERSION="10032026-r6"', r5_start)
+r6_end = text.index("# All required stages already have completion markers", r6_start)
 r2_block = text[r2_start:r3_start]
 r3_block = text[r3_start:r4_start]
 r4_block = text[r4_start:r5_start]
-r5_block = text[r5_start:r5_end]
+r5_block = text[r5_start:r6_start]
+r6_block = text[r6_start:r6_end]
 if "R2 completed successfully; continuing" not in r2_block or "exit 187" in r2_block or "prune_superseded_backups" not in r2_block:
     raise AssertionError("successful R2 must prune older backups and continue to R3 in the same invocation")
 if "R3 completed successfully; continuing to R4" not in r3_block or "exit 187" in r3_block or "prune_superseded_backups" not in r3_block:
     raise AssertionError("successful R3 must prune older backups and continue to R4 in the same invocation")
 if "R4 completed successfully; continuing to R5" not in r4_block or "sudo systemctl reboot" in r4_block:
     raise AssertionError("R4 must continue to R5 without an intermediate reboot")
-if ("All available updates through R5 completed" not in r5_block or
-        "sudo systemctl reboot || {" not in r5_block or
-        "automatic restart failed" not in r5_block or
-        "No further updater run is needed" not in r5_block or
-        "prune_superseded_backups" not in r5_block):
-    raise AssertionError("successful R5 must perform the one final reboot and report failures")
+if "R5 completed successfully; continuing to R6" not in r5_block or "sudo systemctl reboot" in r5_block:
+    raise AssertionError("R5 must continue to R6 without an intermediate reboot")
+if ("All available updates through R6 completed" not in r6_block or
+        "sudo systemctl reboot || {" not in r6_block or
+        "automatic restart failed" not in r6_block or
+        "No further updater run is needed" not in r6_block or
+        "prune_superseded_backups" not in r6_block):
+    raise AssertionError("successful R6 must perform the one final reboot and report failures")
 base_start = text.index('if [ ! -f "/home/ark/.config/.update10032026" ]; then')
 r1_start = text.index('PATCH_VERSION="10032026-r1"', base_start)
 compat_start = text.index('COMPAT_VERSION="10032026-compat"', r1_start)
@@ -116,7 +123,7 @@ no_update_end = text.index('msgbox "No more updates available.', no_update_start
 no_update_block = text[no_update_start:no_update_end]
 if "sudo systemctl reboot" in no_update_block or "sudo reboot" in no_update_block:
     raise AssertionError("opening the updater when already current must not trigger a reboot")
-if ('CURRENT_VERSION" == 10032026-r4 || "$CURRENT_VERSION" == 10032026-r5' not in no_update_block or
+if ('CURRENT_VERSION" == 10032026-r4 || "$CURRENT_VERSION" == 10032026-r5 || "$CURRENT_VERSION" == 10032026-r6' not in no_update_block or
         'grep -Fxq "title=dArkOSRE ($CURRENT_VERSION)"' not in no_update_block or
         'sudo sed -i "/^title=/c\\\\title=dArkOSRE ($CURRENT_VERSION)"' not in no_update_block):
     raise AssertionError("the already-current R4/R5 path must repair stale Plymouth titles without rebooting")
